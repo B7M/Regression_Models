@@ -1,15 +1,7 @@
 available-course-formats
 introduction
 introduction-1
-motivation
-target-audience
-curriculum
 introduction-2
-motivation-1
-target-audience-1
-curriculum-1
 introduction-3
-motivation-2
-target-audience-2
-curriculum-2
+motivation
 references
