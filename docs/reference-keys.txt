@@ -1,7 +1,3 @@
 available-course-formats
 introduction
-introduction-1
-introduction-2
-introduction-3
-motivation
 references
