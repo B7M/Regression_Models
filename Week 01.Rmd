@@ -5,7 +5,8 @@ ottrpal::set_knitr_image_path()
 
 # Introduction
 Hi there!
-Now it should work 
+Now it should work.
+how about now?
 
 ```{r}
 devtools::session_info()
