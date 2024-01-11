@@ -1,7 +1,0 @@
-# 4 Introduction
- 
-{type: iframe, title:4 Introduction, width:800, height:600, poster:resources/chapt_screen_images/introduction-3.png}
-![](https://b7m.github.io/Regression_Models/no_toc/introduction-3.html)
- 
-
- 
