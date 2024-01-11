@@ -1,7 +1,0 @@
-1-Introduction.md
-2-Introduction.md
-3-Introduction.md
-4-Introduction.md
-5-References.md
-About-this-Course.md
-About-the-Authors.md
