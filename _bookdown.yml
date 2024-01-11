@@ -2,10 +2,10 @@ book_filename: "Regression Models"
 chapter_name: "Chapter "
 repo: https://github.com/jhudsl/OTTR_Template/
 rmd_files: ["index.Rmd",
-            "Week 01.Rmd",
-            "Week 02.Rmd",
-            "Week 03.Rmd",
-            "Week 04.Rmd",
+            "Week01.Rmd",
+            "Week02.Rmd",
+            "Week03.Rmd",
+            "Week04.Rmd",
             "About.Rmd",
             "References.Rmd"]
 new_session: yes
