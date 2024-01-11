@@ -1,11 +1,11 @@
 available-course-formats
-introduction
-book-regression-models-for-data-science-in-r
-syllabus
+introduction-xxx
+welcome-to-regression-models
+some-basics
+youtube
+syllabus-xxx
 course-description
 course-content
-github-repository
-youtube-videos
 book-regression-models-for-data-science-in-r.
 quizzes
 course-project
