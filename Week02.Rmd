@@ -1,0 +1,25 @@
+```{r setup, include = FALSE}
+ottrpal::set_knitr_image_path()
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Statistical linear regression models
+
+
+
+# Residuals
+
+
+
+# Inference in regression
+
+
+
+# For the project
+
+
+# Practical R Exercises in swirl
+
+
+# Week 2 Quiz
