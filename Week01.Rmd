@@ -186,10 +186,10 @@ Let's use our studio's `manipulate` function to experiment with trying to find t
 ```{r, echo = T, eval = F}
 library(manipulate) 
 myHist<-function(mu){
-    mse<-mean((galton$child-height-mu)^2)
-    g<- ggplot(galton, aes(x=childHeight))+geom_histogram(fill='salmon',color='black',binwidth=1)
-    g<- g+ geom_vline(xintercept=mu, size=3)
-    g<- g+ ggtitle(paste("mu=",mu,"MSE=",round(mse,2)),sep="")
+    mse<-mean((galton$child - mu)^2)
+    g <- ggplot(galton, aes(x = child)) + geom_histogram(fill = "salmon", colour = "black", binwidth=1)
+    g <- g + geom_vline(xintercept = mu, size = 3)
+    g <- g + ggtitle(paste("mu = ", mu, ", MSE = ", round(mse, 2), sep = ""))
     g
 }
 manipulate(myHist(mu),mu=slider(62,74,step=0.5))
@@ -232,6 +232,23 @@ ggplot(galton, aes(x = parent, y = child)) + geom_point()
 Notably, there's over-plotting due to numerous parent-child pairs sharing the same x, y values. To address this, we provide an improved plot where the point size reflects the number of parent-child combinations at a specific x, y location. Additionally, color indicates frequency, with lighter colors representing higher frequencies.
 
 ```{r, echo = T, eval = T}
+library(dplyr)
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+freqData$child <- as.numeric(as.character(freqData$child))
+freqData$parent <- as.numeric(as.character(freqData$parent))
+g <- ggplot(filter(freqData, freq > 0), aes(x = parent, y = child))
+g <- g  + scale_size(range = c(2, 20), guide = "none" )
+g <- g + geom_point(colour="grey50", aes(size = freq+20, show_guide = FALSE))
+g <- g + geom_point(aes(colour=freq, size = freq))
+g <- g + scale_colour_gradient(low = "lightblue", high="white")                    
+g
+```
+
+In order to find the best line, all we have to find is the slope. Well, here's how we could potentially do that. We would want to find the slope beta that minimizes the sum of the squared distances between the observed data points the $Y_i$ and the fitted data points on the line,
+$\beta X_i$. We'll square that distance and add them up and this is directly analogous to finding the least squares mean. This is sort of using the origin as a pivot point and picking the line that minimizes the sum of the squared vertical distances between the points and the line. Notice that there is a point in regression to the origin is useful for explaining things, because we only have one parameter, the slope and we don't have two parameters, the slope and the intercept. But it's generally bad practice to force regression lines through the point (0, 0). So, an easy way around this is to subtract the mean from the parent's heights and the mean from the child's heights, so that the zero, zero point is right in the middle of the data and that will make this solution a little bit more palatable.
+
+```{r, echo = T, eval = T}
 y <- galton$child - mean(galton$child)
 x <- galton$parent - mean(galton$parent)
 freqData <- as.data.frame(table(x, y))
@@ -239,24 +256,22 @@ names(freqData) <- c("child", "parent", "freq")
 freqData$child <- as.numeric(as.character(freqData$child))
 freqData$parent <- as.numeric(as.character(freqData$parent))
 myPlot <- function(beta){
-    g <- ggplot(filter(freqData, freq > 0), aes(x = parent, y = child))
-    g <- g  + scale_size(range = c(2, 20), guide = "none" )
-    g <- g + geom_point(colour="grey50", aes(size = freq+20, show_guide = FALSE))
-    g <- g + geom_point(aes(colour=freq, size = freq))
-    g <- g + scale_colour_gradient(low = "lightblue", high="white")                     
-    g <- g + geom_abline(intercept = 0, slope = beta, size = 3)
-    mse <- mean( (y - beta * x) ^2 )
-    g <- g + ggtitle(paste("beta = ", beta, "mse = ", round(mse, 3)))
-    g
+  g <- ggplot(filter(freqData, freq > 0), aes(x = parent, y = child))
+  g <- g  + scale_size(range = c(2, 20), guide = "none" )
+  g <- g + geom_point(colour="grey50", aes(size = freq+20, show_guide = FALSE))
+  g <- g + geom_point(aes(colour=freq, size = freq))
+  g <- g + scale_colour_gradient(low = "lightblue", high="white")                     
+  g <- g + geom_abline(intercept = 0, slope = beta, size = 3)
+  mse <- mean( (y - beta * x) ^2 )
+  g <- g + ggtitle(paste("beta = ", beta, "mse = ", round(mse, 3)))
+  g
 }
-```
 
-In order to find the best line, all we have to find is the slope. Well, here's how we could potentially do that. We would want to find the slope beta that minimizes the sum of the squared distances between the observed data points the $Y_i$ and the fitted data points on the line,
-$\beta X_i$. We'll square that distance and add them up and this is directly analogous to finding the least squares mean. This is sort of using the origin as a pivot point and picking the line that minimizes the sum of the squared vertical distances between the points and the line. Notice that there is a point in regression to the origin is useful for explaining things, because we only have one parameter, the slope and we don't have two parameters, the slope and the intercept. But it's generally bad practice to force regression lines through the point (0, 0). So, an easy way around this is to subtract the mean from the parent's heights and the mean from the child's heights, so that the zero, zero point is right in the middle of the data and that will make this solution a little bit more palatable.
+myPlot(0.5)
+```
 
 We can find the slope of the line very quickly in R using the lm function. The lm function stands for linear model. We're going to regress the child's height on the parent's height. We're going to subtract the mean from the child's height and the mean from the parent's height, to make sure line is going through the origin. Doing so will give us a line that has slope of 0.646.
 
-```{r, echo = T, eval = T}
 ```{r, echo = T, eval = T}
 lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
 ```
@@ -264,6 +279,8 @@ lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
 Now what we're going to do in subsequent sections is to talk about how we get these values? What is the motivation behind it and all the things we can do with this fitted line, we're going to spend maybe the next several sections talking about this. You have actually learned a lot of material in this very first part, well done!
 
 ## Linear least squares
+
+### Notations and background
 
 Ordinary least squares (OLS) is the workhorse of statistics. It gives a way of taking complicated outcomes and explaining behavior (such as trends) using linearity. The simplest application of OLS is fitting a line through some data. In the next few sections, we cover the basics of linear least squares. We start with defining our notation. These are things you probably already saw in the prerequisite for this course in a Statistical Inference course in Data Science Specialization. However, because they're so fundamental to regression, we're going to cover them again, so they're fresh in our minds.
 We will try to minimize the amount of mathematics that's required for this class. Throughout the course we will neither require calculus nor linear algebra. And when it does get a little bit more mathematical, we will let you know when you can skip over those sections. 
@@ -315,6 +332,61 @@ Some facts about correlation:
 * $Cor(X,Y) = 1$ and $Cor(X, Y) = -1$ only when the $X$ or $Y$ observations fall perfectly on a positive or negative sloped line, respectively.
 * $Cor(X, Y)$ measures the strength of the linear relationship between the $X$ and $Y$ data, with stronger relationships as $Cor(X,Y)$ heads towards -1 or 1.
 * $Cor(X, Y) = 0$ implies no linear relationship. 
+
+### Linear Least Squares
+
+Consider again, when we're looking at the scatter plot of the parent's heights by the child's heights from the Galton data, the size of the circle represents the frequency of that particular x, y combination. 
+
+```{r, echo = F, eval = T}
+library(dplyr)
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+freqData$child <- as.numeric(as.character(freqData$child))
+freqData$parent <- as.numeric(as.character(freqData$parent))
+g <- ggplot(filter(freqData, freq > 0), aes(x = parent, y = child))
+g <- g  + scale_size(range = c(2, 20), guide = "none" )
+g <- g + geom_point(colour="grey50", aes(size = freq+20, show_guide = FALSE))
+g <- g + geom_point(aes(colour=freq, size = freq))
+g <- g + scale_colour_gradient(low = "lightblue", high="white")                    
+g
+```
+
+We'd like to use the parent's heights to explain the child's heights and we're going to do it using linear regression. We're going to use our notation that we developed in our last section. So let's let $Y$ be the $i^{th}$ child's height and $X_i$ be the $i^{th}$ parents' height. Now we want to find the best line, where we want the line to look like child's height is an intercept. Child's Height = $\beta_0$ + Parent's Height $\beta_1$, $\beta_0$ and $\beta_!$ are parameters we would like to know that we don't know. Well, we need a criteria for the term best. We need to figure out what we mean by the best line that fits the data. Well, one criteria is the famous least squares criteria. And the basic gist of the equation is we want to minimize the sum of the squared vertical distances between the data points, the height of the data points, the child's heights and the points on the line, on the fitted line. And we can write this as 
+$$
+  \sum_{i=1}^n \{Y_i - (\beta_0 + \beta_1 X_i)\}^2
+$$
+
+This is the sum of the squared vertical distances between the data points and the fitted line. We want to minimize this quantity. We want to find the $\beta_0$ and $\beta_1$ that minimize this quantity. This is called the least squares criteria. We put little hats over $\beta_o$ and $\beta_1$ to indicate the estimated values. The least squares model fit to the line $Y = \beta_0 + \beta_1 X$ through the data pairs $(X_i, Y_i)$ with $Y_i$ as the outcome obtains the line $Y = \hat \beta_0 + \hat \beta_1 X$ where $$\hat \beta_1 = Cor(Y, X) \frac{Sd(Y)}{Sd(X)} ~~~ \hat \beta_0 = \bar Y - \hat \beta_1 \bar X$$
+
+The solution works out to be $\hat \beta_1$ is the correlation between $Y$ and $X$ times the standard deviation of $Y$ divided by the standard deviation of $X$. The estimated intercept $\hat \beta_0 = \bar Y \beta_1 hat * \bar X$. So let's go through a couple of consequences of this being the result.
+
+* $\hat \beta_1$ has the units of $Y / X$, $\hat \beta_0$ has the units of $Y$. We can see this because the correlation is a unitless quantity.
+* The line passes through the point $(\bar X, \bar Y$)
+* The slope of the regression line with $X$ as the outcome and $Y$ as the predictor is $Cor(Y, X) Sd(X)/ Sd(Y)$. 
+* The slope is the same one you would get if you centered the data,
+$(X_i - \bar X, Y_i - \bar Y)$, and did regression through the origin.
+* If you normalized the data, $\{ \frac{X_i - \bar X}{Sd(X)}, \frac{Y_i - \bar Y}{Sd(Y)}\}$, the slope is $Cor(Y, X)$.
+
+### Linear Least Squares Coding Example
+
+Here we will go through a coding example to show how to calculate the least squares estimates. We plot the Galton parents' height and childrens' height data that we are going to look at.
+
+```{r, echo = T, eval = T}
+library(dplyr)
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+freqData$child <- as.numeric(as.character(freqData$child))
+freqData$parent <- as.numeric(as.character(freqData$parent))
+g <- ggplot(filter(freqData, freq > 0), aes(x = parent, y = child))
+g <- g  + scale_size(range = c(2, 20), guide = "none" )
+g <- g + geom_point(colour="grey50", aes(size = freq+20, show_guide = FALSE))
+g <- g + geom_point(aes(colour=freq, size = freq))
+g <- g + scale_colour_gradient(low = "lightblue", high="white")                    
+g
+```
+
+
+
 
 ## Regression to the Mean
 
