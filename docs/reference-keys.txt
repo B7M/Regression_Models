@@ -12,6 +12,8 @@ course-project
 grading-policy
 swirl-programming-assignment-optional
 differences-of-opinion
+data-science-specialization-community-site
+where-to-get-more-advanced-material
 introduction-to-regression-and-least-squares
 linear-least-squares
 regression-to-the-mean
