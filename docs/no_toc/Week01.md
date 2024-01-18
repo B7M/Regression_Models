@@ -301,8 +301,64 @@ $$
 \end{align} 
 $$
 
-## Regression to the Mean
+The equations above show for any value of $\mu$, the function $\sum_{i=1}^n (Y_i - \mu)^2$ is larger than or equal to the specific case when we plug in $\bar Y$. Therefore, $\bar Y$ has to be the unique minimizer of that equation.
 
+## Regression to the Mean
+At this stage, we haven't utilized the parent's heights in our analysis. The initial step in examining this type of data is to construct a scatter plot of child heights against parent heights. Here we employ ggplot, but the plot has several shortcomings. 
+
+
+```r
+ggplot(galton, aes(x = parent, y = child)) + geom_point()
+```
+
+<img src="resources/images/Week01_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+Notably, there's over-plotting due to numerous parent-child pairs sharing the same x, y values. To address this, we provide an improved plot where the point size reflects the number of parent-child combinations at a specific x, y location. Additionally, color indicates frequency, with lighter colors representing higher frequencies.
+
+
+```r
+y <- galton$child - mean(galton$child)
+x <- galton$parent - mean(galton$parent)
+freqData <- as.data.frame(table(x, y))
+names(freqData) <- c("child", "parent", "freq")
+freqData$child <- as.numeric(as.character(freqData$child))
+freqData$parent <- as.numeric(as.character(freqData$parent))
+myPlot <- function(beta){
+    g <- ggplot(filter(freqData, freq > 0), aes(x = parent, y = child))
+    g <- g  + scale_size(range = c(2, 20), guide = "none" )
+    g <- g + geom_point(colour="grey50", aes(size = freq+20, show_guide = FALSE))
+    g <- g + geom_point(aes(colour=freq, size = freq))
+    g <- g + scale_colour_gradient(low = "lightblue", high="white")                     
+    g <- g + geom_abline(intercept = 0, slope = beta, size = 3)
+    mse <- mean( (y - beta * x) ^2 )
+    g <- g + ggtitle(paste("beta = ", beta, "mse = ", round(mse, 3)))
+    g
+}
+```
+
+In order to find the best line, all we have to find is the slope. Well, here's how we could potentially do that. We would want to find the slope beta that minimizes the sum of the squared distances between the observed data points the $Y_i$ and the fitted data points on the line,
+$\beta X_i$. We'll square that distance and add them up and this is directly analogous to finding the least squares mean. This is sort of using the origin as a pivot point and picking the line that minimizes the sum of the squared vertical distances between the points and the line. Notice that there is a point in regression to the origin is useful for explaining things, because we only have one parameter, the slope and we don't have two parameters, the slope and the intercept. But it's generally bad practice to force regression lines through the point (0, 0). So, an easy way around this is to subtract the mean from the parent's heights and the mean from the child's heights, so that the zero, zero point is right in the middle of the data and that will make this solution a little bit more palatable.
+
+We can find the slope of the line very quickly in R using the lm function. The lm function stands for linear model. We're going to regress the child's height on the parent's height. We're going to subtract the mean from the child's height and the mean from the parent's height, to make sure line is going through the origin. Doing so will give us a line that has slope of 0.646.
+
+
+
+```r
+lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
+```
+
+```
+## 
+## Call:
+## lm(formula = I(child - mean(child)) ~ I(parent - mean(parent)) - 
+##     1, data = galton)
+## 
+## Coefficients:
+## I(parent - mean(parent))  
+##                   0.6463
+```
+
+Now what we're going to do in subsequent sections is to talk about how we get these values? What is the motivation behind it and all the things we can do with this fitted line, we're going to spend maybe the next several sections talking about this. You have actually learned a lot of material in this very first part, well done!
 
 ## Practical R Exercises in swirl
 
