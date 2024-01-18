@@ -1,5 +1,86 @@
 
 
+
+```
+## Installing package into '/usr/local/lib/R/site-library'
+## (as 'lib' is unspecified)
+```
+
+```
+## also installing the dependencies 'jpeg', 'checkmate', 'Formula', 'latticeExtra', 'gridExtra', 'htmlTable', 'viridis', 'HistData', 'Hmisc'
+```
+
+```
+## Installing package into '/usr/local/lib/R/site-library'
+## (as 'lib' is unspecified)
+```
+
+```
+## also installing the dependency 'plyr'
+```
+
+```
+## Installing package into '/usr/local/lib/R/site-library'
+## (as 'lib' is unspecified)
+## Installing package into '/usr/local/lib/R/site-library'
+## (as 'lib' is unspecified)
+```
+
+```
+## Loading required package: MASS
+```
+
+```
+## Loading required package: HistData
+```
+
+```
+## Loading required package: Hmisc
+```
+
+```
+## Loading required package: lattice
+```
+
+```
+## Loading required package: survival
+```
+
+```
+## Loading required package: Formula
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```
+## 
+## Attaching package: 'Hmisc'
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+```
+
+```
+## 
+## Attaching package: 'UsingR'
+```
+
+```
+## The following object is masked from 'package:survival':
+## 
+##     cancer
+```
+
+```
+## Warning: package 'reshape' was built under R version 4.0.3
+```
+
+
 # Introduction (xxx)
 
 ## Welcome to Regression Models
@@ -111,13 +192,100 @@ While these lessons will give you valuable practice and you are encouraged to co
 
 Keep in mind that currently data analysis is as much art as it is science - so we may have a difference of opinion - and that is ok! Please refrain from angry, sarcastic, or abusive comments on the message boards. Our goal is to create a supportive community that helps the learning of all students, from the most advanced to those who are just seeing this material for the first time.
 
+## Data Science Specialization Community Site
+Since the beginning of the Data Science Specialization, we've noticed the unbelievable passion students have about our courses and the generosity they show toward each other on the course forums. A couple students have created quality content around the subjects we discuss, and many of these materials are so good we feel that they should be shared with all of our students.
+
+We're excited to announce that we've created a site using [GitHub Pages](http://datasciencespecialization.github.io/) to serve as a directory for content that the community has created. If you've created materials relating to any of the courses in the Data Science Specialization, please send us a pull request so we can add a link to your content on our site. You can find out more about contributing [here.](https://github.com/DataScienceSpecialization/DataScienceSpecialization.github.io#contributing)
+
+We can't wait to see what you've created and where the community can take this site!
+
+## Where to get more advanced material
+If you want more advanced material, I've been working on another version of this class. Eventually I hope to have a second Coursera class as well. Currently, you can get the E-Book in progress [here](https://leanpub.com/lm) (it's variable pricing including free!)
+
+In addition, you can watch the videos as they're being developed [here.](https://www.youtube.com/playlist?list=PLpl-gQkQivXhdgUCdaUQcdb31CRe8Mm2y)
 
 
 # Introduction to regression and least squares
+Regression models are the workhorse of data science. They are the most well described, practical and theoretically understood models in statistics. A data scientist well versed in regression models will be able to solve an incredible array of problems.
 
+Perhaps the key insight for regression models is that they produce highly interpretable model fits. This is unlike machine learning algorithms, which often sacrifice interpretability for improved prediction performance or automation. These are, of course, valuable attributes in their own rights. However, the benefit of simplicity, parsimony and intrepretability offered by regression models (and their close generalizations) should make them a first tool of choice for any practical problem.
+## Introduction to Regression
+Hello, I'm Brian Caffo, and I'd like to welcome you to the introduction to regression lecture in the regression Coursera class, part of our data science specialization. Co-taught by my colleagues Jeff Leek and Roger Peng, we all belong to the Department of Biostatistics at the Johns Hopkins Bloomberg School of Public Health.
+
+Regression is a cornerstone for data scientists. Before delving into complex machine learning, linear regression or its generalization, linear models, are often the go-to procedures. The roots of regression trace back to Francis Galton, who coined the term and concept, along with correlation, closely tied to linear regression.
+
+Galton's prediction of a child's height from a parent's height remains historically significant. Jeff Leek [highlights](https://www.nature.com/articles/ejhg20095) its continued relevance in modern genetic analysis, comparing it to Victorian Era measurements. Moving to a more contemporary example, a blog post by Rafael Irazarry on Simply Statistics explores the relationship between Kobe Bryant's ball-hogging and the Lakers' performance, utilizing linear regression.
+
+In a modern example, [Simply Statistics](https://simplystatistics.org) blog talks about "[the Lakers wins](https://simplystatistics.org/posts/2013-01-28-data-supports-claim-that-if-kobe-stops-ball-hogging-the-lakers-will-win-more/)" that Data supports claim that if Kobe stops ball hogging the Lakers will win more.The heart of our class is understanding how to formulate and interpret statements like for example in the Simply Statistics blog post "Linear regression suggests an increase of 1% in the percent of shots taken by Kobe results in a drop of 1.16 points." We'll delve into good statistical practices, including providing standard errors.
+
+We might want to find a parsimonious and easily described mean relationships between the parent's and child's height. So we don't want anything complicated. We want the simplest possible relationship, and that is what regression is best at. While machine learning and other techniques generate highly elaborate, in many cases, accurate prediction models, they tend to not be parsimonious. They tend not to explain the data, and they tend not to generate new parsimonious knowledge, whereas this is what regression is good at. This is what regression is in fact best at. We can talk about variation that's unexplained by the regression model. The so called residual variation.
+
+We're going to connect the results back to the subject of inference. How do we take our data, which is just a sample, it only talks about that data set, and try to figure out what assumptions are needed to extrapolate it to a larger population. This is a deep subject called statistical inference. We have a whole another course of Statistical Inference as part of data science specialization. But we're going to apply the tools of inference, which we are hoping most of you will have had as a prerequisite. We're going to apply the tools of inference to this new subject of regression.
 
 # Linear least squares
+Let's look at Francis Galton's data, he first used this data in 1885. He's really an interesting character in history, in general and definitely in the history of statistics. You need to run `install.packages("UsingR")`. Here `UsingR` is the package for the book, [Using R for Introductory Statistics](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf). It is a great book, and they've very kindly packaged all these data sets together in a single R package. So you need to use `UsingR` then the library `UsingR` to get a lot of the data sets that we are going to talk about. So let's first look at the marginal distribution of the parents. In other words, distribution of
+the parents disregarding children. And the marginal distribution of the children, disregarding parents. 
 
+
+```r
+install.packages("UsingR")
+```
+
+Parent distribution is all heterosexual couples, correcting for sex by multiplying the female heights by 1.08. 
+
+
+```r
+library(UsingR); data(galton); library(reshape); long<-melt(galton);
+```
+
+```
+## Using  as id variables
+```
+
+```r
+g<- ggplot(long, aes(x=value, fill=variable)) 
+g<- g+ geom_histogram(color='black', binwidth=1)
+g<- g+ facet_grid(.~variable)
+
+g
+```
+
+<img src="resources/images/Week01_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+On the left, we have the children's heights. The X-axis is in inches, the scale goes from 60 inches to 75. The Y-axis is the count, the number of children that fall in each bin of heights. On the right in the more bluish teal color, we have the parents heights. We've broken the association by the children and the parents by not doing a scatter plot, and only looking at the marginal distribution of the children, and the marginal distribution of the parents by themselves. We would like to use these distributions to introduce least squares, and then we'll build on the bivaried association after that. So consider only the child's height,forget for the moment about using the parent's height to predict the child's heights. We just want to find maybe the best prediction of the child's heights without any other information. Well, probably the best predictor would be the middle and how could one define the middle? 
+
+One definition, let $y_i$, be the height for child $i$, where in this dataset $i=1,2,...,n=928$. So the middle is the value of$\mu$ that minimizes $$\sum_{i=1}^n(y_i-\mu)^2$$
+
+That's how we define the middle. It's also related to physics in this so called physical center of mass of the histogram that we showed on the previously. 
+Imagine of those bars as being physical entities, having weight and you are trying to figure out where you would put your finger to balance it out. That would be the physical center of mass. You might have guessed that the center of the data has to be the mean. 
+
+Let's use our studio's `manipulate` function to experiment with trying to find that center of mass. 
+
+
+
+Because we're using manipulate we can move the slider around and monitor the value of $\mu$ and
+the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of $\mu$. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get's up large again. You can see $\mu$ is the point that balanced out this histogram.
+
+**Notice**
+For those that are interested, we cover some simple proofs of some of the statements made. If this isn't your thing, just skip these sections. However, if you're interested, get a pencil and paper to work along!
+
+$$ 
+\begin{align} 
+\sum_{i=1}^n (Y_i - \mu)^2 & = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\end{align} 
+$$
 
 # Regression to the Mean
 
