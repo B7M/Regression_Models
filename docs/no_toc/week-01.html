@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Week 01 | Course Name</title>
+  <meta name="description" content="Description about Course/Book." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Week 01 | Course Name" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Description about Course/Book." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Week 01 | Course Name" />
+  
+  <meta name="twitter:description" content="Description about Course/Book." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="assets/dasl_favicon.ico" type="image/x-icon" />
+<link rel="prev" href="index.html"/>
+<link rel="next" href="statistical-linear-regression-models.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="http://jhudatascience.org/"><img src="https://jhudatascience.org/images/dasl.png" style=" width: 80%; padding-left: 40px; padding-top: 8px; vertical-align: top "</a>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About this Course</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#available-course-formats"><i class="fa fa-check"></i><b>0.1</b> Available course formats</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="week-01.html"><a href="week-01.html"><i class="fa fa-check"></i><b>1</b> Week 01</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="week-01.html"><a href="week-01.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="week-01.html"><a href="week-01.html#welcome-to-regression-models"><i class="fa fa-check"></i><b>1.1.1</b> Welcome to Regression Models</a></li>
+<li class="chapter" data-level="1.1.2" data-path="week-01.html"><a href="week-01.html#some-basics"><i class="fa fa-check"></i><b>1.1.2</b> Some Basics</a></li>
+<li class="chapter" data-level="1.1.3" data-path="week-01.html"><a href="week-01.html#syllabus-xxx"><i class="fa fa-check"></i><b>1.1.3</b> Syllabus (xxx)</a></li>
+<li class="chapter" data-level="1.1.4" data-path="week-01.html"><a href="week-01.html#data-science-specialization-community-site"><i class="fa fa-check"></i><b>1.1.4</b> Data Science Specialization Community Site</a></li>
+<li class="chapter" data-level="1.1.5" data-path="week-01.html"><a href="week-01.html#where-to-get-more-advanced-material"><i class="fa fa-check"></i><b>1.1.5</b> Where to get more advanced material</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="week-01.html"><a href="week-01.html#introduction-to-regression-and-least-squares"><i class="fa fa-check"></i><b>1.2</b> Introduction to regression and least squares</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="week-01.html"><a href="week-01.html#introduction-to-regression"><i class="fa fa-check"></i><b>1.2.1</b> Introduction to Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="week-01.html"><a href="week-01.html#linear-least-squares"><i class="fa fa-check"></i><b>1.3</b> Linear least squares</a></li>
+<li class="chapter" data-level="1.4" data-path="week-01.html"><a href="week-01.html#regression-to-the-mean"><i class="fa fa-check"></i><b>1.4</b> Regression to the Mean</a></li>
+<li class="chapter" data-level="1.5" data-path="week-01.html"><a href="week-01.html#practical-r-exercises-in-swirl"><i class="fa fa-check"></i><b>1.5</b> Practical R Exercises in swirl</a></li>
+<li class="chapter" data-level="1.6" data-path="week-01.html"><a href="week-01.html#week-1-quiz"><i class="fa fa-check"></i><b>1.6</b> Week 1 Quiz</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="statistical-linear-regression-models.html"><a href="statistical-linear-regression-models.html"><i class="fa fa-check"></i><b>2</b> Statistical linear regression models</a></li>
+<li class="chapter" data-level="3" data-path="residuals.html"><a href="residuals.html"><i class="fa fa-check"></i><b>3</b> Residuals</a></li>
+<li class="chapter" data-level="4" data-path="inference-in-regression.html"><a href="inference-in-regression.html"><i class="fa fa-check"></i><b>4</b> Inference in regression</a></li>
+<li class="chapter" data-level="5" data-path="for-the-project.html"><a href="for-the-project.html"><i class="fa fa-check"></i><b>5</b> For the project</a></li>
+<li class="chapter" data-level="6" data-path="practical-r-exercises-in-swirl-1.html"><a href="practical-r-exercises-in-swirl-1.html"><i class="fa fa-check"></i><b>6</b> Practical R Exercises in swirl</a></li>
+<li class="chapter" data-level="7" data-path="week-2-quiz.html"><a href="week-2-quiz.html"><i class="fa fa-check"></i><b>7</b> Week 2 Quiz</a></li>
+<li class="chapter" data-level="8" data-path="multivariable-regression.html"><a href="multivariable-regression.html"><i class="fa fa-check"></i><b>8</b> Multivariable regression</a></li>
+<li class="chapter" data-level="9" data-path="multivariable-regression-tips-and-tricks.html"><a href="multivariable-regression-tips-and-tricks.html"><i class="fa fa-check"></i><b>9</b> Multivariable regression tips and tricks</a></li>
+<li class="chapter" data-level="10" data-path="adjustment.html"><a href="adjustment.html"><i class="fa fa-check"></i><b>10</b> Adjustment</a></li>
+<li class="chapter" data-level="11" data-path="residuals-again.html"><a href="residuals-again.html"><i class="fa fa-check"></i><b>11</b> Residuals again</a></li>
+<li class="chapter" data-level="12" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>12</b> Model selection</a></li>
+<li class="chapter" data-level="13" data-path="practical-r-exercises-in-swirl-2.html"><a href="practical-r-exercises-in-swirl-2.html"><i class="fa fa-check"></i><b>13</b> Practical R Exercises in swirl</a></li>
+<li class="chapter" data-level="14" data-path="week-3-quiz.html"><a href="week-3-quiz.html"><i class="fa fa-check"></i><b>14</b> Week 3 Quiz</a></li>
+<li class="chapter" data-level="15" data-path="optional-practice-exercise-in-regression-modeling.html"><a href="optional-practice-exercise-in-regression-modeling.html"><i class="fa fa-check"></i><b>15</b> (OPTIONAL) Practice exercise in regression modeling</a></li>
+<li class="chapter" data-level="16" data-path="glm.html"><a href="glm.html"><i class="fa fa-check"></i><b>16</b> GLM</a></li>
+<li class="chapter" data-level="17" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a></li>
+<li class="chapter" data-level="18" data-path="poisson-regression.html"><a href="poisson-regression.html"><i class="fa fa-check"></i><b>18</b> Poisson Regression</a></li>
+<li class="chapter" data-level="19" data-path="hodgepodge.html"><a href="hodgepodge.html"><i class="fa fa-check"></i><b>19</b> Hodgepodge</a></li>
+<li class="chapter" data-level="20" data-path="practical-r-exercises-in-swirl-3.html"><a href="practical-r-exercises-in-swirl-3.html"><i class="fa fa-check"></i><b>20</b> Practical R Exercises in swirl</a></li>
+<li class="chapter" data-level="21" data-path="week-4-quiz.html"><a href="week-4-quiz.html"><i class="fa fa-check"></i><b>21</b> Week 4 Quiz</a></li>
+<li class="chapter" data-level="22" data-path="course-project-1.html"><a href="course-project-1.html"><i class="fa fa-check"></i><b>22</b> Course Project</a></li>
+<li class="chapter" data-level="" data-path="about-the-authors.html"><a href="about-the-authors.html"><i class="fa fa-check"></i>About the Authors</a></li>
+<li class="chapter" data-level="23" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>23</b> References</a></li>
+<li class="divider"></li>
+<p style="text-align:center;"> <a href="https://github.com/jhudsl/OTTR_Template" target="blank" > This content was published with</a> <a href="https://bookdown.org/" target="blank"> bookdown by:</a> </p>
+<p style="text-align:center;"> <a href="http://jhudatascience.org/"> The Johns Hopkins Data Science Lab </a></p>
+<p style="text-align:center; font-size: 12px;"> <a href="https://github.com/rstudio4edu/rstudio4edu-book/"> Style adapted from: rstudio4edu-book </a> <a href ="https://creativecommons.org/licenses/by/2.0/"> (CC-BY 2.0) </a></p>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Course Name</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0">
+  <!--script src="https://kit.fontawesome.com/6a26f47516.js"></script-->
+  <!--<script src="assets/hideOutput.js"></script>-->
+  <link href="assets/style.css" rel="stylesheet">
+</head>
+
+
+
+<div class="hero-image-container">
+  <img class= "hero-image" src= "https://github.com/jhudsl/OTTR_Template/raw/main/assets/dasl_thin_main_image.png">
+</div>
+<div id="week-01" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Week 01</h1>
+<div id="introduction" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Introduction</h2>
+<div id="welcome-to-regression-models" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Welcome to Regression Models</h3>
+<p>I am happy that you’ve chosen to take Regression Models, part of the Johns Hopkins Data Science Specialization on Coursera! This course presents the fundamentals of regression modeling that you will need for the rest of the specialization and ultimately for your work in the field of data science.</p>
+<p>We believe that the key word in Data Science is “science”. Our course track is focused on providing you with three things: (1) an introduction to the key ideas behind working with data in a scientific way that will produce new and reproducible insight, (2) an introduction to the tools that will allow you to execute on a data analytic strategy, from raw data in a database to a completed report with interactive graphics, and (3) on giving you plenty of hands on practice so you can learn the techniques for yourself.</p>
+<p>Regression Models represents a both fundamental and foundational component of the series, and it presents the single most practical data analysis toolset. Using only a bare minimum of mathematics, we will attempt to provide you with the fundamentals for the application and practice of regression.</p>
+<p>We are excited about the opportunity to attempt to scale Data Science education. We intend for the courses to be self-contained, fast-paced, and interactive, and we intend to run them frequently to give people with busy schedules the opportunity to work on material at their own pace.</p>
+</div>
+<div id="some-basics" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Some Basics</h3>
+<p>A couple of first week housekeeping items. First, make sure that you’ve had <a href="https://www.coursera.org/learn/r-programming">R Programming</a> , the <a href="https://www.coursera.org/learn/data-scientists-tools">Data Scientist’s Toolbox</a>, <a href="https://www.coursera.org/learn/regression-models/supplement/uCPA0/welcome-to-regression-models">Reproducible Research</a> and <a href="https://www.coursera.org/learn/statistical-inference">Statistical Inference</a> before taking this class. At a minimum you must know: very basic git, basic R and most of the Statistical Inference Coursera class. The small amount of knitr that you need for the project you can pick up quickly.</p>
+<p>An important aspect of this class is to peruse the materials in the github repository. All of the most up to date material can be found <a href="https://github.com/bcaffo/courses/tree/master/07_RegressionModels">here</a>. You should clone this repository as your first step in this class and make sure to fetch updates periodically. (Please issue pull requests so that we may improve the materials!) It is one of the most essential components of the Specialization that you start to use Git frequently. We’re practicing what we preach as well by using the tools in the series to create the series, especially git. Note my <a href="https://github.com/bcaffo/courses">GitHub repo</a> will generally be more up to date than the Data Science Specialization Repo.</p>
+<p>The lectures are in the index.Rmd lecture files. In <a href="https://www.coursera.org/learn/data-products">Developing Data Products</a>, we cover how to create these sorts of slides. However, for the time being, you should be able to open them in R Studio and look at their contents. You will see all of the R code to recreate the lectures. Going through the R code is the best way to familiarize yourself with the lecture materials.</p>
+<div id="youtube" class="section level4" number="1.1.2.1">
+<h4><span class="header-section-number">1.1.2.1</span> YouTube</h4>
+<p>If you’d prefer to watch the videos on YouTube, you can find them <a href="https://www.youtube.com/playlist?list=PLpl-gQkQivXjqHAJd2t-J_One_fYE55tC">here</a> and <a href="https://www.youtube.com/playlist?list=PLpl-gQkQivXhdgUCdaUQcdb31CRe8Mm2y">here</a>.
+If you’d like to keep up with the instructors I’m <span class="citation">(<a href="#ref-bcaffo" role="doc-biblioref"><strong>bcaffo?</strong></a>)</span> on twitter, Roger is <span class="citation">(<a href="#ref-rdpeng" role="doc-biblioref"><strong>rdpeng?</strong></a>)</span> and Jeff is <span class="citation">(<a href="#ref-jtleek" role="doc-biblioref"><strong>jtleek?</strong></a>)</span>. The Department of Biostat here is <span class="citation">(<a href="#ref-jhubiostat" role="doc-biblioref"><strong>jhubiostat?</strong></a>)</span>.</p>
+</div>
+</div>
+<div id="syllabus-xxx" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Syllabus (xxx)</h3>
+<p>Course Title: Regression Models</p>
+<p>Course Instructor(s):The primary instructor of this class is <a href="https://sites.google.com/view/bcaffo/home/">Brian Caffo</a>.
+Brian is a professor at Johns Hopkins Biostatistics and co-directs the <a href="https://www.smart-stats.org">SMART working group</a>.</p>
+<p>This class is co-taught by Roger Peng and Jeff Leek. In addition, Sean Kross and Nick Carchedi have been helping greatly.</p>
+<div id="course-description" class="section level4" number="1.1.3.1">
+<h4><span class="header-section-number">1.1.3.1</span> Course Description:</h4>
+<p>Linear models, as their name implies, relates an outcome to a set of predictors of interest using linear assumptions. Regression models, a subset of linear models, are the most important statistical analysis tool in a data scientist’s toolkit. This course covers regression analysis, least squares and inference using regression models. Special cases of the regression model, ANOVA and ANCOVA will be covered as well. Analysis of residuals and variability will be investigated. The course will cover modern thinking on model selection and novel uses of regression models including scatterplot smoothing.</p>
+</div>
+<div id="course-content" class="section level4" number="1.1.3.2">
+<h4><span class="header-section-number">1.1.3.2</span> Course Content</h4>
+<p>This class has three main components:</p>
+<ul>
+<li>Least squares and linear regression</li>
+<li>Multivariable regression</li>
+<li>Generalized linear models</li>
+</ul>
+<p>The full list of topics are as follows:</p>
+<ul>
+<li>Module 1, least squares and linear regression</li>
+<li><ul>
+<li>01_01 Introduction</li>
+</ul></li>
+<li><ul>
+<li>01_02 Notation</li>
+</ul></li>
+<li><ul>
+<li>01_03 Ordinary least squares</li>
+</ul></li>
+<li><ul>
+<li>01_04 Regression to the mean</li>
+</ul></li>
+<li><ul>
+<li>01_05 Linear regression</li>
+</ul></li>
+<li><ul>
+<li>01_06 Residuals</li>
+</ul></li>
+<li><ul>
+<li>01_07 Regression inference</li>
+</ul></li>
+<li>Module 2, Multivariable regression</li>
+<li><ul>
+<li>02_01 Multivariate regression</li>
+</ul></li>
+<li><ul>
+<li>02_02 Multivariate examples</li>
+</ul></li>
+<li><ul>
+<li>02_03 Adjustment</li>
+</ul></li>
+<li><ul>
+<li>02_04 Residual variation and diagnostics</li>
+</ul></li>
+<li><ul>
+<li>02_05 Multiple variables</li>
+</ul></li>
+<li>Module 3, Generalized linear models</li>
+<li><ul>
+<li>03_01 GLMs</li>
+</ul></li>
+<li><ul>
+<li>03_02 Binary outcomes</li>
+</ul></li>
+<li><ul>
+<li>03_03 Count outcomes</li>
+</ul></li>
+<li><ul>
+<li>03_04 Olio</li>
+</ul></li>
+<li>Module 4, Logistic Regression and Poisson Regression</li>
+<li><ul>
+<li>04_01 Logistic Regression</li>
+</ul></li>
+<li><ul>
+<li>04_02Poisson Regression</li>
+</ul></li>
+<li><ul>
+<li>04_03 Hodgepodge</li>
+</ul></li>
+</ul>
+</div>
+<div id="book-regression-models-for-data-science-in-r." class="section level4" number="1.1.3.3">
+<h4><span class="header-section-number">1.1.3.3</span> Book: Regression Models for Data Science in R.</h4>
+<p>A companion book is available <a href="https://leanpub.com/regmods">here</a>. The book is published via leanpub, and the suggested price is $14.99. You can get it for free or pay what you feel it is worth.</p>
+</div>
+<div id="quizzes" class="section level4" number="1.1.3.4">
+<h4><span class="header-section-number">1.1.3.4</span> Quizzes</h4>
+<p>There are four weekly quizzes. You must earn a grade of at least 80% to pass a quiz. You may attempt each quiz up to 3 times in 8 hours. The score from your most successful attempt will count toward your final grade.</p>
+</div>
+<div id="course-project" class="section level4" number="1.1.3.5">
+<h4><span class="header-section-number">1.1.3.5</span> Course Project</h4>
+<p>The Course Project is an opportunity to demonstrate the skills you have learned during the course. It is graded through peer assessment. You must earn a grade of at least 80% to pass the peer assessment.</p>
+</div>
+<div id="grading-policy" class="section level4" number="1.1.3.6">
+<h4><span class="header-section-number">1.1.3.6</span> Grading Policy</h4>
+<p>You must score at least 80% on all assignments (Quizzes &amp; Project) to pass the course.</p>
+<p>Your final grade will be calculated as follows:</p>
+<p>Quiz 1 = 15%
+Quiz 2 = 15%
+Quiz 3 = 15%
+Quiz 4 = 15%
+Course Project = 40%</p>
+<div id="swirl-programming-assignment-optional" class="section level5" number="1.1.3.6.1">
+<h5><span class="header-section-number">1.1.3.6.1</span> swirl Programming Assignment (optional)</h5>
+<p>In this course, you have the option to use the <a href="https://swirlstats.com">swirl</a> R package to practice some of the concepts we cover in lectures.</p>
+<p>While these lessons will give you valuable practice and you are encouraged to complete as many as possible, please note that they are completely optional and you can get full marks in the class without completing them.</p>
+</div>
+</div>
+<div id="differences-of-opinion" class="section level4" number="1.1.3.7">
+<h4><span class="header-section-number">1.1.3.7</span> Differences of opinion</h4>
+<p>Keep in mind that currently data analysis is as much art as it is science - so we may have a difference of opinion - and that is ok! Please refrain from angry, sarcastic, or abusive comments on the message boards. Our goal is to create a supportive community that helps the learning of all students, from the most advanced to those who are just seeing this material for the first time.</p>
+</div>
+</div>
+<div id="data-science-specialization-community-site" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Data Science Specialization Community Site</h3>
+<p>Since the beginning of the Data Science Specialization, we’ve noticed the unbelievable passion students have about our courses and the generosity they show toward each other on the course forums. A couple students have created quality content around the subjects we discuss, and many of these materials are so good we feel that they should be shared with all of our students.</p>
+<p>We’re excited to announce that we’ve created a site using <a href="http://datasciencespecialization.github.io/">GitHub Pages</a> to serve as a directory for content that the community has created. If you’ve created materials relating to any of the courses in the Data Science Specialization, please send us a pull request so we can add a link to your content on our site. You can find out more about contributing <a href="https://github.com/DataScienceSpecialization/DataScienceSpecialization.github.io#contributing">here.</a></p>
+<p>We can’t wait to see what you’ve created and where the community can take this site!</p>
+</div>
+<div id="where-to-get-more-advanced-material" class="section level3" number="1.1.5">
+<h3><span class="header-section-number">1.1.5</span> Where to get more advanced material</h3>
+<p>If you want more advanced material, I’ve been working on another version of this class. Eventually I hope to have a second Coursera class as well. Currently, you can get the E-Book in progress <a href="https://leanpub.com/lm">here</a> (it’s variable pricing including free!)</p>
+<p>In addition, you can watch the videos as they’re being developed <a href="https://www.youtube.com/playlist?list=PLpl-gQkQivXhdgUCdaUQcdb31CRe8Mm2y">here.</a></p>
+</div>
+</div>
+<div id="introduction-to-regression-and-least-squares" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Introduction to regression and least squares</h2>
+<p>Regression models are the workhorse of data science. They are the most well described, practical and theoretically understood models in statistics. A data scientist well versed in regression models will be able to solve an incredible array of problems.</p>
+<p>Perhaps the key insight for regression models is that they produce highly interpretable model fits. This is unlike machine learning algorithms, which often sacrifice interpretability for improved prediction performance or automation. These are, of course, valuable attributes in their own rights. However, the benefit of simplicity, parsimony and intrepretability offered by regression models (and their close generalizations) should make them a first tool of choice for any practical problem.</p>
+<div id="introduction-to-regression" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Introduction to Regression</h3>
+<p>Hello, I’m Brian Caffo, and I’d like to welcome you to the introduction to regression lecture in the regression Coursera class, part of our data science specialization. Co-taught by my colleagues Jeff Leek and Roger Peng, we all belong to the Department of Biostatistics at the Johns Hopkins Bloomberg School of Public Health.</p>
+<p>Regression is a cornerstone for data scientists. Before delving into complex machine learning, linear regression or its generalization, linear models, are often the go-to procedures. The roots of regression trace back to Francis Galton, who coined the term and concept, along with correlation, closely tied to linear regression.</p>
+<p>Galton’s prediction of a child’s height from a parent’s height remains historically significant. Jeff Leek <a href="https://www.nature.com/articles/ejhg20095">highlights</a> its continued relevance in modern genetic analysis, comparing it to Victorian Era measurements. Moving to a more contemporary example, a blog post by Rafael Irazarry on Simply Statistics explores the relationship between Kobe Bryant’s ball-hogging and the Lakers’ performance, utilizing linear regression.</p>
+<p>In a modern example, <a href="https://simplystatistics.org">Simply Statistics</a> blog talks about “<a href="https://simplystatistics.org/posts/2013-01-28-data-supports-claim-that-if-kobe-stops-ball-hogging-the-lakers-will-win-more/">the Lakers wins</a>” that Data supports claim that if Kobe stops ball hogging the Lakers will win more.The heart of our class is understanding how to formulate and interpret statements like for example in the Simply Statistics blog post “Linear regression suggests an increase of 1% in the percent of shots taken by Kobe results in a drop of 1.16 points.” We’ll delve into good statistical practices, including providing standard errors.</p>
+<p>We might want to find a parsimonious and easily described mean relationships between the parent’s and child’s height. So we don’t want anything complicated. We want the simplest possible relationship, and that is what regression is best at. While machine learning and other techniques generate highly elaborate, in many cases, accurate prediction models, they tend to not be parsimonious. They tend not to explain the data, and they tend not to generate new parsimonious knowledge, whereas this is what regression is good at. This is what regression is in fact best at. We can talk about variation that’s unexplained by the regression model. The so called residual variation.</p>
+<p>We’re going to connect the results back to the subject of inference. How do we take our data, which is just a sample, it only talks about that data set, and try to figure out what assumptions are needed to extrapolate it to a larger population. This is a deep subject called statistical inference. We have a whole another course of Statistical Inference as part of data science specialization. But we’re going to apply the tools of inference, which we are hoping most of you will have had as a prerequisite. We’re going to apply the tools of inference to this new subject of regression.</p>
+<p>Let’s look at Francis Galton’s data, he first used this data in 1885. He’s really an interesting character in history, in general and definitely in the history of statistics. You need to run <code>install.packages("UsingR")</code>. Here <code>UsingR</code> is the package for the book, <a href="https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf">Using R for Introductory Statistics</a>. It is a great book, and they’ve very kindly packaged all these data sets together in a single R package. So you need to use <code>UsingR</code> then the library <code>UsingR</code> to get a lot of the data sets that we are going to talk about. So let’s first look at the marginal distribution of the parents. In other words, distribution of
+the parents disregarding children. And the marginal distribution of the children, disregarding parents.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="week-01.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;UsingR&quot;</span>)</span></code></pre></div>
+<p>Parent distribution is all heterosexual couples, correcting for sex by multiplying the female heights by 1.08.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="week-01.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(UsingR); <span class="fu">data</span>(galton); <span class="fu">library</span>(reshape); long<span class="ot">&lt;-</span><span class="fu">melt</span>(galton);</span></code></pre></div>
+<pre><code>## Using  as id variables</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="week-01.html#cb21-1" aria-hidden="true" tabindex="-1"></a>g<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(long, <span class="fu">aes</span>(<span class="at">x=</span>value, <span class="at">fill=</span>variable)) </span>
+<span id="cb21-2"><a href="week-01.html#cb21-2" aria-hidden="true" tabindex="-1"></a>g<span class="ot">&lt;-</span> g<span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">&#39;black&#39;</span>, <span class="at">binwidth=</span><span class="dv">1</span>)</span>
+<span id="cb21-3"><a href="week-01.html#cb21-3" aria-hidden="true" tabindex="-1"></a>g<span class="ot">&lt;-</span> g<span class="sc">+</span> <span class="fu">facet_grid</span>(.<span class="sc">~</span>variable)</span>
+<span id="cb21-4"><a href="week-01.html#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="week-01.html#cb21-5" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div>
+<p><img src="resources/images/Week01_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>On the left, we have the children’s heights. The X-axis is in inches, the scale goes from 60 inches to 75. The Y-axis is the count, the number of children that fall in each bin of heights. On the right in the more bluish teal color, we have the parents heights. We’ve broken the association by the children and the parents by not doing a scatter plot, and only looking at the marginal distribution of the children, and the marginal distribution of the parents by themselves. We would like to use these distributions to introduce least squares, and then we’ll build on the bivaried association after that. So consider only the child’s height,forget for the moment about using the parent’s height to predict the child’s heights. We just want to find maybe the best prediction of the child’s heights without any other information. Well, probably the best predictor would be the middle and how could one define the middle?</p>
+<p>One definition, let <span class="math inline">\(y_i\)</span>, be the height for child <span class="math inline">\(i\)</span>, where in this dataset <span class="math inline">\(i=1,2,...,n=928\)</span>. So the middle is the value of<span class="math inline">\(\mu\)</span> that minimizes <span class="math display">\[\sum_{i=1}^n(y_i-\mu)^2\]</span></p>
+<p>That’s how we define the middle. It’s also related to physics in this so called physical center of mass of the histogram that we showed on the previously.
+Imagine of those bars as being physical entities, having weight and you are trying to figure out where you would put your finger to balance it out. That would be the physical center of mass. You might have guessed that the center of the data has to be the mean.</p>
+<p>Let’s use our studio’s <code>manipulate</code> function to experiment with trying to find that center of mass.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="week-01.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(manipulate) </span>
+<span id="cb22-2"><a href="week-01.html#cb22-2" aria-hidden="true" tabindex="-1"></a>myHist<span class="ot">&lt;-</span><span class="cf">function</span>(mu){</span>
+<span id="cb22-3"><a href="week-01.html#cb22-3" aria-hidden="true" tabindex="-1"></a>    mse<span class="ot">&lt;-</span><span class="fu">mean</span>((galton<span class="sc">$</span>child<span class="sc">-</span>height<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb22-4"><a href="week-01.html#cb22-4" aria-hidden="true" tabindex="-1"></a>    g<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(galton, <span class="fu">aes</span>(<span class="at">x=</span>childHeight))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">fill=</span><span class="st">&#39;salmon&#39;</span>,<span class="at">color=</span><span class="st">&#39;black&#39;</span>,<span class="at">binwidth=</span><span class="dv">1</span>)</span>
+<span id="cb22-5"><a href="week-01.html#cb22-5" aria-hidden="true" tabindex="-1"></a>    g<span class="ot">&lt;-</span> g<span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept=</span>mu, <span class="at">size=</span><span class="dv">3</span>)</span>
+<span id="cb22-6"><a href="week-01.html#cb22-6" aria-hidden="true" tabindex="-1"></a>    g<span class="ot">&lt;-</span> g<span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;mu=&quot;</span>,mu,<span class="st">&quot;MSE=&quot;</span>,<span class="fu">round</span>(mse,<span class="dv">2</span>)),<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb22-7"><a href="week-01.html#cb22-7" aria-hidden="true" tabindex="-1"></a>    g</span>
+<span id="cb22-8"><a href="week-01.html#cb22-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-9"><a href="week-01.html#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">manipulate</span>(<span class="fu">myHist</span>(mu),<span class="at">mu=</span><span class="fu">slider</span>(<span class="dv">62</span>,<span class="dv">74</span>,<span class="at">step=</span><span class="fl">0.5</span>))</span></code></pre></div>
+<p>fig xxx</p>
+<p>Because we’re using manipulate we can move the slider around and monitor the value of <span class="math inline">\(\mu\)</span> and
+the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of <span class="math inline">\(\mu\)</span>. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get’s up large again. You can see <span class="math inline">\(\mu\)</span> is the point that balanced out this histogram.</p>
+<p><strong>Notice</strong>
+For those that are interested, we cover some simple proofs of some of the statements made. If this isn’t your thing, just skip these sections. However, if you’re interested, get a pencil and paper to work along!</p>
+<p><span class="math display">\[ 
+\begin{align} 
+\sum_{i=1}^n (Y_i - \mu)^2 &amp; = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+&amp; = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+&amp; = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+&amp; = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+&amp; = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+&amp; \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\end{align} 
+\]</span></p>
+<p>The equations above show for any value of <span class="math inline">\(\mu\)</span>, the function <span class="math inline">\(\sum_{i=1}^n (Y_i - \mu)^2\)</span> is larger than or equal to the specific case when we plug in <span class="math inline">\(\bar Y\)</span>. Therefore, <span class="math inline">\(\bar Y\)</span> has to be the unique minimizer of that equation.</p>
+<p>At this stage, we haven’t utilized the parent’s heights in our analysis. The initial step in examining this type of data is to construct a scatter plot of child heights against parent heights. Here we employ ggplot, but the plot has several shortcomings.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="week-01.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(galton, <span class="fu">aes</span>(<span class="at">x =</span> parent, <span class="at">y =</span> child)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="resources/images/Week01_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Notably, there’s over-plotting due to numerous parent-child pairs sharing the same x, y values. To address this, we provide an improved plot where the point size reflects the number of parent-child combinations at a specific x, y location. Additionally, color indicates frequency, with lighter colors representing higher frequencies.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="week-01.html#cb24-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> galton<span class="sc">$</span>child <span class="sc">-</span> <span class="fu">mean</span>(galton<span class="sc">$</span>child)</span>
+<span id="cb24-2"><a href="week-01.html#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> galton<span class="sc">$</span>parent <span class="sc">-</span> <span class="fu">mean</span>(galton<span class="sc">$</span>parent)</span>
+<span id="cb24-3"><a href="week-01.html#cb24-3" aria-hidden="true" tabindex="-1"></a>freqData <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(x, y))</span>
+<span id="cb24-4"><a href="week-01.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(freqData) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;child&quot;</span>, <span class="st">&quot;parent&quot;</span>, <span class="st">&quot;freq&quot;</span>)</span>
+<span id="cb24-5"><a href="week-01.html#cb24-5" aria-hidden="true" tabindex="-1"></a>freqData<span class="sc">$</span>child <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(freqData<span class="sc">$</span>child))</span>
+<span id="cb24-6"><a href="week-01.html#cb24-6" aria-hidden="true" tabindex="-1"></a>freqData<span class="sc">$</span>parent <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(freqData<span class="sc">$</span>parent))</span>
+<span id="cb24-7"><a href="week-01.html#cb24-7" aria-hidden="true" tabindex="-1"></a>myPlot <span class="ot">&lt;-</span> <span class="cf">function</span>(beta){</span>
+<span id="cb24-8"><a href="week-01.html#cb24-8" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">filter</span>(freqData, freq <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="fu">aes</span>(<span class="at">x =</span> parent, <span class="at">y =</span> child))</span>
+<span id="cb24-9"><a href="week-01.html#cb24-9" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> g  <span class="sc">+</span> <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">20</span>), <span class="at">guide =</span> <span class="st">&quot;none&quot;</span> )</span>
+<span id="cb24-10"><a href="week-01.html#cb24-10" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">colour=</span><span class="st">&quot;grey50&quot;</span>, <span class="fu">aes</span>(<span class="at">size =</span> freq<span class="sc">+</span><span class="dv">20</span>, <span class="at">show_guide =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb24-11"><a href="week-01.html#cb24-11" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span>freq, <span class="at">size =</span> freq))</span>
+<span id="cb24-12"><a href="week-01.html#cb24-12" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="at">high=</span><span class="st">&quot;white&quot;</span>)                     </span>
+<span id="cb24-13"><a href="week-01.html#cb24-13" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> beta, <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb24-14"><a href="week-01.html#cb24-14" aria-hidden="true" tabindex="-1"></a>    mse <span class="ot">&lt;-</span> <span class="fu">mean</span>( (y <span class="sc">-</span> beta <span class="sc">*</span> x) <span class="sc">^</span><span class="dv">2</span> )</span>
+<span id="cb24-15"><a href="week-01.html#cb24-15" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">&lt;-</span> g <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">&quot;beta = &quot;</span>, beta, <span class="st">&quot;mse = &quot;</span>, <span class="fu">round</span>(mse, <span class="dv">3</span>)))</span>
+<span id="cb24-16"><a href="week-01.html#cb24-16" aria-hidden="true" tabindex="-1"></a>    g</span>
+<span id="cb24-17"><a href="week-01.html#cb24-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>In order to find the best line, all we have to find is the slope. Well, here’s how we could potentially do that. We would want to find the slope beta that minimizes the sum of the squared distances between the observed data points the <span class="math inline">\(Y_i\)</span> and the fitted data points on the line,
+<span class="math inline">\(\beta X_i\)</span>. We’ll square that distance and add them up and this is directly analogous to finding the least squares mean. This is sort of using the origin as a pivot point and picking the line that minimizes the sum of the squared vertical distances between the points and the line. Notice that there is a point in regression to the origin is useful for explaining things, because we only have one parameter, the slope and we don’t have two parameters, the slope and the intercept. But it’s generally bad practice to force regression lines through the point (0, 0). So, an easy way around this is to subtract the mean from the parent’s heights and the mean from the child’s heights, so that the zero, zero point is right in the middle of the data and that will make this solution a little bit more palatable.</p>
+<p>We can find the slope of the line very quickly in R using the lm function. The lm function stands for linear model. We’re going to regress the child’s height on the parent’s height. We’re going to subtract the mean from the child’s height and the mean from the parent’s height, to make sure line is going through the origin. Doing so will give us a line that has slope of 0.646.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="week-01.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">I</span>(child <span class="sc">-</span> <span class="fu">mean</span>(child))<span class="sc">~</span> <span class="fu">I</span>(parent <span class="sc">-</span> <span class="fu">mean</span>(parent)) <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> galton)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = I(child - mean(child)) ~ I(parent - mean(parent)) - 
+##     1, data = galton)
+## 
+## Coefficients:
+## I(parent - mean(parent))  
+##                   0.6463</code></pre>
+<p>Now what we’re going to do in subsequent sections is to talk about how we get these values? What is the motivation behind it and all the things we can do with this fitted line, we’re going to spend maybe the next several sections talking about this. You have actually learned a lot of material in this very first part, well done!</p>
+</div>
+</div>
+<div id="linear-least-squares" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Linear least squares</h2>
+<p>Ordinary least squares (OLS) is the workhorse of statistics. It gives a way of taking complicated outcomes and explaining behavior (such as trends) using linearity. The simplest application of OLS is fitting a line through some data. In the next few sections, we cover the basics of linear least squares. We start with defining our notation. These are things you probably already saw in the prerequisite for this course in a Statistical Inference course in Data Science Specialization. However, because they’re so fundamental to regression, we’re going to cover them again, so they’re fresh in our minds.
+We will try to minimize the amount of mathematics that’s required for this class. Throughout the course we will neither require calculus nor linear algebra. And when it does get a little bit more mathematical, we will let you know when you can skip over those sections.</p>
+<p>We might write <span class="math inline">\(X_1,X_2,...,Xn\)</span> to describe <span class="math inline">\(n\)</span> data points. As an example, consider the data set <span class="math inline">\({1, 2, 5}\)</span>, where <span class="math inline">\(X_1=1\)</span>, <span class="math inline">\(X_2=2\)</span>, <span class="math inline">\(X_3=5\)</span> and <span class="math inline">\(n\)</span> in this case is 3. There’s nothing in particular about the letter <span class="math inline">\(X\)</span>. We could have just as easily described <span class="math inline">\(Y_1\)</span> to <span class="math inline">\(Y_n\)</span>. The last bit of notation that’s important, is we’re typically going to use Greek
+letters for things we don’t know, such as <span class="math inline">\(\mu\)</span> for a population mean and we’ll use non Greek letters or regular letters to denote things that we can observe. So, <span class="math inline">\(\bar X\)</span> is something we can observe. <span class="math inline">\(\mu\)</span> is something we can’t observe and would like to estimate.
+We can define the empirical mean as
+<span class="math display">\[
+\bar X = \frac{1}{n}\sum_{i=1}^n X_i. 
+\]</span>
+Notice if we subtract the mean from data points, we get data that has mean 0. That is, if we define <span class="math inline">\(\tilde X_i = X_i - \bar X.\)</span>
+The mean of the <span class="math inline">\(\tilde X_i\)</span> is 0.</p>
+<ul>
+<li>This process is called “centering” the random variables. Recall from the previous section that the mean is the least squares solution for minimizing <span class="math inline">\(\sum_{i=1}^n (X_i - \mu)^2\)</span>.</li>
+</ul>
+<p>Since we talked about means, let’s talk about variances. The variances is usually denoted by <span class="math inline">\(S^2\)</span>. It’s defined as
+<span class="math display">\[
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar X)^2 
+= \frac{1}{n-1} \left( \sum_{i=1}^n X_i^2 - n \bar X ^ 2 \right)
+\]</span></p>
+<p>This is nothing other than basically the average squared deviation of the observations around the mean.
+The empirical standard deviation is defined as <span class="math inline">\(S = \sqrt{S^2}\)</span>. Notice that the standard deviation has the same units as the data. It’s nice to work with standard deviations because the variance is expressed in whatever units <span class="math inline">\(X\)</span> has squared, whereas the standard deviation is just expressed in the normal units of <span class="math inline">\(X\)</span>. Another interesting fact related to standard deviation is scaling, so if we subtract a mean off from every observation, we get a resulting data set that has mean 0. If we divide every observation by the standard deviation, the resulting data set will have standard deviation 1. This is called <strong>scaling</strong> the data. If we take our original data now and
+subtract off <span class="math inline">\(\bar X\)</span>, then take the resulting centered data and scale it by <span class="math inline">\(S\)</span>. We get a new data set, let’s call them <span class="math inline">\(Z_i\)</span>.
+<span class="math display">\[
+Z_i = \frac{X_i - \bar X}{s}
+\]</span></p>
+<p>This process of centering and then scaling is called <em>normalizing</em> the data. As an example, if something has a value 2 from normalized data, that means that the data point was 2
+standard deviations larger than the mean. As its name would suggest, normalization is an attempt to make non-comparable data sets comparable.</p>
+<p>The empirical covariance is the most central quantity in regression. Imagine we have two vectors, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and they’re lined up. So <span class="math inline">\(X_i\)</span> might be the BMI and <span class="math inline">\(Y_i\)</span> might be the blood pressure for subject <span class="math inline">\(i\)</span>. You could meaningfully do a scatter plot. Then we just define the covariance between X and Y as:
+<span class="math display">\[ 
+Cov(X, Y) = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar X) (Y_i - \bar Y)
+= \frac{1}{n-1}\left( \sum_{i=1}^n X_i Y_i - n \bar X \bar Y\right)
+\]</span></p>
+<p>The correlation is defined as:
+<span class="math display">\[
+Cor(X, Y) = \frac{Cov(X, Y)}{S_x S_y}
+\]</span></p>
+<p>where <span class="math inline">\(S_x\)</span> and <span class="math inline">\(S_y\)</span> are the estimates of standard deviations for the <span class="math inline">\(X\)</span> observations and <span class="math inline">\(Y\)</span> observations, respectively.
+In other words, the correlation is simply the covariance then standardized into a unitless quantity. So, the correlation is the covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which has units, basically units of X times units of Y.</p>
+<p>Some facts about correlation:
+* <span class="math inline">\(Cor(X, Y) = Cor(Y, X)\)</span>
+* <span class="math inline">\(-1 \leq Cor(X, Y) \leq 1\)</span>
+* <span class="math inline">\(Cor(X,Y) = 1\)</span> and <span class="math inline">\(Cor(X, Y) = -1\)</span> only when the <span class="math inline">\(X\)</span> or <span class="math inline">\(Y\)</span> observations fall perfectly on a positive or negative sloped line, respectively.
+* <span class="math inline">\(Cor(X, Y)\)</span> measures the strength of the linear relationship between the <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> data, with stronger relationships as <span class="math inline">\(Cor(X,Y)\)</span> heads towards -1 or 1.
+* <span class="math inline">\(Cor(X, Y) = 0\)</span> implies no linear relationship.</p>
+</div>
+<div id="regression-to-the-mean" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Regression to the Mean</h2>
+</div>
+<div id="practical-r-exercises-in-swirl" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Practical R Exercises in swirl</h2>
+</div>
+<div id="week-1-quiz" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Week 1 Quiz</h2>
+
+</div>
+</div>
+<hr>
+<center> 
+  <div class="footer">
+      All illustrations <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY. </a>
+      <br>
+      All other materials <a href= "https://creativecommons.org/licenses/by/4.0/"> CC-BY </a> unless noted otherwise.
+  </div>
+</center>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="statistical-linear-regression-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
