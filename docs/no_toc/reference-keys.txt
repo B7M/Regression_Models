@@ -18,6 +18,9 @@ where-to-get-more-advanced-material
 introduction-to-regression-and-least-squares
 introduction-to-regression
 linear-least-squares
+notations-and-background
+linear-least-squares-1
+linear-least-squares-coding-example
 regression-to-the-mean
 practical-r-exercises-in-swirl
 week-1-quiz
