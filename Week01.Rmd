@@ -3,6 +3,15 @@ ottrpal::set_knitr_image_path()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+```{r, include = FALSE}
+install.packages("UsingR")
+install.packages("reshape")
+install.packages("ggplot2")
+install.packages("manipulate")
+library(UsingR); library(reshape); library(ggplot2);library(manipulate)
+```
+
+
 # Introduction (xxx)
 
 ## Welcome to Regression Models
@@ -185,7 +194,28 @@ manipulate(myHist(mu),mu=slider(62,74,step=0.5))
 ```
 
 Because we're using manipulate we can move the slider around and monitor the value of $\mu$ and
-the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of $\mu$. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get's up large again. You can see $\mu$ is the point that balanced out this histogram. 
+the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of $\mu$. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get's up large again. You can see $\mu$ is the point that balanced out this histogram.
+
+**Notice**
+For those that are interested, we cover some simple proofs of some of the statements made. If this isn't your thing, just skip these sections. However, if you're interested, get a pencil and paper to work along!
+
+$$ 
+\begin{align} 
+\sum_{i=1}^n (Y_i - \mu)^2 & = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\end{align} 
+$$
 
 # Regression to the Mean
 
