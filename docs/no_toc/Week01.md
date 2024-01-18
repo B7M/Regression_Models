@@ -81,7 +81,7 @@
 ```
 
 
-# Introduction (xxx)
+# Introduction
 
 ## Welcome to Regression Models
 
@@ -209,6 +209,7 @@ In addition, you can watch the videos as they're being developed [here.](https:/
 Regression models are the workhorse of data science. They are the most well described, practical and theoretically understood models in statistics. A data scientist well versed in regression models will be able to solve an incredible array of problems.
 
 Perhaps the key insight for regression models is that they produce highly interpretable model fits. This is unlike machine learning algorithms, which often sacrifice interpretability for improved prediction performance or automation. These are, of course, valuable attributes in their own rights. However, the benefit of simplicity, parsimony and intrepretability offered by regression models (and their close generalizations) should make them a first tool of choice for any practical problem.
+
 ## Introduction to Regression
 Hello, I'm Brian Caffo, and I'd like to welcome you to the introduction to regression lecture in the regression Coursera class, part of our data science specialization. Co-taught by my colleagues Jeff Leek and Roger Peng, we all belong to the Department of Biostatistics at the Johns Hopkins Bloomberg School of Public Health.
 
@@ -222,7 +223,7 @@ We might want to find a parsimonious and easily described mean relationships bet
 
 We're going to connect the results back to the subject of inference. How do we take our data, which is just a sample, it only talks about that data set, and try to figure out what assumptions are needed to extrapolate it to a larger population. This is a deep subject called statistical inference. We have a whole another course of Statistical Inference as part of data science specialization. But we're going to apply the tools of inference, which we are hoping most of you will have had as a prerequisite. We're going to apply the tools of inference to this new subject of regression.
 
-# Linear least squares
+## Linear least squares
 Let's look at Francis Galton's data, he first used this data in 1885. He's really an interesting character in history, in general and definitely in the history of statistics. You need to run `install.packages("UsingR")`. Here `UsingR` is the package for the book, [Using R for Introductory Statistics](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf). It is a great book, and they've very kindly packaged all these data sets together in a single R package. So you need to use `UsingR` then the library `UsingR` to get a lot of the data sets that we are going to talk about. So let's first look at the marginal distribution of the parents. In other words, distribution of
 the parents disregarding children. And the marginal distribution of the children, disregarding parents. 
 
@@ -262,6 +263,19 @@ Imagine of those bars as being physical entities, having weight and you are tryi
 Let's use our studio's `manipulate` function to experiment with trying to find that center of mass. 
 
 
+```r
+library(manipulate) 
+myHist<-function(mu){
+    mse<-mean((galton$child-height-mu)^2)
+    g<- ggplot(galton, aes(x=childHeight))+geom_histogram(fill='salmon',color='black',binwidth=1)
+    g<- g+ geom_vline(xintercept=mu, size=3)
+    g<- g+ ggtitle(paste("mu=",mu,"MSE=",round(mse,2)),sep="")
+    g
+}
+manipulate(myHist(mu),mu=slider(62,74,step=0.5))
+```
+
+fig xxx
 
 Because we're using manipulate we can move the slider around and monitor the value of $\mu$ and
 the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of $\mu$. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get's up large again. You can see $\mu$ is the point that balanced out this histogram.
@@ -287,11 +301,11 @@ $$
 \end{align} 
 $$
 
-# Regression to the Mean
+## Regression to the Mean
 
 
-# Practical R Exercises in swirl
+## Practical R Exercises in swirl
 
 
 
-# Week 1 Quiz
+## Week 1 Quiz
