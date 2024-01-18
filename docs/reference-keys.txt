@@ -1,5 +1,5 @@
 available-course-formats
-introduction-xxx
+introduction
 welcome-to-regression-models
 some-basics
 youtube
@@ -15,6 +15,7 @@ differences-of-opinion
 data-science-specialization-community-site
 where-to-get-more-advanced-material
 introduction-to-regression-and-least-squares
+introduction-to-regression
 linear-least-squares
 regression-to-the-mean
 practical-r-exercises-in-swirl
