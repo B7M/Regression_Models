@@ -183,6 +183,7 @@ Imagine of those bars as being physical entities, having weight and you are tryi
 Let's use our studio's `manipulate` function to experiment with trying to find that center of mass. 
 
 ```{r, echo = T, eval = T}
+install.packages("manipulate")
 library(manipulate) 
 myHist<-function(mu){
     mse<-mean((galton$child-height-mu)^2)
