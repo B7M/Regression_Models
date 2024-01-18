@@ -12,9 +12,11 @@ library(UsingR); library(reshape); library(ggplot2);library(manipulate)
 ```
 
 
-# Introduction
+# Week 01
 
-## Welcome to Regression Models
+## Introduction
+
+### Welcome to Regression Models
 
 I am happy that you've chosen to take Regression Models, part of the Johns Hopkins Data Science Specialization on Coursera! This course presents the fundamentals of regression modeling that you will need for the rest of the specialization and ultimately for your work in the field of data science.
 
@@ -24,7 +26,7 @@ Regression Models represents a both fundamental and foundational component of th
 
 We are excited about the opportunity to attempt to scale Data Science education. We intend for the courses to be self-contained, fast-paced, and interactive, and we intend to run them frequently to give people with busy schedules the opportunity to work on material at their own pace.
 
-## Some Basics
+### Some Basics
 
 A couple of first week housekeeping items. First, make sure that you've had [R Programming](https://www.coursera.org/learn/r-programming) , the [Data Scientist's Toolbox](https://www.coursera.org/learn/data-scientists-tools), [Reproducible Research](https://www.coursera.org/learn/regression-models/supplement/uCPA0/welcome-to-regression-models) and [Statistical Inference](https://www.coursera.org/learn/statistical-inference) before taking this class. At a minimum you must know: very basic git, basic R and most of the Statistical Inference Coursera class. The small amount of knitr that you need for the project you can pick up quickly.
 
@@ -32,12 +34,12 @@ An important aspect of this class is to peruse the materials in the github repos
 
 The lectures are in the index.Rmd lecture files. In [Developing Data Products](https://www.coursera.org/learn/data-products), we cover how to create these sorts of slides. However, for the time being, you should be able to open them in R Studio and look at their contents. You will see all of the R code to recreate the lectures. Going through the R code is the best way to familiarize yourself with the lecture materials.
 
-### YouTube
+#### YouTube
 If you'd prefer to watch the videos on YouTube, you can find them [here](https://www.youtube.com/playlist?list=PLpl-gQkQivXjqHAJd2t-J_One_fYE55tC) and [here](https://www.youtube.com/playlist?list=PLpl-gQkQivXhdgUCdaUQcdb31CRe8Mm2y).
 If you'd like to keep up with the instructors I'm @bcaffo on twitter, Roger is @rdpeng and Jeff is @jtleek. The Department of Biostat here is @jhubiostat.
 
 
-## Syllabus (xxx)
+### Syllabus (xxx)
 
 Course Title: Regression Models
 
@@ -46,11 +48,11 @@ Brian is a professor at Johns Hopkins Biostatistics and co-directs the [SMART wo
 
 This class is co-taught by Roger Peng and Jeff Leek. In addition, Sean Kross and Nick Carchedi have been helping greatly.
 
-### Course Description:
+#### Course Description:
 
 Linear models, as their name implies, relates an outcome to a set of predictors of interest using linear assumptions. Regression models, a subset of linear models, are the most important statistical analysis tool in a data scientist's toolkit. This course covers regression analysis, least squares and inference using regression models. Special cases of the regression model, ANOVA and ANCOVA will be covered as well. Analysis of residuals and variability will be investigated. The course will cover modern thinking on model selection and novel uses of regression models including scatterplot smoothing.
 
-### Course Content
+#### Course Content
 
 This class has three main components:
 
@@ -88,19 +90,19 @@ The full list of topics are as follows:
 - - 04_03 Hodgepodge
 
 
-### Book: Regression Models for Data Science in R. 
+#### Book: Regression Models for Data Science in R. 
 
 A companion book is available [here](https://leanpub.com/regmods). The book is published via leanpub, and the suggested price is $14.99. You can get it for free or pay what you feel it is worth.
 
-### Quizzes
+#### Quizzes
 
 There are four weekly quizzes. You must earn a grade of at least 80% to pass a quiz. You may attempt each quiz up to 3 times in 8 hours. The score from your most successful attempt will count toward your final grade.
 
-### Course Project
+#### Course Project
 
 The Course Project is an opportunity to demonstrate the skills you have learned during the course. It is graded through peer assessment. You must earn a grade of at least 80% to pass the peer assessment.
 
-### Grading Policy
+#### Grading Policy
 
 You must score at least 80% on all assignments (Quizzes & Project) to pass the course.
 
@@ -113,35 +115,35 @@ Quiz 4 = 15%
 Course Project = 40%
 
 
-#### swirl Programming Assignment (optional)
+##### swirl Programming Assignment (optional)
 
 In this course, you have the option to use the [swirl](https://swirlstats.com) R package to practice some of the concepts we cover in lectures.
 
 While these lessons will give you valuable practice and you are encouraged to complete as many as possible, please note that they are completely optional and you can get full marks in the class without completing them.
 
-### Differences of opinion
+#### Differences of opinion
 
 Keep in mind that currently data analysis is as much art as it is science - so we may have a difference of opinion - and that is ok! Please refrain from angry, sarcastic, or abusive comments on the message boards. Our goal is to create a supportive community that helps the learning of all students, from the most advanced to those who are just seeing this material for the first time.
 
-## Data Science Specialization Community Site
+### Data Science Specialization Community Site
 Since the beginning of the Data Science Specialization, we've noticed the unbelievable passion students have about our courses and the generosity they show toward each other on the course forums. A couple students have created quality content around the subjects we discuss, and many of these materials are so good we feel that they should be shared with all of our students.
 
 We're excited to announce that we've created a site using [GitHub Pages](http://datasciencespecialization.github.io/) to serve as a directory for content that the community has created. If you've created materials relating to any of the courses in the Data Science Specialization, please send us a pull request so we can add a link to your content on our site. You can find out more about contributing [here.](https://github.com/DataScienceSpecialization/DataScienceSpecialization.github.io#contributing)
 
 We can't wait to see what you've created and where the community can take this site!
 
-## Where to get more advanced material
+### Where to get more advanced material
 If you want more advanced material, I've been working on another version of this class. Eventually I hope to have a second Coursera class as well. Currently, you can get the E-Book in progress [here](https://leanpub.com/lm) (it's variable pricing including free!)
 
 In addition, you can watch the videos as they're being developed [here.](https://www.youtube.com/playlist?list=PLpl-gQkQivXhdgUCdaUQcdb31CRe8Mm2y)
 
 
-# Introduction to regression and least squares
+## Introduction to regression and least squares
 Regression models are the workhorse of data science. They are the most well described, practical and theoretically understood models in statistics. A data scientist well versed in regression models will be able to solve an incredible array of problems.
 
 Perhaps the key insight for regression models is that they produce highly interpretable model fits. This is unlike machine learning algorithms, which often sacrifice interpretability for improved prediction performance or automation. These are, of course, valuable attributes in their own rights. However, the benefit of simplicity, parsimony and intrepretability offered by regression models (and their close generalizations) should make them a first tool of choice for any practical problem.
 
-## Introduction to Regression
+### Introduction to Regression
 Hello, I'm Brian Caffo, and I'd like to welcome you to the introduction to regression lecture in the regression Coursera class, part of our data science specialization. Co-taught by my colleagues Jeff Leek and Roger Peng, we all belong to the Department of Biostatistics at the Johns Hopkins Bloomberg School of Public Health.
 
 Regression is a cornerstone for data scientists. Before delving into complex machine learning, linear regression or its generalization, linear models, are often the go-to procedures. The roots of regression trace back to Francis Galton, who coined the term and concept, along with correlation, closely tied to linear regression.
@@ -154,7 +156,6 @@ We might want to find a parsimonious and easily described mean relationships bet
 
 We're going to connect the results back to the subject of inference. How do we take our data, which is just a sample, it only talks about that data set, and try to figure out what assumptions are needed to extrapolate it to a larger population. This is a deep subject called statistical inference. We have a whole another course of Statistical Inference as part of data science specialization. But we're going to apply the tools of inference, which we are hoping most of you will have had as a prerequisite. We're going to apply the tools of inference to this new subject of regression.
 
-## Linear least squares
 Let's look at Francis Galton's data, he first used this data in 1885. He's really an interesting character in history, in general and definitely in the history of statistics. You need to run `install.packages("UsingR")`. Here `UsingR` is the package for the book, [Using R for Introductory Statistics](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf). It is a great book, and they've very kindly packaged all these data sets together in a single R package. So you need to use `UsingR` then the library `UsingR` to get a lot of the data sets that we are going to talk about. So let's first look at the marginal distribution of the parents. In other words, distribution of
 the parents disregarding children. And the marginal distribution of the children, disregarding parents. 
 
@@ -222,7 +223,6 @@ $$
 
 The equations above show for any value of $\mu$, the function $\sum_{i=1}^n (Y_i - \mu)^2$ is larger than or equal to the specific case when we plug in $\bar Y$. Therefore, $\bar Y$ has to be the unique minimizer of that equation.
 
-## Regression to the Mean
 At this stage, we haven't utilized the parent's heights in our analysis. The initial step in examining this type of data is to construct a scatter plot of child heights against parent heights. Here we employ ggplot, but the plot has several shortcomings. 
 
 ```{r, echo = T, eval = T}
@@ -262,6 +262,62 @@ lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
 ```
 
 Now what we're going to do in subsequent sections is to talk about how we get these values? What is the motivation behind it and all the things we can do with this fitted line, we're going to spend maybe the next several sections talking about this. You have actually learned a lot of material in this very first part, well done!
+
+## Linear least squares
+
+Ordinary least squares (OLS) is the workhorse of statistics. It gives a way of taking complicated outcomes and explaining behavior (such as trends) using linearity. The simplest application of OLS is fitting a line through some data. In the next few sections, we cover the basics of linear least squares. We start with defining our notation. These are things you probably already saw in the prerequisite for this course in a Statistical Inference course in Data Science Specialization. However, because they're so fundamental to regression, we're going to cover them again, so they're fresh in our minds.
+We will try to minimize the amount of mathematics that's required for this class. Throughout the course we will neither require calculus nor linear algebra. And when it does get a little bit more mathematical, we will let you know when you can skip over those sections. 
+
+We might write $X_1,X_2,...,Xn$ to describe $n$ data points. As an example, consider the data set ${1, 2, 5}$, where $X_1=1$, $X_2=2$, $X_3=5$ and $n$ in this case is 3. There's nothing in particular about the letter $X$. We could have just as easily described $Y_1$ to $Y_n$. The last bit of notation that's important, is we're typically going to use Greek
+letters for things we don't know, such as $\mu$ for a population mean and we'll use non Greek letters or regular letters to denote things that we can observe. So, $\bar X$ is something we can observe. $\mu$ is something we can't observe and would like to estimate. 
+We can define the empirical mean as
+$$
+\bar X = \frac{1}{n}\sum_{i=1}^n X_i. 
+$$
+Notice if we subtract the mean from data points, we get data that has mean 0. That is, if we define $\tilde X_i = X_i - \bar X.$
+The mean of the $\tilde X_i$ is 0. 
+
+* This process is called "centering" the random variables. Recall from the previous section that the mean is the least squares solution for minimizing $\sum_{i=1}^n (X_i - \mu)^2$. 
+
+Since we talked about means, let's talk about variances. The variances is usually denoted by $S^2$. It's defined as 
+$$
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar X)^2 
+= \frac{1}{n-1} \left( \sum_{i=1}^n X_i^2 - n \bar X ^ 2 \right)
+$$
+
+This is nothing other than basically the average squared deviation of the observations around the mean.
+The empirical standard deviation is defined as $S = \sqrt{S^2}$. Notice that the standard deviation has the same units as the data. It's nice to work with standard deviations because the variance is expressed in whatever units $X$ has squared, whereas the standard deviation is just expressed in the normal units of $X$. Another interesting fact related to standard deviation is scaling, so if we subtract a mean off from every observation, we get a resulting data set that has mean 0. If we divide every observation by the standard deviation, the resulting data set will have standard deviation 1. This is called **scaling** the data. If we take our original data now and
+subtract off $\bar X$, then take the resulting centered data and scale it by $S$. We get a new data set, let's call them $Z_i$.
+$$
+Z_i = \frac{X_i - \bar X}{s}
+$$
+
+This process of centering and then scaling is called *normalizing* the data. As an example, if something has a value 2 from normalized data, that means that the data point was 2
+standard deviations larger than the mean. As its name would suggest, normalization is an attempt to make non-comparable data sets comparable. 
+
+The empirical covariance is the most central quantity in regression. Imagine we have two vectors, $X$ and $Y$, and they're lined up. So $X_i$ might be the BMI and $Y_i$ might be the blood pressure for subject $i$. You could meaningfully do a scatter plot. Then we just define the covariance between X and Y as:
+$$ 
+Cov(X, Y) = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar X) (Y_i - \bar Y)
+= \frac{1}{n-1}\left( \sum_{i=1}^n X_i Y_i - n \bar X \bar Y\right)
+$$
+
+The correlation is defined as:
+$$
+Cor(X, Y) = \frac{Cov(X, Y)}{S_x S_y}
+$$
+
+where $S_x$ and $S_y$ are the estimates of standard deviations for the $X$ observations and $Y$ observations, respectively.
+In other words, the correlation is simply the covariance then standardized into a unitless quantity. So, the correlation is the covariance of $X$ and $Y$, which has units, basically units of X times units of Y.
+
+Some facts about correlation:
+* $Cor(X, Y) = Cor(Y, X)$
+* $-1 \leq Cor(X, Y) \leq 1$
+* $Cor(X,Y) = 1$ and $Cor(X, Y) = -1$ only when the $X$ or $Y$ observations fall perfectly on a positive or negative sloped line, respectively.
+* $Cor(X, Y)$ measures the strength of the linear relationship between the $X$ and $Y$ data, with stronger relationships as $Cor(X,Y)$ heads towards -1 or 1.
+* $Cor(X, Y) = 0$ implies no linear relationship. 
+
+## Regression to the Mean
+
 
 ## Practical R Exercises in swirl
 
