@@ -3,7 +3,7 @@ ottrpal::set_knitr_image_path()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r, include = FALSE}
+```{r, include = T}
 install.packages("UsingR")
 install.packages("reshape")
 install.packages("ggplot2")
@@ -157,13 +157,13 @@ We're going to connect the results back to the subject of inference. How do we t
 Let's look at Francis Galton's data, he first used this data in 1885. He's really an interesting character in history, in general and definitely in the history of statistics. You need to run `install.packages("UsingR")`. Here `UsingR` is the package for the book, [Using R for Introductory Statistics](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf). It is a great book, and they've very kindly packaged all these data sets together in a single R package. So you need to use `UsingR` then the library `UsingR` to get a lot of the data sets that we are going to talk about. So let's first look at the marginal distribution of the parents. In other words, distribution of
 the parents disregarding children. And the marginal distribution of the children, disregarding parents. 
 
-```{r, echo = TRUE, eval = FALSE}
+```{r, echo = T, eval = F}
 install.packages("UsingR")
 ```
 
 Parent distribution is all heterosexual couples, correcting for sex by multiplying the female heights by 1.08. 
 
-```{r, echo = TRUE, eval = True}
+```{r, echo = T, eval = T}
 library(UsingR); data(galton); library(reshape); long<-melt(galton);
 g<- ggplot(long, aes(x=value, fill=variable)) 
 g<- g+ geom_histogram(color='black', binwidth=1)
@@ -181,7 +181,7 @@ Imagine of those bars as being physical entities, having weight and you are tryi
 
 Let's use our studio's `manipulate` function to experiment with trying to find that center of mass. 
 
-```{r, echo = TRUE, eval = TRUE}
+```{r, echo = T, eval = T}
 library(manipulate) 
 myHist<-function(mu){
     mse<-mean((galton$child-height-mu)^2)
