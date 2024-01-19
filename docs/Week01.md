@@ -554,7 +554,7 @@ rbind(c(beta0, beta1), coef(lm(x ~ y)))
 ## [2,] 1.258492e-15 0.3256475
 ```
 
-If we concatenate these slope and intercept estimates with those that you get with `lm` where $X$ is on the left hand side of the $\tilde$ and $Y$ is on the right hand side of $\tilde$, reversed from what it was previously. 
+If we concatenate these slope and intercept estimates with those that you get with `lm` where $X$ is on the left hand side of the ~ and $Y$ is on the right hand side of ~, reversed from what it was previously. 
 
 So our formula is correct and we know how to use it and we know what happens when we reverse the $X,Y$ relationship. Another point that was made thus far in the course was that regression through the origin yielded the same slope as linear regression with a not necessarily zero intercept. If you mean centered the $Y$'s and mean centered the $X$'s first. So let's just check that computationally. Recall that the regression to the origin equation for the slope was just the sum of the $Y$ variable times the $X$ variable, divided
 by the sum of the $X$ variable squared. So, let's run that and get our coefficient that is estimated through a regression to the origin. 
@@ -588,10 +588,32 @@ c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
 ## 0.4587624 0.4587624 0.4587624
 ```
 
-Here over on the right we are showing the somewhat fancy plot for this data. We would also note that `ggplot2` does a very good thing for us on our behalf. It automatically gives us a confidence interval around the line. We'll talk about how to generate this confidence interval later on in the lecture. But it's very nice that they're thinking
+
+```
+## Warning: Ignoring unknown aesthetics: show_guide
+```
+
+![](resources/images/Week01_files/figure-docx/unnamed-chunk-15-1.png)<!-- -->
+
+Here we are showing the somewhat fancy plot for this data. We would also note that `ggplot2` does a very good thing for us on our behalf. It automatically gives us a confidence interval around the line. We'll talk about how to generate this confidence interval later on in the lecture. But it's very nice that they're thinking
 of statistical uncertainty automatically.
 
+### Mathematical Details (Optional) XXX
+
+
 ## Regression to the Mean
+
+Regression to the mean was an important milestone in the discovery of regression. So we're going to talk about it. It was discovered by Francis Galton. Regression to mean asks
+questions like this. 
+
+* Why is it that the children of tall parents tend to be tall, but not as tall as their parents? 
+* Why do children of short parents tend to be short, but not as short as their parents? 
+* Why do parents of very short children, tend to be short, but not a short as their child? And the same with parents of very tall children?
+
+We can try this with anything that is measured with error. Why do the best performing athletes this year tend to do a little worse the following? Why do the best performers on hard exams always do a little worse on the next hard exam?
+
+These phenomena are all examples of so-called regression to the mean. Regression to the mean, was invented by Francis Galton in the paper “Regression towards mediocrity in hereditary stature” The Journal of the Anthropological Institute of Great Britain and Ireland , Vol. 15, (1886). The idea served as a foundation for the discovery of linear regression.
+
 
 
 ## Practical R Exercises in swirl

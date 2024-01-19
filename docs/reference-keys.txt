@@ -21,15 +21,18 @@ linear-least-squares
 notations-and-background
 linear-least-squares-1
 linear-least-squares-coding-example
+mathematical-details-optional-xxx
 regression-to-the-mean
 practical-r-exercises-in-swirl
 week-1-quiz
+week-2
 statistical-linear-regression-models
 residuals
 inference-in-regression
 for-the-project
 practical-r-exercises-in-swirl-1
 week-2-quiz
+week-3
 multivariable-regression
 multivariable-regression-tips-and-tricks
 adjustment
@@ -38,6 +41,7 @@ model-selection
 practical-r-exercises-in-swirl-2
 week-3-quiz
 optional-practice-exercise-in-regression-modeling
+week-4
 glm
 logistic-regression
 poisson-regression
