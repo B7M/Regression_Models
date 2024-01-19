@@ -767,10 +767,13 @@ Good luck and have fun!
 
 1. Consider the data set given by the R code `x <- c(0.18, -1.54, 0.42, 0.95)`and weights given by `w <- c(2, 1, 3, 1)` give the value of $μ$ that minimizes the least squares equation $\sum_{i=1}^n w_i (x_i - \mu)^2$.
 
-2. Consider the following data set:
-`x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`
-`y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)`
-Fit the regression through the origin and get the slope treating `y`as the outcome and `x` as the regressor. (Hint, do not center the data since we want regression through the origin, not through the means of the data.)
+2. Consider the following data set fit the regression through the origin and get the slope treating `y`as the outcome and `x` as the regressor. (Hint, do not center the data since we want regression through the origin, not through the means of the data.)
+  
+
+```r
+x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
+```
 
 3. Do `data(mtcars)` from the datasets package and fit the regression model with `mpg` as the outcome and `weight` as the predictor. What is the slope coefficient?
 
@@ -782,16 +785,20 @@ Fit the regression through the origin and get the slope treating `y`as the outco
 6. Consider the data given by `x <- c(8.58, 10.46, 9.01, 9.64, 8.86)`. What is the value of the first measurement if `x` were normalized (to have mean 0 and variance 1)?
 
 7. Consider the following data set (used above as well). What is the intercept for fitting the model with x as the predictor and y as the outcome?
-`x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`
-`y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)`
 
-8. You know that both the predictor and response have mean 0. What can be said about the intercept when you fit a linear regression?
+
+```r
+x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)
+y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)
+```
+
+1. You know that both the predictor and response have mean 0. What can be said about the intercept when you fit a linear regression?
   a. It must be identically 0.
   b. It is undefined as you have to divide by zero.
   c. It must be exactly one.
   d. Nothing about the intercept can be said from the information given.
 
-9. Consider the data given by `x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`. What value minimizes the sum of the squared distances between these points and itself?
+1. Consider the data given by `x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`. What value minimizes the sum of the squared distances between these points and itself?
 
-10. Let the slope having fit $Y$ as the outcome and $X$ as the predictor be denoted as $β_1$. Let the slope from fitting $X$ as the outcome and $Y$ as the predictor be denoted as $γ_1$. Suppose that you divide $β_1$ by $γ_1$; in other words consider $β_1/γ_1$. What is this ratio always equal to?
+2.  Let the slope having fit $Y$ as the outcome and $X$ as the predictor be denoted as $β_1$. Let the slope from fitting $X$ as the outcome and $Y$ as the predictor be denoted as $γ_1$. Suppose that you divide $β_1$ by $γ_1$; in other words consider $β_1/γ_1$. What is this ratio always equal to?
 
