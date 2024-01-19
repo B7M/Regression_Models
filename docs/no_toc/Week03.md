@@ -1,28 +1,29 @@
 
 
+# Week 3
 
-# Multivariable regression
-
-
-# Multivariable regression tips and tricks
+## Multivariable regression
 
 
-# Adjustment
+## Multivariable regression tips and tricks
 
 
-# Residuals again
+## Adjustment
+
+
+## Residuals again
 
 
 
-# Model selection
+## Model selection
 
 
-# Practical R Exercises in swirl
+## Practical R Exercises in swirl
 
 
-# Week 3 Quiz
+## Week 3 Quiz
 
 
-# (OPTIONAL) Practice exercise in regression modeling
+## (OPTIONAL) Practice exercise in regression modeling
 
 

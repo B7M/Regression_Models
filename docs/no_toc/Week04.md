@@ -1,18 +1,20 @@
 
 
-# GLM
+# Week 4
 
-# Logistic Regression
+## GLM
 
-
-# Poisson Regression
-
-
-# Hodgepodge
-
-# Practical R Exercises in swirl
+## Logistic Regression
 
 
-# Week 4 Quiz
+## Poisson Regression
 
-# Course Project
+
+## Hodgepodge
+
+## Practical R Exercises in swirl
+
+
+## Week 4 Quiz
+
+## Course Project
