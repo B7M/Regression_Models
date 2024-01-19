@@ -384,9 +384,46 @@ g <- g + geom_point(aes(colour=freq, size = freq))
 g <- g + scale_colour_gradient(low = "lightblue", high="white")                    
 g
 ```
+Now we indicate that the solution that we specified is the same solution that R will give you with its built in regression function. The function lm in R stands for linear model. Regression is a component of linear models, and so, this function is the general function whether you want regression or you want some of the more elaborate versions of regression that we're going to cover later on. So we want lm, the outcome $\tilde Y$, the predictor $X$. `coef` takes the output of the linear model and just grabs the coefficients.
 
+```{r, echo = T, eval = T}
+beta1 <- cor(y, x) *  sd(x) / sd(y)
+beta0 <- mean(x) - beta1 * mean(y)
+rbind(c(beta0, beta1), coef(lm(x ~ y)))
+```
 
+As we expected you see we get the same numbers, 23.94 and 0.64, 0.65. Very briefly now, we just want to mention that if we reverse the $Y$ and $X$ relationship the formula, of course holds but now with standard deviation of $X$ in the numerator and standard deviation of $Y$ in the denominator.
+    
+```{r, echo = T, eval = T}
+beta1 <- cor(y, x) *  sd(x) / sd(y)
+beta0 <- mean(x) - beta1 * mean(y)
+rbind(c(beta0, beta1), coef(lm(x ~ y)))
+```
 
+If we concatenate these slope and intercept estimates with those that you get with `lm` where $X$ is on the left hand side of the $\tilde$ and $Y$ is on the right hand side of $\tilde$, reversed from what it was previously. 
+
+So our formula is correct and we know how to use it and we know what happens when we reverse the $X,Y$ relationship. Another point that was made thus far in the course was that regression through the origin yielded the same slope as linear regression with a not necessarily zero intercept. If you mean centered the $Y$'s and mean centered the $X$'s first. So let's just check that computationally. Recall that the regression to the origin equation for the slope was just the sum of the $Y$ variable times the $X$ variable, divided
+by the sum of the $X$ variable squared. So, let's run that and get our coefficient that is estimated through a regression to the origin. 
+
+```{r, echo = T, eval = T}
+yc <- y - mean(y)
+xc <- x - mean(x)
+beta1 <- sum(yc * xc) / sum(xc ^ 2)
+c(beta1, coef(lm(y ~ x))[2])
+```
+
+We want to very briefly also just show you how you can actually do regression to the origin. In this case I'll get the same number if I take the centered $Y$ and use the centered $X$ as a predictor, to subtract out the intercept, you put a minus one to get rid of the intercept. 
+
+Another point that was made before, was that if we were to normalize the $Y$ or the $X$ so that they have standard deviation one, the slope would be the correlation. So let's just double check that quickly. Here, We normalize the child's heights by subtracting off the mean and dividing by the standard deviation. We do the same thing for $X$ variables. We have gotten rid of the, the original units, the inches. 
+
+```{r, echo = T, eval = T}
+yn <- (y - mean(y))/sd(y)
+xn <- (x - mean(x))/sd(x)
+c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
+```
+
+Here over on the right we are showing the somewhat fancy plot for this data. We would also note that `ggplot2` does a very good thing for us on our behalf. It automatically gives us a confidence interval around the line. We'll talk about how to generate this confidence interval later on in the lecture. But it's very nice that they're thinking
+of statistical uncertainty automatically.
 
 ## Regression to the Mean
 
