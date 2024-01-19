@@ -1,22 +1,23 @@
 
 
+# Week 2
 
-# Statistical linear regression models
-
-
-
-# Residuals
+## Statistical linear regression models
 
 
 
-# Inference in regression
+## Residuals
 
 
 
-# For the project
+## Inference in regression
 
 
-# Practical R Exercises in swirl
+
+## For the project
 
 
-# Week 2 Quiz
+## Practical R Exercises in swirl
+
+
+## Week 2 Quiz
