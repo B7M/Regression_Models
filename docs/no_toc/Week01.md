@@ -742,6 +742,70 @@ In summary:
   
 ## Practical R Exercises in swirl
 
+During this course we'll be using the [swirl](https://swirlstats.com) software package for R in order to illustrate some key concepts. The swirl package turns the R console into an interactive learning environment. Using swirl will also give you the opportunity to construct and explore your own regression models.
 
+0. Install R
+
+swirl requires R 3.0.2 or later. If you have an older version of R, please update before going any further. If you're not sure what version of R you have, type R.version.string at the R prompt. You can download the latest version of R from https://www.r-project.org/.
+
+Optional but highly recommended: Install RStudio. You can download the latest version of RStudio at https://www.rstudio.com/products/rstudio/.
+
+1. Install swirl
+
+Since swirl is an R package, you can easily install it by entering a single command from the R console:
+
+* * If you are on a Linux operating system, please visit our Installing swirl on Linux page for special instructions: `install.packages("swirl")`
+
+* * If you've installed swirl in the past make sure you have version 2.2.21 or later. You can check this with: `packageVersion("swirl")`
+
+2. Load swirl
+
+Every time you want to use swirl, you need to first load the package. From the R console: `library(swirl)`.
+
+3. Install the Regression Models course
+
+swirl offers a variety of interactive courses, but for our purposes, you want the one called Regression Models. If this is your first time using swirl, it will prompt you to install the Regression Models course automatically. If you've used swirl in the past, you will need to type the following from the R prompt: `install_course("Regression Models")`.
+
+4. Start swirl and complete the lessons
+
+Type the following from the R console to start swirl:
+
+For the first part of this course you should complete the following lessons:
+- Introduction
+- Residuals
+- Least Squares Estimation
+
+Good luck and have fun!
 
 ## Week 1 Quiz
+
+1. Consider the data set given by the R code `x <- c(0.18, -1.54, 0.42, 0.95)`and weights given by `w <- c(2, 1, 3, 1)` give the value of $μ$ that minimizes the least squares equation $\sum_{i=1}^n w_i (x_i - \mu)^2$.
+
+2. Consider the following data set:
+`x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`
+`y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)`
+Fit the regression through the origin and get the slope treating `y`as the outcome and `x` as the regressor. (Hint, do not center the data since we want regression through the origin, not through the means of the data.)
+
+3. Do `data(mtcars)` from the datasets package and fit the regression model with `mpg` as the outcome and `weight` as the predictor. What is the slope coefficient?
+
+4. Consider data with an outcome ($Y$) and a predictor ($X$). The standard deviation of the predictor is one half that of the outcome. The correlation between the two variables is .5. What value would the slope coefficient for the regression model with $Y$ as the outcome and $X$ as the predictor?
+
+
+5. Students were given two hard tests and scores were normalized to have empirical mean 0 and variance 1. The correlation between the scores on the two tests was 0.4. What would be the expected score on Quiz 2 for a student who had a normalized score of 1.5 on Quiz 1?
+
+6. Consider the data given by `x <- c(8.58, 10.46, 9.01, 9.64, 8.86)`. What is the value of the first measurement if `x` were normalized (to have mean 0 and variance 1)?
+
+7. Consider the following data set (used above as well). What is the intercept for fitting the model with x as the predictor and y as the outcome?
+`x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`
+`y <- c(1.39, 0.72, 1.55, 0.48, 1.19, -1.59, 1.23, -0.65, 1.49, 0.05)`
+
+8. You know that both the predictor and response have mean 0. What can be said about the intercept when you fit a linear regression?
+  a. It must be identically 0.
+  b. It is undefined as you have to divide by zero.
+  c. It must be exactly one.
+  d. Nothing about the intercept can be said from the information given.
+
+9. Consider the data given by `x <- c(0.8, 0.47, 0.51, 0.73, 0.36, 0.58, 0.57, 0.85, 0.44, 0.42)`. What value minimizes the sum of the squared distances between these points and itself?
+
+10. Let the slope having fit $Y$ as the outcome and $X$ as the predictor be denoted as $β_1$. Let the slope from fitting $X$ as the outcome and $Y$ as the predictor be denoted as $γ_1$. Suppose that you divide $β_1$ by $γ_1$; in other words consider $β_1/γ_1$. What is this ratio always equal to?
+
