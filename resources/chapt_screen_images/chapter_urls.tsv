@@ -1,26 +1,8 @@
 url	chapt_title	img_path
 https://b7m.github.io/Regression_Models/no_toc/index.html	About this Course	resources/chapt_screen_images/index.png
 https://b7m.github.io/Regression_Models/no_toc/week-01.html	1 Week 01	resources/chapt_screen_images/week-01.png
-https://b7m.github.io/Regression_Models/no_toc/statistical-linear-regression-models.html	2 Statistical linear regression models	resources/chapt_screen_images/statistical-linear-regression-models.png
-https://b7m.github.io/Regression_Models/no_toc/residuals.html	3 Residuals	resources/chapt_screen_images/residuals.png
-https://b7m.github.io/Regression_Models/no_toc/inference-in-regression.html	4 Inference in regression	resources/chapt_screen_images/inference-in-regression.png
-https://b7m.github.io/Regression_Models/no_toc/for-the-project.html	5 For the project	resources/chapt_screen_images/for-the-project.png
-https://b7m.github.io/Regression_Models/no_toc/practical-r-exercises-in-swirl-1.html	6 Practical R Exercises in swirl	resources/chapt_screen_images/practical-r-exercises-in-swirl-1.png
-https://b7m.github.io/Regression_Models/no_toc/week-2-quiz.html	7 Week 2 Quiz	resources/chapt_screen_images/week-2-quiz.png
-https://b7m.github.io/Regression_Models/no_toc/multivariable-regression.html	8 Multivariable regression	resources/chapt_screen_images/multivariable-regression.png
-https://b7m.github.io/Regression_Models/no_toc/multivariable-regression-tips-and-tricks.html	9 Multivariable regression tips and tricks	resources/chapt_screen_images/multivariable-regression-tips-and-tricks.png
-https://b7m.github.io/Regression_Models/no_toc/adjustment.html	10 Adjustment	resources/chapt_screen_images/adjustment.png
-https://b7m.github.io/Regression_Models/no_toc/residuals-again.html	11 Residuals again	resources/chapt_screen_images/residuals-again.png
-https://b7m.github.io/Regression_Models/no_toc/model-selection.html	12 Model selection	resources/chapt_screen_images/model-selection.png
-https://b7m.github.io/Regression_Models/no_toc/practical-r-exercises-in-swirl-2.html	13 Practical R Exercises in swirl	resources/chapt_screen_images/practical-r-exercises-in-swirl-2.png
-https://b7m.github.io/Regression_Models/no_toc/week-3-quiz.html	14 Week 3 Quiz	resources/chapt_screen_images/week-3-quiz.png
-https://b7m.github.io/Regression_Models/no_toc/optional-practice-exercise-in-regression-modeling.html	15 (OPTIONAL) Practice exercise in regression modeling	resources/chapt_screen_images/optional-practice-exercise-in-regression-modeling.png
-https://b7m.github.io/Regression_Models/no_toc/glm.html	16 GLM	resources/chapt_screen_images/glm.png
-https://b7m.github.io/Regression_Models/no_toc/logistic-regression.html	17 Logistic Regression	resources/chapt_screen_images/logistic-regression.png
-https://b7m.github.io/Regression_Models/no_toc/poisson-regression.html	18 Poisson Regression	resources/chapt_screen_images/poisson-regression.png
-https://b7m.github.io/Regression_Models/no_toc/hodgepodge.html	19 Hodgepodge	resources/chapt_screen_images/hodgepodge.png
-https://b7m.github.io/Regression_Models/no_toc/practical-r-exercises-in-swirl-3.html	20 Practical R Exercises in swirl	resources/chapt_screen_images/practical-r-exercises-in-swirl-3.png
-https://b7m.github.io/Regression_Models/no_toc/week-4-quiz.html	21 Week 4 Quiz	resources/chapt_screen_images/week-4-quiz.png
-https://b7m.github.io/Regression_Models/no_toc/course-project-1.html	22 Course Project	resources/chapt_screen_images/course-project-1.png
+https://b7m.github.io/Regression_Models/no_toc/week-2.html	2 Week 2	resources/chapt_screen_images/week-2.png
+https://b7m.github.io/Regression_Models/no_toc/week-3.html	3 Week 3	resources/chapt_screen_images/week-3.png
+https://b7m.github.io/Regression_Models/no_toc/week-4.html	4 Week 4	resources/chapt_screen_images/week-4.png
 https://b7m.github.io/Regression_Models/no_toc/about-the-authors.html	About the Authors	resources/chapt_screen_images/about-the-authors.png
-https://b7m.github.io/Regression_Models/no_toc/references.html	23 References	resources/chapt_screen_images/references.png
+https://b7m.github.io/Regression_Models/no_toc/references.html	5 References	resources/chapt_screen_images/references.png
