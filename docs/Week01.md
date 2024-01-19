@@ -614,8 +614,118 @@ We can try this with anything that is measured with error. Why do the best perfo
 
 These phenomena are all examples of so-called regression to the mean. Regression to the mean, was invented by Francis Galton in the paper “Regression towards mediocrity in hereditary stature” The Journal of the Anthropological Institute of Great Britain and Ireland , Vol. 15, (1886). The idea served as a foundation for the discovery of linear regression.
 
+Regression to the mean often comes up in sports. If you have a player who has a phenomenal year, the next year they tend to do a little bit worse. If you have a player who has a terrible year, the next year they tend to do a little bit better. Another example would be often people talk about stocks in the same way. Some of the best performing stocks tend to go down. These phenomena could all be examples of so called regression to the mean. We will talk about why these happen and whether or not something is intrinsic or whether it is a regression to the mean effect. Regression to the mean was invented by Francis Galton. We like to think of regression to the mean by thinking of the case where it's a 100% regression to the mean. So imagine if we were to simulate pairs of standard normals, i.e. they have nothing to do with one another, they're independent standard normals. If we were to take the largest one, the chance that its pair in the second vector is smaller will be high. And this is simply saying that the probability that $Y$ is less than $X$, given $X$ is going to get bigger as $X$ heads to very large values. The same thing in other words, is that probability $Y$ is greater than $X$. Given that $X$ equals $X$ is going to get bigger as $X$ heads to smaller values. This extreme version of regression in the mean where there's 100% regression to the mean is what we like to think about. 
 
 
+* $P(Y < x | X = x)$ gets bigger as $x$ heads into the very large values.
+* $P(Y > x | X = x)$ gets bigger as $x$ heads to very small values.
+
+However, in most cases there's some blend of some, some intrinsic component, and a noise. For example, consider a scenario where every student in this class takes two very challenging quizzes. While those at the top likely have a better understanding of the material, quizzes are imperfect instruments, introducing inherent error or noise. This means that even the top performers might benefit from some luck or randomness. Consequently, a top performer, who probably knows the material a bit better than others, may experience a slight dip in performance on the second quiz due to this inherent variability. Conversely, even the worst performers might fare a bit better on one quiz due to chance. This concept extends beyond academics. It's intriguing to reflect on how much of the discussion about sports revolves around the idea of regression to the mean. For instance, a baseball player with a phenomenal batting average one year might experience a slightly lower average the next year, illustrating the natural tendency for extreme performances to move closer to the average over time. The question is are these examples of just regression to the mean? If so, it would be nice to figure out how to quantify it. This is what Francis Galton did with regression in the first treatment of regression to the mean. 
+
+Let's delve into how Francis Galton employed the concept of regression, particularly using correlation, which is intimately related to linear regression. The goal is to quantify regression to the mean, and I'll illustrate this with a visual representation. Before delving into the R code, let me outline the setup.
+
+In this case, I'm assigning $X$ to be the child's height and $Y$ to be the parent's height. I'm using a dataset where the parent is a single parent, specifically the father. Both the $X$ and $Y$ values have been normalized, meaning they have a mean of 0 and a variance of 1. Assuming you're familiar with this normalization process, the regression line will pass through the point (0, 0). Notably, regardless of whether the child's height is the outcome or the parent's height is the outcome, the slope of the regression line is simply the correlation.
+
+Now, a quirk worth mentioning when creating the plot is that if $X$ is the outcome and you happen to plot it on the horizontal axis, the slope of the line needs to be 1 over the correlation. This is due to the specific orientation of the axes. Keep this in mind as we proceed with the *R* code. In the code below we are using the dataset from the `usingR` library, specifically the `father.son` data. Here's how we define the variables:
+
+- `Y`: Son's heights, normalized by subtracting the mean and dividing by the standard deviation.
+- `X`: Father's heights, similarly normalized.
+
+Now, both `X` and `Y` should have a mean of 0 and a variance of 1.
+
+We use the Greek letter $\rho$ (`rho`) to represent the correlation between $X$ and $Y$. If you would check the value of `rho`, turns out to be about 0.5. This indicates a correlation of 0.5 between the father's height and the son's height.
+
+Now, let's create the plot. After loading the `ggplot2` library, we assign the ggplot to the variable `g` and adding points with a black background and salmon-colored foreground. The use of alpha blending makes the points somewhat transparent. We set the x-axis and y-axis limits to be -4 to +4 on both axes. This range is chosen as it should cover most of the data, considering the extremely low probability of standardized random variables being below -4 or above +4. Chebyshev's theorem supports this choice, especially if you've covered it in the Statistical Inference course. Next, we add a layer for the identity line. Afterward, we'll add the horizontal and vertical axes.
+
+
+```r
+library(UsingR)
+data(father.son)
+y <- (father.son$sheight - mean(father.son$sheight)) / sd(father.son$sheight)
+x <- (father.son$fheight - mean(father.son$fheight)) / sd(father.son$fheight)
+rho <- cor(x, y)
+library(ggplot2)
+g = ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+g = g + geom_point(size = 6, colour = "black", alpha = 0.2)
+g = g + geom_point(size = 4, colour = "salmon", alpha = 0.2)
+g = g + xlim(-4, 4) + ylim(-4, 4)
+g = g + geom_abline(intercept = 0, slope = 1)
+g = g + geom_vline(xintercept = 0)
+g = g + geom_hline(yintercept = 0)
+g = g + geom_abline(intercept = 0, slope = rho, size = 2)
+g = g + geom_abline(intercept = 0, slope = 1 / rho, size = 2)
+g = ggplot(data.frame(x, y), aes(x = x, y = y))
+g = g + geom_point(size = 5, alpha = .2, colour = "black")
+g = g + geom_point(size = 4, alpha = .2, colour = "red")
+g = g + geom_vline(xintercept = 0)
+g = g + geom_hline(yintercept = 0)
+g = g + geom_abline(position = "identity")
+```
+
+```
+## Warning: Ignoring unknown parameters: position
+```
+
+```r
+g
+```
+
+![](resources/images/Week01_files/figure-docx/unnamed-chunk-16-1.png)<!-- -->
+
+Now, let's create two lines. First, we'll treat the son's height as the outcome and the father's height as the predictor. Then, we'll add the line treating the son's height as the predictor and the father's height as the outcome. Since the axes are rotated, the slope needs to be 1 over `rho`.
+
+
+```r
+library(UsingR)
+data(father.son)
+y <- (father.son$sheight - mean(father.son$sheight)) / sd(father.son$sheight)
+x <- (father.son$fheight - mean(father.son$fheight)) / sd(father.son$fheight)
+rho <- cor(x, y)
+library(ggplot2)
+g = ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+g = g + geom_point(size = 6, colour = "black", alpha = 0.2)
+g = g + geom_point(size = 4, colour = "salmon", alpha = 0.2)
+g = g + xlim(-4, 4) + ylim(-4, 4)
+g = g + geom_abline(intercept = 0, slope = 1)
+g = g + geom_vline(xintercept = 0)
+g = g + geom_hline(yintercept = 0)
+g = g + geom_abline(intercept = 0, slope = rho, size = 2)
+g = g + geom_abline(intercept = 0, slope = 1 / rho, size = 2)
+g = ggplot(data.frame(x, y), aes(x = x, y = y))
+g = g + geom_point(size = 5, alpha = .2, colour = "black")
+g = g + geom_point(size = 4, alpha = .2, colour = "red")
+g = g + geom_vline(xintercept = 0)
+g = g + geom_hline(yintercept = 0)
+g = g + geom_abline(position = "identity")
+```
+
+```
+## Warning: Ignoring unknown parameters: position
+```
+
+```r
+g = g + geom_abline(intercept = 0, slope = rho, size = 2)
+g = g + geom_abline(intercept = 0, slope = 1 / rho, size = 2)
+g = g + xlab("Father's height, normalized")
+g = g + ylab("Son's height, normalized")
+g
+```
+
+![](resources/images/Week01_files/figure-docx/unnamed-chunk-17-1.png)<!-- -->
+
+Now, let's discuss regression to the mean in relation to this plot. If the observations perfectly aligned on a line, it would be the identity line, given that both $X$ and $Y$ have been normalized. The father's height is plotted as the $X$ variable, and the son's height is plotted as the $Y$ variable. For instance, if we had a father's height of 2 with no noise, the prediction for the son's height would also be 2, representing 2 standard deviations above the mean for both fathers and sons.
+
+However, in the presence of noise, the prediction deviates from 2 but falls on the regression line. This prediction is obtained by multiplying the father's height (=2) by the slope (=correlation). The result is a prediction between 2 and 0, precisely 2 multiplied by the correlation. This phenomenon is known as regression to the mean. The extent to which this correlation is shrunk towards the horizontal line indicates the degree of regression to the mean.
+
+Consider the extreme cases for better understanding. In a scenario with no noise, the line would fall perfectly on the identity line. Conversely, if there was only noise, indicating no informative relationship between father's and son's heights (correlation = 0), the line would lie on the horizontal axis, predicting a constant height of 0 for sons based on fathers. This concept holds when considering the son's height as the predictor and the father's height as the outcome. The regression to the mean is observed in how much the line is shrunk towards the vertical axis. This notion, introduced by Francis Galton, played a pivotal role in the development of modern regression. Although it remains a fundamental idea, regression to the mean continues to have significance in statistical analyses, particularly in the study of longitudinal data where it's crucial to consider this phenomenon.
+
+In summary:
+* If you had to predict a son's normalized height, it would be $Cor(Y, X) * X_i$ 
+* If you had to predict a father's normalized height, it would be $Cor(Y, X) * Y_i$
+* Multiplication by this correlation shrinks toward 0 (regression toward the mean)
+* If the correlation is 1 there is no regression to the mean (if father's height perfectly determine's child's height and vice versa)
+* Note, regression to the mean has been thought about quite a bit and generalized 
+  
 ## Practical R Exercises in swirl
 
 
