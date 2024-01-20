@@ -188,9 +188,18 @@ coef(fit2)
 ```
 
 As you notice in code: `lm` is again the linear model procedure, the outcome stays the same and we use `carat - mean(carat)`, and the `I` is to indicate that we want to do arithmetic on the variable. So, we want to subtract the mean of the carat variable from the carat variable. This is a way to mean center the variable. 
-As we expected the slope stays the same, 3,721, but the intercept has changed to $500$, meaning $\$ 500$, Singapore dollars is the expected price of the average sized diamond. In this case, the average diamond is about 0.2 carats. A one carat increase is actually kind of big. What about changing the units to one-tenth of a carat? We can do this just by dividing the coefficient by ten. So we know that we would expect to see a $372 increase in price for every %0.1$ of a carat increase in the mass of a diamond. 
+As we expected the slope stays the same, 3,721, but the intercept has changed to $500$, meaning $\$ 500$, Singapore dollars is the expected price of the average sized diamond. In this case, the average diamond is about 0.2 carats. A one carat increase is actually kind of big. What about changing the units to one-tenth of a carat? We can do this just by dividing the coefficient by ten. So we know that we would expect to see a $\$372$ increase in price for every $0.1$ of a carat increase in the mass of a diamond. 
 
 
+```r
+fit3 <- lm(price ~ I(carat/10), data = diamond)
+coef(fit3)
+```
+
+```
+## (Intercept) I(carat/10) 
+##   -259.6259  37210.2485
+```
 
 In the linear model fit instead of putting in carat, we put in $carat * 10$, the units of this new variable is one-tenth of a carat. The data is of course, still the diamond dataset.
 
@@ -240,7 +249,7 @@ lines(c(0.34, 0.34, 0.12),
 text(newx, rep(250, 3), labels = newx, pos = 2)
 ```
 
-![](resources/images/Week02_files/figure-docx/unnamed-chunk-6-1.png)<!-- -->
+![](resources/images/Week02_files/figure-docx/unnamed-chunk-7-1.png)<!-- -->
 
 To illustrate, here's our observe data points in blue. The fitted values when we do the predict command, the fitted values in red all of the observed $X$ values and their associated fitted points on the line. These are if we were to draw vertical lines from the observed data points on to the fitted line, they would occur on these red points. When we predicted a new value of $X$, we're finding a point along this horizontal axis. In this example we want, 0.16, 0.27 and 0.34. We're drawing a line up to the fitted regression line and then over to dollars and those are our predicted dollar amounts.
 
