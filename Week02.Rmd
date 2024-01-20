@@ -63,7 +63,7 @@ If we would like to guess the outcome at a particular value of the predictor, sa
 This doesn't mean that we can only predict at the fitted values. We can predict at any value of $X$ by plugging in the value of $X$ into the equation. However, we're going to have more reasonable predictions if the value of $X$ that we plug in is in the cloud of data that we used to build the model. Later on, we'll also talk about how to account for that kind of uncertainty with prediction intervals. But for the time being, let's just talk about how we get a prediction. Let's go through an example to interpret the regression
 coefficients and show running of the regression coefficient. The dataset is the diamond dataset from the `UsingR` package. The data is diamond prices in Singapore dollars and diamond weight in carats, which is a standard measure of diamond mass. 
 
-```{r, echo = T, eval = T}
+```{r, echo = T, eval = F}
 library(UsingR)
 data(diamond)
 library(ggplot2)
@@ -75,6 +75,20 @@ g = g + geom_point(size = 5, colour = "blue", alpha=0.2)
 g = g + geom_smooth(method = "lm", colour = "black")
 g
 ```
+
+```{r, echo = F, eval = T}
+suppressMessages(library(UsingR))
+suppressMessages(data(diamond))
+suppressMessages(library(ggplot2))
+g = ggplot(diamond, aes(x = carat, y = price))
+g = g + xlab("Mass (carats)")
+g = g + ylab("Price (SIN $)")
+g = g + geom_point(size = 7, colour = "black", alpha=0.5)
+g = g + geom_point(size = 5, colour = "blue", alpha=0.2)
+g = g + geom_smooth(method = "lm", colour = "black")
+g
+```
+
 In this code we assign variable `g` to the `ggplot`, the dataset is diamond, the aesthetic has the horizontal axis variable as carat and the y-axis variable as price, we add a layer where the xlab is `Mass in carats` and the y label price in Singapore dollars. We also add the points of the black background and then a light alpha blending color on top. Afterwards we add a layer that is `geom_smooth` where `method = "lm"` will add the regression line. If you omit any arguments, it's just going to assume the regression
 line with $Y$ as the outcome and $X$ as the predictor. Finally, we indicate the color of the regression line as black and call the plot.
 
