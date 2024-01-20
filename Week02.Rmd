@@ -102,12 +102,9 @@ coef(fit2)
 ```
 
 As you notice in code: `lm` is again the linear model procedure, the outcome stays the same and we use `carat - mean(carat)`, and the `I` is to indicate that we want to do arithmetic on the variable. So, we want to subtract the mean of the carat variable from the carat variable. This is a way to mean center the variable. 
-As we expected the slope stays the same, 3,721, but the intercept has changed to $500$, meaning $500$, Singapore dollars is the expected price of the average sized diamond. In this case, the average diamond is about 0.2 carats. A one carat increase is actually kind of big. What about changing the units to one-tenth of a carat? We can do this just by dividing the coefficient by ten. So we know that we would expect to see a $372 increase in price for every %0.1$ of a carat increase in the mass of a diamond. 
+As we expected the slope stays the same, 3,721, but the intercept has changed to $500$, meaning $\$ 500$, Singapore dollars is the expected price of the average sized diamond. In this case, the average diamond is about 0.2 carats. A one carat increase is actually kind of big. What about changing the units to one-tenth of a carat? We can do this just by dividing the coefficient by ten. So we know that we would expect to see a $372 increase in price for every %0.1$ of a carat increase in the mass of a diamond. 
 
-```{r, echo = T, eval = T}
-fit3 <- lm(price ~ carat/10, data = diamond)
-coef(fit3)
-```
+
 
 In the linear model fit instead of putting in carat, we put in $carat * 10$, the units of this new variable is one-tenth of a carat. The data is of course, still the diamond dataset.
 
