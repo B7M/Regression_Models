@@ -27,6 +27,7 @@ practical-r-exercises-in-swirl
 week-1-quiz
 week-2
 statistical-linear-regression-models
+statistical-linear-regression-models-1
 residuals
 inference-in-regression
 for-the-project
