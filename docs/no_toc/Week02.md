@@ -63,59 +63,6 @@ coefficients and show running of the regression coefficient. The dataset is the 
 
 ```r
 library(UsingR)
-```
-
-```
-## Loading required package: MASS
-```
-
-```
-## Loading required package: HistData
-```
-
-```
-## Loading required package: Hmisc
-```
-
-```
-## Loading required package: lattice
-```
-
-```
-## Loading required package: survival
-```
-
-```
-## Loading required package: Formula
-```
-
-```
-## Loading required package: ggplot2
-```
-
-```
-## 
-## Attaching package: 'Hmisc'
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     format.pval, units
-```
-
-```
-## 
-## Attaching package: 'UsingR'
-```
-
-```
-## The following object is masked from 'package:survival':
-## 
-##     cancer
-```
-
-```r
 data(diamond)
 library(ggplot2)
 g = ggplot(diamond, aes(x = carat, y = price))
@@ -127,11 +74,13 @@ g = g + geom_smooth(method = "lm", colour = "black")
 g
 ```
 
+
 ```
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-<img src="resources/images/Week02_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
 In this code we assign variable `g` to the `ggplot`, the dataset is diamond, the aesthetic has the horizontal axis variable as carat and the y-axis variable as price, we add a layer where the xlab is `Mass in carats` and the y label price in Singapore dollars. We also add the points of the black background and then a light alpha blending color on top. Afterwards we add a layer that is `geom_smooth` where `method = "lm"` will add the regression line. If you omit any arguments, it's just going to assume the regression
 line with $Y$ as the outcome and $X$ as the predictor. Finally, we indicate the color of the regression line as black and call the plot.
 
@@ -249,7 +198,7 @@ lines(c(0.34, 0.34, 0.12),
 text(newx, rep(250, 3), labels = newx, pos = 2)
 ```
 
-<img src="resources/images/Week02_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 To illustrate, here's our observe data points in blue. The fitted values when we do the predict command, the fitted values in red all of the observed $X$ values and their associated fitted points on the line. These are if we were to draw vertical lines from the observed data points on to the fitted line, they would occur on these red points. When we predicted a new value of $X$, we're finding a point along this horizontal axis. In this example we want, 0.16, 0.27 and 0.34. We're drawing a line up to the fitted regression line and then over to dollars and those are our predicted dollar amounts.
 
