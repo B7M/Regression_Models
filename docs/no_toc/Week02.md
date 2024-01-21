@@ -63,6 +63,59 @@ coefficients and show running of the regression coefficient. The dataset is the 
 
 ```r
 library(UsingR)
+```
+
+```
+## Loading required package: MASS
+```
+
+```
+## Loading required package: HistData
+```
+
+```
+## Loading required package: Hmisc
+```
+
+```
+## Loading required package: lattice
+```
+
+```
+## Loading required package: survival
+```
+
+```
+## Loading required package: Formula
+```
+
+```
+## Loading required package: ggplot2
+```
+
+```
+## 
+## Attaching package: 'Hmisc'
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+```
+
+```
+## 
+## Attaching package: 'UsingR'
+```
+
+```
+## The following object is masked from 'package:survival':
+## 
+##     cancer
+```
+
+```r
 data(diamond)
 library(ggplot2)
 g = ggplot(diamond, aes(x = carat, y = price))
@@ -74,12 +127,11 @@ g = g + geom_smooth(method = "lm", colour = "black")
 g
 ```
 
-
 ```
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-<img src="resources/images/Week02_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
 In this code we assign variable `g` to the `ggplot`, the dataset is diamond, the aesthetic has the horizontal axis variable as carat and the y-axis variable as price, we add a layer where the xlab is `Mass in carats` and the y label price in Singapore dollars. We also add the points of the black background and then a light alpha blending color on top. Afterwards we add a layer that is `geom_smooth` where `method = "lm"` will add the regression line. If you omit any arguments, it's just going to assume the regression
 line with $Y$ as the outcome and $X$ as the predictor. Finally, we indicate the color of the regression line as black and call the plot.
@@ -174,7 +226,7 @@ predict(fit, newdata = data.frame(carat = newx))
 ```
 
 Often, you don't want to do even that much coding, you want to more general method, especially when you get lots of regression variables. So there's this general method called
-predict that will take the output from several different kinds of model fits. Linear models are one example, but predict is a generic function, and it applies to several different prediction models. The new data is a `data.frame` that has the new values of $X$ for the carat variable. Then when we do that, what you'll see is the same answer. The difference is that it scales up when we have lots of regressors in much more complicated settings. In general, we want to predict using the predict function. If you omit this new data statement if you just do predict fit, it predicts at the observed $X$ values, so it gives you the $\hat Y$ values. If you want it at new $X$ values, you have to give it this new data argument.
+predict that will take the output from several different kinds of model fits. Linear models are one example, but predict is a generic function, and it applies to several different prediction models. The new data is a `data.frame(catar=newx)` that has the new values of $X$ for the carat variable. Then when we do that, what you'll see is the same answer. The difference is that it scales up when we have lots of regressors in much more complicated settings. In general, we want to predict using the predict function. If you omit this new data statement if you just do predict fit, it predicts at the observed $X$ values, so it gives you the $\hat Y$ values. If you want it at new $X$ values, you have to give it this new data argument.
 
 
 ```r
@@ -198,17 +250,307 @@ lines(c(0.34, 0.34, 0.12),
 text(newx, rep(250, 3), labels = newx, pos = 2)
 ```
 
-<img src="resources/images/Week02_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 To illustrate, here's our observe data points in blue. The fitted values when we do the predict command, the fitted values in red all of the observed $X$ values and their associated fitted points on the line. These are if we were to draw vertical lines from the observed data points on to the fitted line, they would occur on these red points. When we predicted a new value of $X$, we're finding a point along this horizontal axis. In this example we want, 0.16, 0.27 and 0.34. We're drawing a line up to the fitted regression line and then over to dollars and those are our predicted dollar amounts.
 
 ## Residuals
 
+Residuals represent variation left unexplained by our model. We emphasize the difference between residuals and errors. The errors unobservable true errors from the known coefficients, while residuals are the observable errors from the estimated coefficients. In a sense, the residuals are estimates of the errors.  
 
+To begin, let's delve into our illustrative example featuring the diamond dataset. It's important to recall that in this dataset, the diamonds are priced in Singapore dollars. The key variable under consideration is the weight of the diamonds, expressed in carats. Our objective is to explore the correlation between the weight of diamonds and their corresponding prices, seeking to understand how variations in diamond prices can be elucidated by their mass.
+
+
+```r
+library(UsingR)
+data(diamond)
+library(ggplot2)
+g = ggplot(diamond, aes(x = carat, y = price))
+g = g + xlab("Mass (carats)")
+g = g + ylab("Price (SIN $)")
+g = g + geom_smooth(method = "lm", colour = "black")
+g = g + geom_point(size = 7, colour = "black", alpha=0.5)
+g = g + geom_point(size = 5, colour = "blue", alpha=0.2)
+g
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+
+Now, our focus is on elucidating the price (on the vertical axis) through the mass (on the horizontal axis). Without taking mass into account, we'd have a scatter of points projecting onto the vertical axis, displaying considerable variation. Disregarding mass would result in a notable amount of unexplained variation. However, when we factor in mass, the variation diminishes, as we're now examining the variation around the regression line.
+
+This remaining variation around the regression line is termed residual variation. It represents the portion of variation that persists even after accounting for mass. Initially, there is substantial variation, a significant portion of which is clarified by the linear relationship with mass. Nonetheless, there remains some residual variation. These residual distances are referred to as residuals, and they constitute the focal point of today's lecture. Residuals prove to be valuable for various diagnostic purposes, including assessing model fit. Let's refresh our memory regarding the model under consideration.
+
+The outcome in our example,price, is $Y_i$, which we're assuming is a line. Observed outcome $i$ is $Y_i$ at predictor value $X_i$, predicted outcome $i$ is $\hat Y_i$ at predictor value $X_i$ is $\hat Y_i = \hat \beta_0 + \hat \beta_1 X_i$. Residual, the between the observed and predicted outcome $e_i = Y_i - \hat Y_i$, which is the vertical distance between the observed data point and the regression line where least squares minimizes $\sum_{i=1}^n e_i^2$. In essence, it was minimizing the sum of the squared residual, summation $e_i$ squared. One way to think about the residuals are as an estimate of $\epsilon_i$, though, you have to be careful with that, because as we will see later on, we can decrease the residuals just by adding irrelevant regressors into the equation. Let's talk about some aspects of residuals that will help us interpret them. 
+
+* $E[e_i] = 0$. (Their population's expected value is zero.)
+* If an intercept is included, $\sum_{i=1}^n e_i = 0$ (Their empirical sum, hence the empirical mean also, is zero if you include an intercept.If you don't include an intercept, this property doesn't have to hold.)
+* If a regressor variable, $X_i$, is included in the model $\sum_{i=1}^n e_i X_i = 0$. (The generalization of this property is, if you include any regression term in linear regression, the sum of the residuals times that regression variable has to be zero.)
+* Residuals are useful for investigating poor model fit. (We can create plots that highlight the aspects of poor model fit.)
+* Positive residuals are above the line, negative residuals are below.
+* Residuals can be thought of as the outcome ($Y$) with the linear association of the predictor ($X$) removed. (A common use of residuals is to think of them as the outcome $Y$ with the linear influence of the predictor $X$ having been removed. For example, if we wanted to in some subsequent model or some subsequent analysis diamond prices, but in a way that has already been adjusted for their weight, calibrating all the diamond prices to be on the same scale regardless of their weight, we would take those residuals from the model fit that has diamond prices as the outcome, and weight as the predictor.)
+* One differentiates residual variation (variation after removing the predictor) from systematic variation (variation explained by the regression model). (It's very common to take residuals and carry them forward in a later analysis where you want to think of them as the, the new outcome, having removed the predictor at that point. But, remember with linear regression, you're only removing the linear component of the predictor. One should differentiate between residual variation, which is variation that is left over after the explanatory variable has been accounted for in a linear fashion, from systematic variation, which is variation explained by the regression model. Again, residual plots can highlight poor model fit. And, we are going to go through some residual plots.)
+* Residual plots highlight poor model fit.
+
+Let's walk through calculating residuals in this example we're going to use the diamond dataset. 
+
+
+```r
+data(diamond)
+y <- diamond$price; x <- diamond$carat; n <- length(y)
+fit <- lm(y ~ x)
+e <- resid(fit)
+yhat <- predict(fit)
+max(abs(e -(y - yhat)))
+```
+
+```
+## [1] 8.242296e-13
+```
+
+```r
+max(abs(e - (y - coef(fit)[1] - coef(fit)[2] * x)))
+```
+
+```
+## [1] 8.242296e-13
+```
+
+We redefine price as `y` and `x` as carat, `n` as the length of the number of pairs. We assign the linear regression object from `lm` to variable `fit`. To get the residuals we `resid(fit)`, and we assign that to `e`. We also get the fitted values by `predict(fit)` and assign that to `yhat`. We can check that the residuals are the difference between the observed outcome and the predicted outcome. We can also check that the residuals are the difference between the observed outcome and the intercept plus the slope times the predictor. To show you that residual's calculated via `resid()` functions are the same as the residuals that we calculate manually we take the absolute difference between `y - yhat` and `e` and find the one is on the scale of $10^{-13}$ i.e, up to numerical precision, it's the same thing. Then lastly, we want to show that the residuals are the difference between the observed outcome and the intercept plus the slope times the predictor, again up to numeric precision, exactly the same. To obtain the residuals, the preferred method is to use `resid()`. However, by demonstrating an alternative code, we aim to shed light on the underlying process of "res" and the specific computation performed by `resid()`. Ultimately, we would like to demonstrate that the total sum of the residuals equals zero. Technically, it's $10^{-14}$, which is sufficiently close to zero. Additionally, the sum of the residuals multiplied by the price variable `x`` must also be zero—albeit at $10^{-15}$. Therefore, in numerical terms, both cases effectively amount to zero. These residuals represent the magnitudes of the deviations depicted by the red line in the accompanying plot.
+
+
+```r
+plot(diamond$carat, diamond$price,  
+     xlab = "Mass (carats)", 
+     ylab = "Price (SIN $)", 
+     bg = "lightblue", 
+     col = "black", cex = 2, pch = 21,frame = FALSE)
+abline(fit, lwd = 2)
+for (i in 1 : n) 
+  lines(c(x[i], x[i]), c(y[i], yhat[i]), col = "red" , lwd = 2)
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+Notice all of the blank space in the graph, making the plot kind of useless for that purpose, why don't we plot the residuals on the vertical axis versus mass on the horizontal axis?
+
+
+```r
+plot(x, e,  
+     xlab = "Mass (carats)", 
+     ylab = "Residuals (SIN $)", 
+     bg = "lightblue", 
+     col = "black", cex = 2, pch = 21,frame = FALSE)
+abline(h = 0, lwd = 2)
+for (i in 1 : n) 
+  lines(c(x[i], x[i]), c(e[i], 0), col = "red" , lwd = 2)
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+
+Now we can see the residual variation much more clearly. One important point is: the residuals should be mostly patternless. Also, remember that if you include an intercept, residuals have to sum to zero. We can see some interesting patterns by honing in on the residual plot here. For example, we can see that there were lots of diamonds of exactly the same mass which gets lost in the scatter plot. Next, we want to go through some pathological residual plots, just to highlight what residual plots can do for us. 
+
+
+```r
+x = runif(100, -3, 3); y = x + sin(x) + rnorm(100, sd = .2); 
+library(ggplot2)
+g = ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+g = g + geom_smooth(method = "lm", colour = "black")
+g = g + geom_point(size = 7, colour = "black", alpha = 0.4)
+g = g + geom_point(size = 5, colour = "red", alpha = 0.4)
+g
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+
+Here X is just going to be uniform $[-3,3]$, `y` is equal to `x`, so it's an identity line, but then we add another term that's `sin(x)`. This looks like an identity line, but kind of oscillating around it a little bit with some normal noise on top of it. Before we move on to the residual plot, let us make a comment. This model is actually not the correct model for this data and this might happen in practice. This doesn't mean that this model is unimportant, right? There is a linear trend and the model is accounting for it, it's just not accounting for the secondary variation in the `sin` term. To emphasize just because you aren't fitting the actually correct model, that doesn't mean the model is itself useless, in regression, having the exact right model is not always the primary goal. You can get meaningful information about trends from incorrect models. 
+
+Let's me plot the residuals' versus the `x` variable.
+
+
+```r
+g = ggplot(data.frame(x = x, y = resid(lm(y ~ x))), 
+           aes(x = x, y = y))
+g = g + geom_hline(yintercept = 0, size = 2); 
+g = g + geom_point(size = 7, colour = "black", alpha = 0.4)
+g = g + geom_point(size = 5, colour = "red", alpha = 0.4)
+g = g + xlab("X") + ylab("Residual")
+g
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+
+You can see that the `sin` term is now extremely apparent. This is what the residual plot has done highlighting the model inadequacy. Another example is the following plot, where by appearances, the plot falls perfectly on a line.
+
+
+```r
+x <- runif(100, 0, 6); y <- x + rnorm(100,  mean = 0, sd = .001 * x); 
+g = ggplot(data.frame(x = x, y = y), aes(x = x, y = y))
+g = g + geom_smooth(method = "lm", colour = "black")
+g = g + geom_point(size = 7, colour = "black", alpha = 0.4)
+g = g + geom_point(size = 5, colour = "red", alpha = 0.4)
+g
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+
+But when you highlight the residuals, it looks quite different.
+
+
+```r
+g = ggplot(data.frame(x = x, y = resid(lm(y ~ x))), 
+           aes(x = x, y = y))
+g = g + geom_hline(yintercept = 0, size = 2); 
+g = g + geom_point(size = 7, colour = "black", alpha = 0.4)
+g = g + geom_point(size = 5, colour = "red", alpha = 0.4)
+g = g + xlab("X") + ylab("Residual")
+g
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+
+Plotting the residuals shows the trend toward greater variability as you head along the `x` variable. That property,
+where the variability increases with the x variables called heteroscedasticity. Heteroscedasticity is one of those things
+that residual plots are quite good at diagnosing and you couldn't see it. 
+
+Let's run the residual plot for the diamond data.
+
+
+```r
+diamond$e <- resid(lm(price ~ carat, data = diamond))
+g = ggplot(diamond, aes(x = carat, y = e))
+g = g + xlab("Mass (carats)")
+g = g + ylab("Residual price (SIN $)")
+g = g + geom_hline(yintercept = 0, size = 2)
+g = g + geom_point(size = 7, colour = "black", alpha=0.5)
+g = g + geom_point(size = 5, colour = "blue", alpha=0.2)
+g
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
+The x-label is Mass in carats, the y-label is Residual price and just to emphasize the residuals have the same units as the ys. There doesn't appear to be a lot of pattern in the plot, meaning it's a pretty good fit. 
+
+Let us illustrate something about variability in a diamond dataset that will help us set the stage for defining some new properties about our regression model fit. So we create two residual vectors. The first residual vector is the one where we just fit an intercept, so the residuals are just the deviations around the average price. The second is the variation around the regression line with carats as the explanatory variable and price as the outcome. Then we create a factor variable that labels the set of residuals. The first one is labeled as a bunch of intercept only model residuals and the second set is labeled as a bunch of intercept and slope residuals.
+
+
+```r
+e = c(resid(lm(price ~ 1, data = diamond)),
+      resid(lm(price ~ carat, data = diamond)))
+fit = factor(c(rep("Itc", nrow(diamond)),
+               rep("Itc, slope", nrow(diamond))))
+g = ggplot(data.frame(e = e, fit = fit), aes(y = e, x = fit, fill = fit))
+g = g + geom_dotplot(binaxis = "y", size = 2, stackdir = "center", binwidth = 20)
+```
+
+```
+## Warning: Ignoring unknown parameters: size
+```
+
+```r
+g = g + xlab("Fitting approach")
+g = g + ylab("Residual price")
+g
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+
+What we see on the left-hand plot with just the intercept is the variation in diamond prices around the average diamond price. What we're seeing in the rightmost plot is displaying the variation around the regression line. So we have explained a lot of the variation with the relationship with mass. We're going to talk about $R^2$, which basically says, we can decompose the total variation, the variation explained by the regression model and the variation that's left over after accounting for the regression model.
+
+Residual variation is the variation around the regression line ($Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$ where $\epsilon_i \sim N(0, \sigma^2)$). The residuals are the vertical distances between the outcomes and the fitted regression line. If we include an intercept, the residuals have to sum to zero, which means their mean is zero. 
+The variance of the residuals, is the average squared residual ($\sigma^2$ is $\frac{1}{n}\sum_{i=1}^n e_i^2$).
+Most people use $\hat \sigma^2 = \frac{1}{n-2}\sum_{i=1}^n e_i^2$, they $n-2$ instead of $n$ so that $E[\hat \sigma^2] = \sigma^2$.
+The way to think about that is, we include the intercept the residuals have to sum to zero, that puts a constraint. If you know n minus one of them, then, you know the $n^{th}$ if you have a line term in there, if you have a co-variant in there, then, that puts a second constrain on the residuals. So, you lose two degrees of freedom. If you put another regression variable in there, you have another constraint, you lose three degrees of freedom. So in that sense you really don't have n residuals, you have $n-2$ of them, because if you knew $n-2$ of them you could figure out the last two. And that's why it's one over $n-2$.
+You can grab the residual variation out of the `lm` fit and assign it to a variable.
+
+
+```r
+y <- diamond$price; x <- diamond$carat; n <- length(y)
+fit <- lm(y ~ x)
+summary(fit)$sigma
+```
+
+```
+## [1] 31.84052
+```
+
+```r
+sqrt(sum(resid(fit)^2) / (n - 2))
+```
+
+```
+## [1] 31.84052
+```
+
+If you want to grab it as an object that you can assign to something, just put dollar sign sigma. Then you can assign sigma to any other variable. The line `sqrt(sum(resid(fit)^2) / (n - 2))` will result in the value and is showing what the `lm` function is doing behind the scenes.
+
+Now let's go back to the following plot where we look at the total variability in diamond prices, and compare what happens to the variability when we explain some of that variability with a regression line. 
+
+
+```r
+e = c(resid(lm(price ~ 1, data = diamond)),
+      resid(lm(price ~ carat, data = diamond)))
+fit = factor(c(rep("Itc", nrow(diamond)),
+               rep("Itc, slope", nrow(diamond))))
+g = ggplot(data.frame(e = e, fit = fit), aes(y = e, x = fit, fill = fit))
+g = g + geom_dotplot(binaxis = "y", size = 2, stackdir = "center", binwidth = 20)
+```
+
+```
+## Warning: Ignoring unknown parameters: size
+```
+
+```r
+g = g + xlab("Fitting approach")
+g = g + ylab("Residual price")
+g
+```
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+
+The total variability is just the deviations of the data, $\sum_{i=1}^n (Y_i - \bar Y)^2$ the average squared deviation of the data around its mean. To make things easy, let's forget about the denominator and just talk about the sum of the squared deviations. We might call the regression variability as the component of that variability that then gets explained away by the regression line. We would take the points on the regression line, the heights, which is the variability in the response and explained by the regression line, $\sum_{i=1}^n  (\hat Y_i - \bar Y)^2$. The error variability is what's leftover around the regression line $\sum_{i=1}^n (Y_i - \hat Y_i)^2$.
+The interesting identity is that the total variability disregarding everything except for where they're centered at is equal to the regression variability, that is the variability
+explained by the model plus the residual variability, the variability left over and not explained by the model.
+$$
+\sum_{i=1}^n (Y_i - \bar Y)^2 
+= \sum_{i=1}^n (Y_i - \hat Y_i)^2 + \sum_{i=1}^n  (\hat Y_i - \bar Y)^2 
+$$
+Because the residual variation and the regression model variation add up to the total variation we can define a quantity that represents the percentage of the total variation that's represented by the model. This is called the coefficient of determination, $R^2$. R squared is the percentage of the total variability that is explained by the linear relationship with the predictor
+$$
+R^2 = \frac{\sum_{i=1}^n  (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2}
+$$
+So R squared for our diamond example, is the percentage of the variation in diamond price, that is explained by the regression relationship with mass.
+
+**Some facts about $R^2$:**
+
+* $R^2$ is the percentage of variation explained by the regression model.
+* $0 \leq R^2 \leq 1$ (because the regression variability and the error variability and the sums of the squares add up to the total sums of squares, and they are all positive)
+* $R^2$ is the sample correlation squared. (If we define R as the sample correlation between the predictor and the outcome, then R squared is literally that sample correlation R, squared.)
+* $R^2$ can be a misleading summary of model fit. (For example, if you have somewhat noisy data and delete a lot of the points in the middle you can get a much higher R squared. Or if you just add arbitrary regression variables into a linear model fit, you increase R squared and decrease mean squared error)
+  * Deleting data can inflate $R^2$.
+  * (For later.) Adding terms to a regression model always increases $R^2$.
+
+Anscombe created a particularly stark example of a bunch of data sets with an equivalent R squared, equivalent mean, and variances in the x's and the y's, and identical regression relationships, but when you look at the scatter plots, you can see that the fit has very different meanings in each of the cases. 
+
+<img src="resources/images/Week02_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+The first is a nice regression line, exactly sort of along the lines of what we think of, when we think of just a slightly noisy x,y relationship. In the second one clearly there's a missing term in order to address some of the curvature in the data. In the third one, there's an outlier. Finally, in the fourth one, all the data stacked up at one particular location and there's one point way out at the end. So you could imagine getting this if you had the first example and you deleted a lot of the points in the middle. In all these cases you have an equivalent R squared. But the summary to the single number certainly has thrown out a lot of the important information that you get from a simple scatter plot.
 
 ## Inference in regression
 
+Inference is the process of drawing conclusions about a population using a sample. In statistical inference, we must account for the uncertainty in our estimates in a principled way. Hypothesis tests and confidence intervals are among the most common forms of statistical inference. 
 
+These statements apply generally, and, of course, to the regression setting that we've been studying. In the next few lectures, we'll cover inference in regression where we make some Gaussian assumptions about the errors.
 
 ## For the project
 
