@@ -169,8 +169,14 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1.1" data-path="week-2.html"><a href="week-2.html#statistical-linear-regression-models-1"><i class="fa fa-check"></i><b>2.1.1</b> Statistical Linear Regression Models</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="week-2.html"><a href="week-2.html#residuals"><i class="fa fa-check"></i><b>2.2</b> Residuals</a></li>
-<li class="chapter" data-level="2.3" data-path="week-2.html"><a href="week-2.html#inference-in-regression"><i class="fa fa-check"></i><b>2.3</b> Inference in regression</a></li>
+<li class="chapter" data-level="2.2" data-path="week-2.html"><a href="week-2.html#residuals"><i class="fa fa-check"></i><b>2.2</b> Residuals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="week-2.html"><a href="week-2.html#optional-reading-how-to-derive-r-squared"><i class="fa fa-check"></i><b>2.2.1</b> Optional reading How to derive R squared:</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="week-2.html"><a href="week-2.html#inference-in-regression"><i class="fa fa-check"></i><b>2.3</b> Inference in regression</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="week-2.html"><a href="week-2.html#prediction"><i class="fa fa-check"></i><b>2.3.1</b> Prediction</a></li>
+</ul></li>
 <li class="chapter" data-level="2.4" data-path="week-2.html"><a href="week-2.html#for-the-project"><i class="fa fa-check"></i><b>2.4</b> For the project</a></li>
 <li class="chapter" data-level="2.5" data-path="week-2.html"><a href="week-2.html#practical-r-exercises-in-swirl-1"><i class="fa fa-check"></i><b>2.5</b> Practical R Exercises in swirl</a></li>
 <li class="chapter" data-level="2.6" data-path="week-2.html"><a href="week-2.html#week-2-quiz"><i class="fa fa-check"></i><b>2.6</b> Week 2 Quiz</a></li>
@@ -557,20 +563,201 @@ So R squared for our diamond example, is the percentage of the variation in diam
 <p>Anscombe created a particularly stark example of a bunch of data sets with an equivalent R squared, equivalent mean, and variances in the x’s and the y’s, and identical regression relationships, but when you look at the scatter plots, you can see that the fit has very different meanings in each of the cases.</p>
 <p><img src="resources/images/Week02_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 The first is a nice regression line, exactly sort of along the lines of what we think of, when we think of just a slightly noisy x,y relationship. In the second one clearly there’s a missing term in order to address some of the curvature in the data. In the third one, there’s an outlier. Finally, in the fourth one, all the data stacked up at one particular location and there’s one point way out at the end. So you could imagine getting this if you had the first example and you deleted a lot of the points in the middle. In all these cases you have an equivalent R squared. But the summary to the single number certainly has thrown out a lot of the important information that you get from a simple scatter plot.</p>
+<div id="optional-reading-how-to-derive-r-squared" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Optional reading How to derive R squared:</h3>
+<p><span class="math display">\[
+\begin{align}
+\sum_{i=1}^n (Y_i - \bar Y)^2 
+&amp; = \sum_{i=1}^n (Y_i - \hat Y_i + \hat Y_i - \bar Y)^2 \\
+&amp; = \sum_{i=1}^n (Y_i - \hat Y_i)^2 + 
+2 \sum_{i=1}^n  (Y_i - \hat Y_i)(\hat Y_i - \bar Y) + 
+\sum_{i=1}^n  (\hat Y_i - \bar Y)^2 \\
+\end{align}
+\]</span></p>
+<div id="scratch-work" class="section level4" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Scratch work</h4>
+<p><span class="math inline">\((Y_i - \hat Y_i) = \{Y_i - (\bar Y - \hat \beta_1 \bar X) - \hat \beta_1 X_i\} = (Y_i - \bar Y) - \hat \beta_1 (X_i - \bar X)\)</span></p>
+<p><span class="math inline">\((\hat Y_i - \bar Y) = (\bar Y - \hat \beta_1 \bar X - \hat \beta_1 X_i - \bar Y ) = \hat \beta_1 (X_i - \bar X)\)</span></p>
+<p><span class="math inline">\(\sum_{i=1}^n (Y_i - \hat Y_i)(\hat Y_i - \bar Y) = \sum_{i=1}^n \{(Y_i - \bar Y) - \hat \beta_1 (X_i - \bar X))\}\{\hat \beta_1 (X_i - \bar X)\}\)</span></p>
+<p><span class="math inline">\(=\hat \beta_1 \sum_{i=1}^n (Y_i - \bar Y)(X_i - \bar X) -\hat\beta_1^2\sum_{i=1}^n (X_i - \bar X)^2\)</span></p>
+<p><span class="math inline">\(= \hat \beta_1^2 \sum_{i=1}^n (X_i - \bar X)^2-\hat\beta_1^2\sum_{i=1}^n (X_i - \bar X)^2 = 0\)</span></p>
+</div>
+<div id="the-relation-between-r-squared-and-r" class="section level4" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> The relation between R squared and r</h4>
+<p>Recall that <span class="math inline">\((\hat Y_i - \bar Y) = \hat \beta_1 (X_i - \bar X)\)</span>
+so that
+<span class="math display">\[
+R^2 = \frac{\sum_{i=1}^n  (\hat Y_i - \bar Y)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2}
+= \hat \beta_1^2  \frac{\sum_{i=1}^n(X_i - \bar X)^2}{\sum_{i=1}^n (Y_i - \bar Y)^2}
+= Cor(Y, X)^2
+\]</span>
+Since, recall,
+<span class="math display">\[
+\hat \beta_1 = Cor(Y, X)\frac{Sd(Y)}{Sd(X)}
+\]</span>
+So, <span class="math inline">\(R^2\)</span> is literally <span class="math inline">\(r\)</span> squared.</p>
+</div>
+</div>
 </div>
 <div id="inference-in-regression" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Inference in regression</h2>
 <p>Inference is the process of drawing conclusions about a population using a sample. In statistical inference, we must account for the uncertainty in our estimates in a principled way. Hypothesis tests and confidence intervals are among the most common forms of statistical inference.</p>
 <p>These statements apply generally, and, of course, to the regression setting that we’ve been studying. In the next few lectures, we’ll cover inference in regression where we make some Gaussian assumptions about the errors.</p>
+<p>Before we begin talking about inference, let’s just revisit our model so that it’s fresh in our mind. <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \epsilon_i\)</span> where <span class="math inline">\(\epsilon \sim N(0, \sigma^2)\)</span>. For the time being, we’re going to assume that the true model is known, and this will be the basis for most of this class. We also assume that you’ve seen confidence intervals and hypothesis tests before. If you feel the need, you should go back and review them. Also, remember <span class="math inline">\(\hat \beta_0 = \bar Y - \hat \beta_1 \bar X\)</span>, <span class="math inline">\(\hat \beta_1 = Cor(Y, X) \frac{Sd(Y)}{Sd(X)}\)</span>.</p>
+<p>We would like to review some of the basic concepts from statistical inference. Statistics like <span class="math inline">\(\frac{\hat \theta - \theta}{\hat \sigma_{\hat \theta}}\)</span> often have the following properties.</p>
+<ol style="list-style-type: decimal">
+<li>Is normally distributed and has a finite sample Student’s T distribution if the variance is replaced with a sample estimate (under normality assumptions).</li>
+<li>Can be used to test <span class="math inline">\(H_0 : \theta = \theta_0\)</span> versus <span class="math inline">\(H_a : \theta &gt;, &lt;, \neq \theta_0\)</span>.</li>
+<li>Can be used to create a confidence interval for <span class="math inline">\(\theta\)</span> via <span class="math inline">\(\hat \theta \pm Q_{1-\alpha/2} \hat \sigma_{\hat \theta}\)</span> where <span class="math inline">\(Q_{1-\alpha/2}\)</span> is the relevant quantile from either a normal or T distribution. (For example, if our <span class="math inline">\(\alpha\)</span> is 5%, so we want a 95% confidence interval, we take the <span class="math inline">\(97.5^{th}\)</span> quantile.)</li>
+</ol>
+<p>In the case of regression with iid sampling assumptions and normal errors, our inferences will follow very similarily to what you saw in your inference class. We won’t cover asymptotics for regression analysis, but suffice it to say that under assumptions on the ways in which the <span class="math inline">\(X\)</span> values are collected, the iid sampling model, and mean model, the normal results hold to create intervals and confidence intervals. In other words, it’s not mandatory for the errors to be Gaussian for our statistical inferences in regression to hold. You can appeal to large sample theory, though it’s a little bit more complicated.</p>
+<p>The variance of our regression slope is actually a highly informative formula. <span class="math display">\[\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \sigma^2 / \sum_{i=1}^n (X_i - \bar X)^2\]</span>
+This is variance of <span class="math inline">\(\hat \beta_1\)</span>, showing how variable the points are around the true regression line, <span class="math inline">\(\sigma^2\)</span>, and how variable my X’s are. The numerator, how variable the points are around the regression line, is somewhat understandable as to why that would get better estimates of the regression slope if that were smaller. However, it’s maybe less intuitive to understand why we want more variance in our predictor in order to get lower variance in our regression slope. To understand it imagine a dataset where the regressors, the predictors, are all packed in very tightly, closely together, then it’s clear we’re not going to estimate a very good line. It could sort of bend around that cloud of points very easily and get equivalent fits.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="week-2.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a dataset with more random points around 2.5, 2.5</span></span>
+<span id="cb110-2"><a href="week-2.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">102</span>)</span>
+<span id="cb110-3"><a href="week-2.html#cb110-3" aria-hidden="true" tabindex="-1"></a>num_points <span class="ot">&lt;-</span> <span class="dv">25</span></span>
+<span id="cb110-4"><a href="week-2.html#cb110-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">runif</span>(num_points, <span class="at">min =</span> <span class="dv">2</span>, <span class="at">max =</span> <span class="dv">3</span>)</span>
+<span id="cb110-5"><a href="week-2.html#cb110-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">runif</span>(num_points, <span class="at">min =</span> <span class="dv">2</span>, <span class="at">max =</span> <span class="dv">3</span>)</span>
+<span id="cb110-6"><a href="week-2.html#cb110-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-7"><a href="week-2.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the dataset</span></span>
+<span id="cb110-8"><a href="week-2.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, Y, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">main =</span> <span class="st">&quot;Scatterplot with Random Points around 2.5, 2.5&quot;</span>, </span>
+<span id="cb110-9"><a href="week-2.html#cb110-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;X&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Y&quot;</span>, <span class="at">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">cex=</span><span class="fl">1.75</span>)</span>
+<span id="cb110-10"><a href="week-2.html#cb110-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-11"><a href="week-2.html#cb110-11" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> <span class="fu">I</span>(X))</span>
+<span id="cb110-12"><a href="week-2.html#cb110-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">&#39;black&#39;</span>,<span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb110-13"><a href="week-2.html#cb110-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-14"><a href="week-2.html#cb110-14" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> <span class="fu">I</span>(<span class="sc">-</span>X<span class="sc">+</span><span class="dv">5</span>))</span>
+<span id="cb110-15"><a href="week-2.html#cb110-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">&#39;blue&#39;</span>,<span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="resources/images/Week02_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>On the other hand, if we spread our axis out, we will get a better fitted regression line with lower variance for the slope. It turns out the lowest you can make that variance is to push half the observations to one end and the other half of the observations to another end; however, you’re banking on having a line in between those two because you haven’t collected any data to evaluate that property.</p>
+<p>The variance of the intercept, which is maybe a little less informative because intercepts are often a little less of interest than the slopes.
+<span class="math display">\[\sigma_{\hat \beta_0}^2 = Var(\hat \beta_0)  = \left(\frac{1}{n} + \frac{\bar X^2}{\sum_{i=1}^n (X_i - \bar X)^2 }\right)\sigma^2\]</span></p>
+<p>In practice, <span class="math inline">\(\sigma\)</span> is replaced by its estimate. It’s probably not surprising that under iid Gaussian errors <span class="math inline">\(\frac{\hat \beta_j - \beta_j}{\hat \sigma_{\hat \beta_j}}\)</span> follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-2\)</span> degrees of freedom and a normal distribution for large <span class="math inline">\(n\)</span>. This can be used to create confidence intervals and perform hypothesis tests.</p>
+<p>In the following example we demonstrate the formulas we are giving are exactly the formulas that R is using when it performs its calculations.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="week-2.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(UsingR); <span class="fu">data</span>(diamond)</span>
+<span id="cb111-2"><a href="week-2.html#cb111-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> diamond<span class="sc">$</span>price; x <span class="ot">&lt;-</span> diamond<span class="sc">$</span>carat; n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span>
+<span id="cb111-3"><a href="week-2.html#cb111-3" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">cor</span>(y, x) <span class="sc">*</span> <span class="fu">sd</span>(y) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb111-4"><a href="week-2.html#cb111-4" aria-hidden="true" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(y) <span class="sc">-</span> beta1 <span class="sc">*</span> <span class="fu">mean</span>(x)</span>
+<span id="cb111-5"><a href="week-2.html#cb111-5" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> y <span class="sc">-</span> beta0 <span class="sc">-</span> beta1 <span class="sc">*</span> x</span>
+<span id="cb111-6"><a href="week-2.html#cb111-6" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(e<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n<span class="dv">-2</span>)) </span>
+<span id="cb111-7"><a href="week-2.html#cb111-7" aria-hidden="true" tabindex="-1"></a>ssx <span class="ot">&lt;-</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb111-8"><a href="week-2.html#cb111-8" aria-hidden="true" tabindex="-1"></a>seBeta0 <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> n <span class="sc">+</span> <span class="fu">mean</span>(x) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">/</span> ssx) <span class="sc">^</span> .<span class="dv">5</span> <span class="sc">*</span> sigma </span>
+<span id="cb111-9"><a href="week-2.html#cb111-9" aria-hidden="true" tabindex="-1"></a>seBeta1 <span class="ot">&lt;-</span> sigma <span class="sc">/</span> <span class="fu">sqrt</span>(ssx)</span>
+<span id="cb111-10"><a href="week-2.html#cb111-10" aria-hidden="true" tabindex="-1"></a>tBeta0 <span class="ot">&lt;-</span> beta0 <span class="sc">/</span> seBeta0; tBeta1 <span class="ot">&lt;-</span> beta1 <span class="sc">/</span> seBeta1</span>
+<span id="cb111-11"><a href="week-2.html#cb111-11" aria-hidden="true" tabindex="-1"></a>pBeta0 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(tBeta0), <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb111-12"><a href="week-2.html#cb111-12" aria-hidden="true" tabindex="-1"></a>pBeta1 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(tBeta1), <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb111-13"><a href="week-2.html#cb111-13" aria-hidden="true" tabindex="-1"></a>coefTable <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">c</span>(beta0, seBeta0, tBeta0, pBeta0), <span class="fu">c</span>(beta1, seBeta1, tBeta1, pBeta1))</span>
+<span id="cb111-14"><a href="week-2.html#cb111-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(coefTable) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Std. Error&quot;</span>, <span class="st">&quot;t value&quot;</span>, <span class="st">&quot;P(&gt;|t|)&quot;</span>)</span>
+<span id="cb111-15"><a href="week-2.html#cb111-15" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(coefTable) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb111-16"><a href="week-2.html#cb111-16" aria-hidden="true" tabindex="-1"></a>coefTable</span></code></pre></div>
+<pre><code>##              Estimate Std. Error   t value      P(&gt;|t|)
+## (Intercept) -259.6259   17.31886 -14.99094 2.523271e-19
+## x           3721.0249   81.78588  45.49715 6.751260e-40</code></pre>
+<p>We again use the diamond dataset in the <code>UsingR</code> library. Let’s define the variables y, x, n like before, and <span class="math inline">\(\beta_1 , \beta_0\)</span>. The residuals are response y minus the predicted values, <span class="math inline">\(beta_0 + \beta_1 * x\)</span>. We create the two t-statistics if you’re testing a hypothesis that <span class="math inline">\(\beta_0\)</span> is zero or <span class="math inline">\(\beta_1\)</span> is zero, that is the estimate. Here’s the estimate divided by its standard error. We don’t have to subtract off the true value, because the true value is assumed to be zero under this hypothesis. Next we calculate the two p values. If you’ve taken the inference class, then you know how to go from a t-statistic to a p value. In next step, we create the coefficient table created manually without having done any <code>lm</code> or any built in higher level R function. We specify the row names and column names.</p>
+<p>However, there is an easy way to do the same thing in R.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="week-2.html#cb113-1" aria-hidden="true" tabindex="-1"></a>coefTable</span></code></pre></div>
+<pre><code>##              Estimate Std. Error   t value      P(&gt;|t|)
+## (Intercept) -259.6259   17.31886 -14.99094 2.523271e-19
+## x           3721.0249   81.78588  45.49715 6.751260e-40</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="week-2.html#cb115-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x); </span>
+<span id="cb115-2"><a href="week-2.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##              Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept) -259.6259   17.31886 -14.99094 2.523271e-19
+## x           3721.0249   81.78588  45.49715 6.751260e-40</code></pre>
+<p>You’ll see everything is exactly the same.</p>
+<p>Next we want to get a confidence interval for the intercept and the slope.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="week-2.html#cb117-1" aria-hidden="true" tabindex="-1"></a>sumCoef <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span>
+<span id="cb117-2"><a href="week-2.html#cb117-2" aria-hidden="true" tabindex="-1"></a>sumCoef[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> fit<span class="sc">$</span>df) <span class="sc">*</span> sumCoef[<span class="dv">1</span>, <span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] -294.4870 -224.7649</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="week-2.html#cb119-1" aria-hidden="true" tabindex="-1"></a>(sumCoef[<span class="dv">2</span>,<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(.<span class="dv">975</span>, <span class="at">df =</span> fit<span class="sc">$</span>df) <span class="sc">*</span> sumCoef[<span class="dv">2</span>, <span class="dv">2</span>]) <span class="sc">/</span> <span class="dv">10</span></span></code></pre></div>
+<pre><code>## [1] 355.6398 388.5651</code></pre>
+<p>Here we just need the table part of the summary, just the coefficient. With 95% confidence, we estimate that a 0.1 carat increase in diamond size results in a 355.6 to 388.6 increase in price in (Singapore) dollars, which is we estimate that a 0.1 carat increase in diamond size results in a 356 to 389 increase in price in Singapore dollars.</p>
+<div id="prediction" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Prediction</h3>
+<p>Prediction is a central concept for the data scientist. In fact, we have an entire course, Practical Machine Learning on advanced prediction techniques. However, regression and generalized linear models which we will cover later on in the course are some of the most core techniques for performing prediction, they often produce very good predictions,
+they’re parsimonious and interpretable, and as an added bonus we can get inference on top of our predictions without doing any sort of data re sampling. By inference we mean you can get predictions, confidence intervals around the predictions to evaluate the uncertainty in those predictions, so that’s very easy in regression and pretty easy in generalized linear models and quite difficult in some more advanced machine learning algorithms, you may have to do data resampling or other techniques. We might want to predict a response, which might be the price of a diamond at a particular mass, in carats, or we might want to predict a child’s height for a particular value of the parent’s height. The obvious estimate in both cases is just take the <span class="math inline">\(X\)</span>, the predictor value multiply it by the relevant estimated slope, <span class="math inline">\(\hat \beta_1\)</span> and then add the intercept.</p>
+<ul>
+<li>The obvious estimate for prediction at point <span class="math inline">\(x_0\)</span> is <span class="math display">\[\hat \beta_0 + \hat \beta_1 x_0\]</span></li>
+</ul>
+<p>Being a good statisticians requires us to evaluate some uncertainty in the prediction, and it is nice to have a prediction interval. There’s a small intricacy between trying to predict a regression line at a particular point, and trying to predict a future <span class="math inline">\(Y\)</span> at that same point. Those are two different ideas.</p>
+<ul>
+<li>Line at <span class="math inline">\(x_0\)</span>, <span class="math inline">\(\hat \sigma\sqrt{\frac{1}{n} + \frac{(x_0 - \bar X)^2}{\sum_{i=1}^n (X_i - \bar X)^2}}\)</span></li>
+<li>Prediction interval at <span class="math inline">\(x_0\)</span>, <span class="math inline">\(\hat \sigma\sqrt{1 + \frac{1}{n} + \frac{(x_0 - \bar X)^2}{\sum_{i=1}^n (X_i - \bar X)^2}}\)</span></li>
+</ul>
+<p>What we have here, and it makes sense that our prediction variance first relates around how variable the points are around our regression line, <span class="math inline">\(\hat \sigma\)</span> and we have the term <span class="math inline">\(\frac{1}{n}\)</span> that also kind of makes sense. Typically our standard errors decrease at some rate, <span class="math inline">\(\sqrt{\frac{1}{n}}\)</span>. If we’re predicting a new <span class="math inline">\(Y\)</span>, then we have the added 1 out front, so we get a wider interval. If we want to predict a new value at a specific point versus trying to predict what the regression line is at that point. We will talk more about that later, for now let’s focus on the very end term that on both equations: <span class="math inline">\(\frac{(x_0 - \bar X)^2}{\sum_{i=1}^n (X_i - \bar X)^2}\)</span> consider the numerator of this statistic our prediction error is going to be the lowest when <span class="math inline">\(X\)</span> not is equal to <span class="math inline">\(\bar X\)</span> the prediction variance is smallest when we predict at the average mass of a diamond or at the average height of the parents. The denominator is basically how variable the Xs are. The more variable the Xs are, the smaller this term becomes and the lower the prediction error is. Like the slope estimate where the more variable the regressors were, the less variable the slope estimate was. The same thing happens in prediction error, and is an essential part of using regression for prediction, where we get easy and convenient prediction uncertainty associated with the parsimonious predictors.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="week-2.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb121-2"><a href="week-2.html#cb121-2" aria-hidden="true" tabindex="-1"></a>newx <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length =</span> <span class="dv">100</span>))</span>
+<span id="cb121-3"><a href="week-2.html#cb121-3" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">predict</span>(fit, <span class="at">newdata=</span> newx,<span class="at">interval =</span> (<span class="st">&quot;confidence&quot;</span>)))</span>
+<span id="cb121-4"><a href="week-2.html#cb121-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">predict</span>(fit, <span class="at">newdata =</span> newx,<span class="at">interval =</span> (<span class="st">&quot;prediction&quot;</span>)))</span>
+<span id="cb121-5"><a href="week-2.html#cb121-5" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">$</span>interval <span class="ot">=</span> <span class="st">&quot;confidence&quot;</span></span>
+<span id="cb121-6"><a href="week-2.html#cb121-6" aria-hidden="true" tabindex="-1"></a>p2<span class="sc">$</span>interval <span class="ot">=</span> <span class="st">&quot;prediction&quot;</span></span>
+<span id="cb121-7"><a href="week-2.html#cb121-7" aria-hidden="true" tabindex="-1"></a>p1<span class="sc">$</span>x <span class="ot">=</span> newx<span class="sc">$</span>x</span>
+<span id="cb121-8"><a href="week-2.html#cb121-8" aria-hidden="true" tabindex="-1"></a>p2<span class="sc">$</span>x <span class="ot">=</span> newx<span class="sc">$</span>x</span>
+<span id="cb121-9"><a href="week-2.html#cb121-9" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">rbind</span>(p1, p2)</span>
+<span id="cb121-10"><a href="week-2.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dat)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">&quot;y&quot;</span></span>
+<span id="cb121-11"><a href="week-2.html#cb121-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb121-12"><a href="week-2.html#cb121-12" aria-hidden="true" tabindex="-1"></a>g <span class="ot">=</span> <span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))</span>
+<span id="cb121-13"><a href="week-2.html#cb121-13" aria-hidden="true" tabindex="-1"></a>g <span class="ot">=</span> g <span class="sc">+</span> <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr, <span class="at">fill =</span> interval), <span class="at">alpha =</span> <span class="fl">0.2</span>) </span>
+<span id="cb121-14"><a href="week-2.html#cb121-14" aria-hidden="true" tabindex="-1"></a>g <span class="ot">=</span> g <span class="sc">+</span> <span class="fu">geom_line</span>()</span>
+<span id="cb121-15"><a href="week-2.html#cb121-15" aria-hidden="true" tabindex="-1"></a>g <span class="ot">=</span> g <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y=</span>y), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">size =</span> <span class="dv">4</span>)</span>
+<span id="cb121-16"><a href="week-2.html#cb121-16" aria-hidden="true" tabindex="-1"></a>g</span></code></pre></div>
+<p><img src="resources/images/Week02_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>In <code>predict</code> function we provide the output of <code>lm</code>. For a lot of prediction algorithms, especially linear models and generalized linear models, random forests in R, the <code>predict</code> function is a generic method that applies to them, <code>interval = ("confidence")</code> indicates that we want the confidence interval, not a prediction interval, that’s R’s Code for
+creating the interval around the estimated line at that particular value of x not for a potential new y at that particular value of x, if we want an interval for potential new Y at that particular value of X, we change the <code>interval = ("confidence")</code> to <code>interval = ("prediction")</code>, as we do on the fourth line.</p>
+<p>The blue is the prediction interval, this is for predicting a new line, and the salmon color is for prediction of the line at those particular values of x. The confidence interval is much narrower than the prediction interval. It is because of that 1 plus for the prediction interval.</p>
+<p>Imagine if we collected an infinite amount of data at all different values of x along this line. Well, then, we would pretty much know the regression line exactly, if that were the case, we would be extremely confident about predictions on the line, where the line was at a particular x value. As we collected more and more data, that salmon colored confidence interval will get narrower and narrower around the line to the point where it was just the line itself. That’s what we would expect to happen. That’s just the idea of statistical sampling working. On the other hand, the prediction interval, there’s variability in the Ys, that has nothing to do with how well we estimated <span class="math inline">\(\beta_0, \beta_1\)</span> and in fact, if I were given the correct <span class="math inline">\(\beta_0, \beta_1\)</span>. There would still be variability in the Ys, because of the error term. Consequently, if we wanted to predict a new y there would be some uncertainty that would be inherent in that prediction. That’s why the prediction interval is always going to be wider than the confidence interval. It doesn’t go away with N. It doesn’t go away as we collect more X’s or anything like that. It’s inherent, and that’s why the prediction interval has a certain amount of width that’s never going to go away.</p>
+<p>The last thing as you may notice both of the intervals get narrower toward the center of the data cloud and then get wider as you head out into the tails. That’s just simply saying that we’re more confident in our predictions closer to the mean of the X’s. Because of that one plus term in prediction intervals this phenomena is less obvious in blue color than the salmon one. If we were to go well beyond where we collected data, then these intervals would really become a lot wider which is what we’d want, because we would be extrapolating and we want to predict where we did not collect data.</p>
+<p><strong>Summary</strong></p>
+<ul>
+<li>Both intervals have varying widths.
+<ul>
+<li>Least width at the mean of the Xs.</li>
+</ul></li>
+<li>We are quite confident in the regression line, so that interval is very narrow.
+<ul>
+<li>If we knew <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> this interval would have zero width.</li>
+</ul></li>
+<li>The prediction interval must incorporate the variabilibity in the data around the line.
+<ul>
+<li>Even if we knew <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> this interval would still have width.</li>
+</ul></li>
+</ul>
+</div>
 </div>
 <div id="for-the-project" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> For the project</h2>
+<p>You need to know a little bit of knitr. In this video, which you may have to refer back to when you start the project, will get you started on knitr.</p>
+<p>In this section we will learn how to use knitr to create reproducible reports. We will also learn how to use R Markdown to create reproducible documents. You’ll need a little bit of knitr to create your R project. We open the go <code>File&gt; New File&gt; R Markdown</code>, this will populate a simple knitr document. Here we can run R commands in a code block, which is defined as three right tick marks followed by <code>{r}</code> if you insert a comma after the r you will open up a bunch of options, <code>cache</code> tells R whether or not to keep it, <code>eval=</code> tells whether or not it should evaluate the code and <code>echo=</code> where echo TRUE shows the code and echo FALSE does not show the code. Once you are done with the document click Knit HTML
+and it will knit and create an HTML document. That’s just a standard HTML document and you can bring up the document in a browser window. And that’s knitr in a nutshell.</p>
 </div>
 <div id="practical-r-exercises-in-swirl-1" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Practical R Exercises in swirl</h2>
+<p>During this week of the course you should complete the following lessons in the Regression Models swirl course:</p>
+<ol style="list-style-type: decimal">
+<li>Residual Variation</li>
+<li>Introduction to Multivariable Regression</li>
+<li>MultiVar Examples</li>
+</ol>
 </div>
 <div id="week-2-quiz" class="section level2" number="2.6">
 <h2><span class="header-section-number">2.6</span> Week 2 Quiz</h2>
+<ol style="list-style-type: decimal">
+<li>Consider the following data with x as the predictor and y as as the outcome. Give a P-value for the two sided hypothesis test of whether <span class="math inline">\(β_1\)</span> from a linear regression model is 0 or not.</li>
+</ol>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="week-2.html#cb122-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.61</span>, <span class="fl">0.93</span>, <span class="fl">0.83</span>, <span class="fl">0.35</span>, <span class="fl">0.54</span>, <span class="fl">0.16</span>, <span class="fl">0.91</span>, <span class="fl">0.62</span>, <span class="fl">0.62</span>)</span>
+<span id="cb122-2"><a href="week-2.html#cb122-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.67</span>, <span class="fl">0.84</span>, <span class="fl">0.6</span>, <span class="fl">0.18</span>, <span class="fl">0.85</span>, <span class="fl">0.47</span>, <span class="fl">1.1</span>, <span class="fl">0.65</span>, <span class="fl">0.36</span>)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Consider the previous problem, give the estimate of the residual standard deviation.</p></li>
+<li><p>In the <code>mtcars</code> data set, fit a linear regression model of weight (predictor) on mpg (outcome). Get a 95% confidence interval for the expected mpg at the average weight. What is the lower endpoint?</p></li>
+<li><p>Refer to the previous question. Read the help file for <code>mtcars</code>. What is the weight coefficient interpreted as?</p></li>
+<li><p>Consider again the <code>mtcars</code> data set and a linear regression model with mpg as predicted by weight (1,000 lbs). A new car is coming weighing 3000 pounds. Construct a 95% prediction interval for its mpg. What is the upper endpoint?</p></li>
+<li><p>Consider again the <code>mtcars</code> data set and a linear regression model with mpg as predicted by weight (in 1,000 lbs). A “short” ton is defined as 2,000 lbs. Construct a 95% confidence interval for the expected change in mpg per 1 short ton increase in weight. Give the lower endpoint.</p></li>
+<li><p>If my X from a linear regression is measured in centimeters and I convert it to meters what would happen to the slope coefficient?</p></li>
+<li><p>I have an outcome, Y and a predictor, X and fit a linear regression model with <span class="math inline">\(Y = β_0 + β_1 * X + ϵ\)</span> to obtain <span class="math inline">\(\hat β_0, \hat β_1\)</span> . What would be the consequence to the subsequent slope and intercept if I were to refit the model with a new regressor, <span class="math inline">\(X + c\)</span> for some constant <span class="math inline">\(c\)</span>?</p></li>
+<li><p>Refer back to the mtcars data set with mpg as an outcome and weight (wt) as the predictor. About what is the ratio of the the sum of the squared errors, <span class="math inline">\(\sum_{i=1}^n (Y_i - \hat Y_i)^2\)</span> when comparing a model with just an intercept (denominator) to the model with the intercept and slope (numerator)?</p></li>
+<li><p>Do the residuals always have to sum to 0 in linear regression?</p></li>
+<li></li>
+</ol>
 
 </div>
 </div>
