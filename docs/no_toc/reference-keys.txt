@@ -27,13 +27,8 @@ practical-r-exercises-in-swirl
 week-1-quiz
 week-2
 statistical-linear-regression-models
-statistical-linear-regression-models-1
 residuals
-optional-reading-how-to-derive-r-squared
-scratch-work
-the-relation-between-r-squared-and-r
 inference-in-regression
-prediction
 for-the-project
 practical-r-exercises-in-swirl-1
 week-2-quiz
