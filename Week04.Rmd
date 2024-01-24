@@ -3,7 +3,7 @@ ottrpal::set_knitr_image_path()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Week 4
+# Week 04
 
 ## GLM
 
