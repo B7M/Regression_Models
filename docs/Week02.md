@@ -1,6 +1,6 @@
 
 
-# Week 2
+# Week 02
 
 ## Statistical linear regression models
 
