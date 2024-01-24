@@ -25,7 +25,7 @@ mathematical-details-optional-xxx
 regression-to-the-mean
 practical-r-exercises-in-swirl
 week-1-quiz
-week-2
+week-02
 statistical-linear-regression-models
 statistical-linear-regression-models-1
 residuals
@@ -37,7 +37,7 @@ prediction
 for-the-project
 practical-r-exercises-in-swirl-1
 week-2-quiz
-week-3
+week-03
 multi-variable-regression
 multi-variable-regression-tips-and-tricks
 adjustment
@@ -46,7 +46,7 @@ model-selection
 practical-r-exercises-in-swirl-2
 week-3-quiz
 optional-practice-exercise-in-regression-modeling
-week-4
+week-04
 glm
 logistic-regression
 poisson-regression
