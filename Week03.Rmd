@@ -37,6 +37,45 @@ Y_i =  \beta_1 X_{1i}^2 + \beta_2 X_{2i}^2 + \ldots +
 $$
 is still a linear model. (We've just squared the elements of the predictor variables.)
 
+### How to get the coefficients, derivation of formulas
+
+Here we will go through the derivation of formulas to show how the least squares estimates are obtained. This derivation is not required for the course, but it may be helpful for those who are interested in understanding how the estimates are obtained.
+
+Just to review, if you have regression to the origin, you want a line that's forced to the origin that has no intercepts. You have the single predictor $X$ and a single predictor of $Y$ and you want no intercept, $E[Y_i]=X_{1i}\beta_1$. The slope estimate was $\sum X_i Y_i / \sum X_i^2$. Now lets try to derive the least squares estimate when we have two regressors, which can be generalized to models with more variables. In $E[Y_i] = X_{1i}\beta_1 + X_{2i}\beta_2 = \mu_i$, Least squares tries to minimize:
+$$
+\sum_{i=1}^n (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2
+$$
+Here we try to give a development that is more intuitive than what you would get with something like linear algebra. 
+$$\Sum(y_i - X_{0i} \beta_0 - X_{1i} \beta_1$$
+Imagine we knew $\beta_1$ or fix $\beta_1$, then we can write $\tilde y_i = y_i - x_{0i} \beta_0$ and subsequently $\Sum(\tilde y_i - X_{1i} \beta_1$. This is exactly regression through the origin with just the single regressor. So we can write $\beta_1 = \sum \tilde y_i X_{1i} / \sum X_{1i}^2$. Now we can plug this back into the original equation and we get:
+$$
+\sum_{i=1}^n (Y_i - X_{1i} \beta_1 - X_{2i} \sum \tilde y_i X_{1i} / \sum X_{1i}^2)^2
+$$
+This is an equation that only involves $\beta_0$ and a regression through the origin for $\beta_0$. What it works out to be, and this is the interesting part, is that the regression slope for $\beta_0$, is exactly what you would obtain if you took the residual of $X_1$ out of $X_0$, and $X_1$ out of $Y$ and
+then just did regression to the origin. 
+
+Multivariable regression calculates the coefficient for $X_0$, $\beta_0$, as if you had removed the effect of $X_1$ from both $Y$ and $X_0$. Similarly, the regression coefficient for $X_1$, $\beta_1$, is what you would get if you were to remove the effect of $X_0$ from both $Y$ and $X_1$. This is why multivariable regression is thought of as having adjusted for the other variables.
+A coefficient from a multivariable regression is the coefficient where the linear effect of all the other variables on that predictor and response has been removed.
+
+### Results
+
+In $E[Y_i] = X_{0i}\beta_0 + X_{1i}\beta_1$, we have two covariants, $X_1 , X_2$. 
+$$\hat \beta_0 = \frac{\sum_{i=1}^n e_{i, Y | X_1} e_{i, X_0 | X_1}}{\sum_{i=1}^n e_{i, X_0 | X_1}^2}$$
+
+$\beta_0$ is what you would get with regression through the origin if you removed the second coefficient $X_1$. Similarly, the same thing could be said about the coefficient for $X_1 \beta_1$. $\hat \beta_1$ is the linear regression where linear effect of $X_0$ out of both the response $Y$, and the second predictor, $X_1$. This is why multivariable regression relationships are considered as having been adjusted for all the other variables. 
+
+### Example with two variables, simple linear regression
+
+$Y_{i} = \beta_0 X_{0i} + \beta_1 X_{1i}$ where  $X_{0i} = 1$ is an intercept term. Notice the fitted coefficient of $X_{1i}$ on $Y_{i}$ is $\bar Y$. The residuals are $e_{i, Y | X_1} = Y_i - \bar Y$. Thus the fitted coefficient of $X_{1i}$ on $X_{0i}$ is $\bar X_1$, which is the residuals $e_{i, X_0 | X_1}= X_{0i} - \bar X_0$. We can write:
+$$
+\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_0} e_{i, X_1 | X_0}}{\sum_{i=1}^n e_{i, X_1 | X_0}^2} = \frac{\sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y)}{\sum_{i=1}^n (X_i - \bar X)^2}
+= Cor(X, Y) \frac{Sd(Y)}{Sd(X)}
+$$
+
+### The general case
+
+More generally, multivariate regression estimates are exactly those having removed the linear relationship of the other variables from both the regressor and response. Least squares solutions have to minimize$$\sum_{i=1}^n (Y_i - X_{1i}\beta_1 - \ldots - X_{pi}\beta_p)^2$$. The least squares estimate for the coefficient of a multivariate regression model is exactly regression through the origin with the linear relationships with the other regressors removed from both the regressor and outcome by taking residuals. In this sense, multivariate regression "adjusts" a coefficient for the linear impact of the other variables. 
+
 
 ## Multi-variable regression tips and tricks
 
