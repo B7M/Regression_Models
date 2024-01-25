@@ -9,6 +9,35 @@ knitr::opts_chunk$set(echo = FALSE)
 
 We now extend linear regression so that our models can contain more variables. A natural first approach is to assume additive effects, basically extending our line to a plane, or generalized version of a plane as we add more variables. Multi-variable regression represents one of the most widely used and successful methods in statistics.  
 
+If you're utilizing predictor X to forecast a response Y and discover a meaningful relationship, there's a potential issue if the predictor hasn't been randomly assigned to the subjects or units being observed. In such cases, there's always a concern that there might be another variable, whether known or unknown, that could account for the observed relationship. For example, imagine if you had a friend who downloaded some data, where they had all sorts of health information from people
+and also their dietary information. This person claims to have found an interesting relationship: breath mint usage has a significant regression relationship with forced expiratory volume(FEV), a measure of lung function. You would be skeptical there's very little basis for a biological relationship there. Breath mints are just sugar! But maybe, but what you've really be thinking is what other variables might explain this relationship? You might have two hypotheses: this person dug through lots and lots of variables and just found the one that was significant, and it's just a chance of association, which is the problem of multiplicity. In addition it is likely, you would think the real problem is smokers tend to use more breath mints, and smoking has this relationship with lung function. It's well-established that chronic exposure to a smoker, even second-hand smoke has negative impacts on lung function. So it's probably smoking it probably has nothing to do with the breath mints, it's a indirect effect of breath mints through smoking, not a direct effect of breath mints on lung function. This would be the hypothesis. To establish that there's a breath mint effect beyond smoking we could consider smokers by themselves, and see whether their lung function differs by their breath mint usage, and consider non-smokers by themselves, and see whether their lung function differs by breath mint usage, where we conditioned on smoking status. This way we would compare like with like. Multivariable regression is sort of automated way to do that in a linear fashion. It makes fair enough assumptions, in automated way. In this section we will explain how it works and we will also talk a little bit about its limitations. 
+
+Multivariable regression is trying to look at the relationship of a predictor and a response, while having, at some level, accounted for other variables. Moreover, multivariable regression is actually a good prediction model.
+For example, a Kaggle competition wanted to predict the number of days a person would be in the hospital in subsequent years given their claims history and number of days they were in the hospital in previous years. The insurance companies seek to harness an extensive dataset derived from claims, aiming to predict a singular numerical outcome. However, the conventional approach of simple linear regression would be insufficient when confronted with multiple predictors. How can we extend the scope of simple linear regression to accommodate a multitude of regressors for predictive purposes? The procedure is similar to simple linear regression where there's more predictor terms,X values. For example, $X_1$ might be the number of insurance claims in the previous year, and $X_2$ might be whether or not the person had a particular cardiac problem, and so on. The first variable is typically just a constant one, so there's an intercept that's included, a term that's just $\beta_0$ by itself. Interestrigly in this competition, we found that multivariable regression could get people very close to the winning entry, while other machine learning methods like random forest, and boosting only improved the results minorly on top of multivariable regression.
+
+Note: in case of breath mint study, one of the predictors, $X_1$ might be breath mint usage (a binary variable), and $X_2$ might be how much a person smoked.
+
+* The general linear model extends simple linear regression (SLR) by adding terms linearly into the model.
+$$
+Y_i =  \beta_0 X_{0i} + \beta_1 X_{1i} + \ldots +
+\beta_{p} X_{pi} + \epsilon_{i} 
+= \sum_{k=0}^p X_{ik} \beta_j + \epsilon_{i}
+$$
+* Where $X_{1i}=1$ typically, the $\beta_j$ are the coefficients of the model.
+
+
+* Least squares (and hence ML estimates under iid Gaussianity of the errors) minimizes
+$$
+\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ki} \beta_j\right)^2
+$$
+Note, the important linearity is linearity in the coefficients. Thus
+$$
+Y_i =  \beta_1 X_{1i}^2 + \beta_2 X_{2i}^2 + \ldots +
+\beta_{p} X_{pi}^2 + \epsilon_{i} 
+$$
+is still a linear model. (We've just squared the elements of the predictor variables.)
+
+
 ## Multi-variable regression tips and tricks
 
 
@@ -23,7 +52,11 @@ We now extend linear regression so that our models can contain more variables. A
 
 
 ## Practical R Exercises in swirl
+During this week of the course you should complete the following lessons in the Regression Models swirl course:
 
+1. MultiVar Examples2
+2. MultiVar Examples3
+3. Residuals Diagnostics and Variation
 
 ## Week 3 Quiz
 
