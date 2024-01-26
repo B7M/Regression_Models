@@ -6,6 +6,131 @@
 
 We now extend linear regression so that our models can contain more variables. A natural first approach is to assume additive effects, basically extending our line to a plane, or generalized version of a plane as we add more variables. Multi-variable regression represents one of the most widely used and successful methods in statistics.  
 
+If you're utilizing predictor X to forecast a response Y and discover a meaningful relationship, there's a potential issue if the predictor hasn't been randomly assigned to the subjects or units being observed. In such cases, there's always a concern that there might be another variable, whether known or unknown, that could account for the observed relationship. For example, imagine if you had a friend who downloaded some data, where they had all sorts of health information from people
+and also their dietary information. This person claims to have found an interesting relationship: breath mint usage has a significant regression relationship with forced expiratory volume(FEV), a measure of lung function. You would be skeptical there's very little basis for a biological relationship there. Breath mints are just sugar! But maybe, but what you've really be thinking is what other variables might explain this relationship? You might have two hypotheses: this person dug through lots and lots of variables and just found the one that was significant, and it's just a chance of association, which is the problem of multiplicity. In addition it is likely, you would think the real problem is smokers tend to use more breath mints, and smoking has this relationship with lung function. It's well-established that chronic exposure to a smoker, even second-hand smoke has negative impacts on lung function. So it's probably smoking it probably has nothing to do with the breath mints, it's a indirect effect of breath mints through smoking, not a direct effect of breath mints on lung function. This would be the hypothesis. To establish that there's a breath mint effect beyond smoking we could consider smokers by themselves, and see whether their lung function differs by their breath mint usage, and consider non-smokers by themselves, and see whether their lung function differs by breath mint usage, where we conditioned on smoking status. This way we would compare like with like. Multivariable regression is sort of automated way to do that in a linear fashion. It makes fair enough assumptions, in automated way. In this section we will explain how it works and we will also talk a little bit about its limitations. 
+
+Multivariable regression is trying to look at the relationship of a predictor and a response, while having, at some level, accounted for other variables. Moreover, multivariable regression is actually a good prediction model.
+For example, a Kaggle competition wanted to predict the number of days a person would be in the hospital in subsequent years given their claims history and number of days they were in the hospital in previous years. The insurance companies seek to harness an extensive dataset derived from claims, aiming to predict a singular numerical outcome. However, the conventional approach of simple linear regression would be insufficient when confronted with multiple predictors. How can we extend the scope of simple linear regression to accommodate a multitude of regressors for predictive purposes? The procedure is similar to simple linear regression where there's more predictor terms,X values. For example, $X_1$ might be the number of insurance claims in the previous year, and $X_2$ might be whether or not the person had a particular cardiac problem, and so on. The first variable is typically just a constant one, so there's an intercept that's included, a term that's just $\beta_0$ by itself. Interestrigly in this competition, we found that multivariable regression could get people very close to the winning entry, while other machine learning methods like random forest, and boosting only improved the results minorly on top of multivariable regression.
+
+Note: in case of breath mint study, one of the predictors, $X_1$ might be breath mint usage (a binary variable), and $X_2$ might be how much a person smoked.
+
+* The general linear model extends simple linear regression (SLR) by adding terms linearly into the model.
+$$
+Y_i =  \beta_0 X_{0i} + \beta_1 X_{1i} + \ldots +
+\beta_{p} X_{pi} + \epsilon_{i} 
+= \sum_{k=0}^p X_{ik} \beta_j + \epsilon_{i}
+$$
+* Where $X_{1i}=1$ typically, the $\beta_j$ are the coefficients of the model.
+
+
+* Least squares (and hence ML estimates under iid Gaussianity of the errors) minimizes
+$$
+\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ki} \beta_j\right)^2
+$$
+Note, the important linearity is linearity in the coefficients. Thus
+$$
+Y_i =  \beta_1 X_{1i}^2 + \beta_2 X_{2i}^2 + \ldots +
+\beta_{p} X_{pi}^2 + \epsilon_{i} 
+$$
+is still a linear model. (We've just squared the elements of the predictor variables.)
+
+### How to get the coefficients, derivation of formulas
+
+Here we will go through the derivation of formulas to show how the least squares estimates are obtained. This derivation is not required for the course, but it may be helpful for those who are interested in understanding how the estimates are obtained.
+
+Just to review, if you have regression to the origin, you want a line that's forced to the origin that has no intercepts. You have the single predictor $X$ and a single predictor of $Y$ and you want no intercept, $E[Y_i]=X_{1i}\beta_1$. The slope estimate was $\sum X_i Y_i / \sum X_i^2$. Now lets try to derive the least squares estimate when we have two regressors, which can be generalized to models with more variables. In $E[Y_i] = X_{1i}\beta_1 + X_{2i}\beta_2 = \mu_i$, Least squares tries to minimize:
+$$
+\sum_{i=1}^n (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2
+$$
+Here we try to give a development that is more intuitive than what you would get with something like linear algebra. 
+$$\Sum(y_i - X_{0i} \beta_0 - X_{1i} \beta_1$$
+Imagine we knew $\beta_1$ or fix $\beta_1$, then we can write $\tilde y_i = y_i - x_{0i} \beta_0$ and subsequently $\Sum(\tilde y_i - X_{1i} \beta_1$. This is exactly regression through the origin with just the single regressor. So we can write $\beta_1 = \sum \tilde y_i X_{1i} / \sum X_{1i}^2$. Now we can plug this back into the original equation and we get:
+$$
+\sum_{i=1}^n (Y_i - X_{1i} \beta_1 - X_{2i} \sum \tilde y_i X_{1i} / \sum X_{1i}^2)^2
+$$
+This is an equation that only involves $\beta_0$ and a regression through the origin for $\beta_0$. What it works out to be, and this is the interesting part, is that the regression slope for $\beta_0$, is exactly what you would obtain if you took the residual of $X_1$ out of $X_0$, and $X_1$ out of $Y$ and
+then just did regression to the origin. 
+
+Multivariable regression calculates the coefficient for $X_0$, $\beta_0$, as if you had removed the effect of $X_1$ from both $Y$ and $X_0$. Similarly, the regression coefficient for $X_1$, $\beta_1$, is what you would get if you were to remove the effect of $X_0$ from both $Y$ and $X_1$. This is why multivariable regression is thought of as having adjusted for the other variables.
+A coefficient from a multivariable regression is the coefficient where the linear effect of all the other variables on that predictor and response has been removed.
+
+### Results
+
+In $E[Y_i] = X_{0i}\beta_0 + X_{1i}\beta_1$, we have two covariants, $X_1 , X_2$. 
+$$\hat \beta_0 = \frac{\sum_{i=1}^n e_{i, Y | X_1} e_{i, X_0 | X_1}}{\sum_{i=1}^n e_{i, X_0 | X_1}^2}$$
+
+$\beta_0$ is what you would get with regression through the origin if you removed the second coefficient $X_1$. Similarly, the same thing could be said about the coefficient for $X_1 \beta_1$. $\hat \beta_1$ is the linear regression where linear effect of $X_0$ out of both the response $Y$, and the second predictor, $X_1$. This is why multivariable regression relationships are considered as having been adjusted for all the other variables. 
+
+### Example with two variables, simple linear regression
+
+$Y_{i} = \beta_0 X_{0i} + \beta_1 X_{1i}$ where  $X_{0i} = 1$ is an intercept term. Notice the fitted coefficient of $X_{1i}$ on $Y_{i}$ is $\bar Y$. The residuals are $e_{i, Y | X_1} = Y_i - \bar Y$. Thus the fitted coefficient of $X_{1i}$ on $X_{0i}$ is $\bar X_1$, which is the residuals $e_{i, X_0 | X_1}= X_{0i} - \bar X_0$. We can write:
+$$
+\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_0} e_{i, X_1 | X_0}}{\sum_{i=1}^n e_{i, X_1 | X_0}^2} = \frac{\sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y)}{\sum_{i=1}^n (X_i - \bar X)^2}
+= Cor(X, Y) \frac{Sd(Y)}{Sd(X)}
+$$
+
+### The general case
+
+More generally, multivariate regression estimates are exactly those having removed the linear relationship of the other variables from both the regressor and response. Least squares solutions have to minimize$$\sum_{i=1}^n (Y_i - X_{1i}\beta_1 - \ldots - X_{pi}\beta_p)^2$$. The least squares estimate for the coefficient of a multivariate regression model is exactly regression through the origin with the linear relationships with the other regressors removed from both the regressor and outcome by taking residuals. In this sense, multivariate regression "adjusts" a coefficient for the linear impact of the other variables. 
+
+### Examples with multiple-variables
+
+In the following simulation we have 100 observations and want to generate three predictors, `x, x2, x3`, where they are all just standard normals. When we write `y = 1 + x + x2 + x3`, all my coefficients are 1, meaning the population model used for simulation, they're all 1. Next we add some random noise, that's the error term. 
+
+
+```r
+n = 100; x = rnorm(n); x2 = rnorm(n); x3 = rnorm(n)
+y = 1 + x + x2 + x3 + rnorm(n, sd = .1)
+ey = resid(lm(y ~ x2 + x3))
+ex = resid(lm(x ~ x2 + x3))
+sum(ey * ex) / sum(ex ^ 2)
+coef(lm(ey ~ ex - 1))
+coef(lm(y ~ x + x2 + x3)) 
+```
+
+Here we want to point out, `coef(lm(ey ~ ex - 1))` is the same coefficient as if we regress y on x, x2 and x3, and an intercept`coef(lm(y ~ x + x2 + x3))`. You see the x term here is exactly the same as the regression through the origin estimate with the residuals. 
+
+### Interpretation of coefficients
+
+The regression predictor, given the collection of covariants take a specific value, $x_1$ to $x_p$, is just the sum of the $x_k\beta_k$. $$E[Y | X_1 = x_1, \ldots, X_p = x_p] = \sum_{k=1}^p x_{k} \beta_k$$
+
+If one of the predictors, say $X_1$, is incremented by 1 i.e. $X_1$ instead of $x_1$ takes $x_1+1$, then the regression coefficient $\beta_1$ is the expected change in the response.
+$$
+E[Y | X_1 = x_1 + 1, \ldots, X_p = x_p] = (x_1 + 1) \beta_1 + \sum_{k=2}^p x_{k} \beta_k
+$$
+
+If we subtract the two terms the expected value of the response from the responce where the first co-efficient takes the value of $x_1 +1$ works out to be $\beta_1$. 
+$$
+E[Y | X_1 = x_1 + 1, \ldots, X_p = x_p]  - E[Y | X_1 = x_1, \ldots, X_p = x_p]$$
+$$= (x_1 + 1) \beta_1 + \sum_{k=2}^p x_{k} \beta_k + \sum_{k=1}^p x_{k} \beta_k = \beta_1 $$
+
+Notice all the other $x_2$ to $x_p$ were held fixed, the interpretation of a multivariate regression coefficient is the expected change in the response per unit change in the regressor, holding all of the other regressors fixed. 
+
+
+
+The basic components of the linear models are exactly the same as in simple linear regression.
+
+* Model $Y_i = \sum_{k=1}^p X_{ik} \beta_{k} + \epsilon_{i}$ where $\epsilon_i \sim N(0, \sigma^2)$
+* Fitted responses $\hat Y_i = \sum_{k=1}^p X_{ik} \hat \beta_{k}$
+* Residuals $e_i = Y_i - \hat Y_i$
+* Variance estimate $\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i ^2$ (note the $n-p$ degrees of freedom)
+* To get predicted responses at new values, $x_1, \ldots, x_p$, simply plug them into the linear model $\sum_{k=1}^p x_{k} \hat \beta_{k}$
+* Coefficients have standard errors, $\hat \sigma_{\hat \beta_k}$, and
+$\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}$
+follows a $T$ distribution with $n-p$ degrees of freedom.
+* Predicted responses have standard errors and we can calculate predicted and expected response intervals.
+
+These should all be pretty familiar because they're basically the same as what we did for linear aggression, the difference is we have more terms now. Remember in linear aggression we had two terms, we had an intercept and a covariant now we're just adding more covariants potentially.
+
+One point to note is that the variance estimate is not quite the same as the average squared residuals. In linear regression we divided by $n-2$, now we divide by $n-p$. That's kind of a technical point because if you know $n-p$ of the residuals you implicity know the last $p$ of them due to some linear constraints. That's a minor point you can think of the residuals variants estimate is nothing other than the average square residuals for the most part with $N-p$ part not withstanding.
+
+
+In a sense all the things we knew about from linear regression carryover to multi-variable regression. 
+
+
+To end this section, we want to emphasize how important linear models are to the data scientist. Before you do any machine learning or any complex algorithm, linear models should be your first attempt. They offer parsimonious and well understood easily describe relationships between predictors and response. There are some modern
+machine learning algorithms that can beat some of the propetries of linear models, like the imposed linearity. Nonetheless, linear models should always be your starting point. There's some amazing things you can do with linear models that you may not think that would be possible. For example, you can take a time series like a music sound or something like that, and decompose it into its harmonics. This is so-called discrete Fourier transform can be thought of the as the fit from a linear model. You can flexibly fit rather complicated functions and curves and things like that using linear models. You can fit factor variables as predictors. ANOVA and ANCOVA are special cases of linear models. You can uncover complex multivariate relationships within a response and you can build fairly accurate prediction models.
+
 ## Multi-variable regression tips and tricks
 
 
@@ -20,7 +145,11 @@ We now extend linear regression so that our models can contain more variables. A
 
 
 ## Practical R Exercises in swirl
+During this week of the course you should complete the following lessons in the Regression Models swirl course:
 
+1. MultiVar Examples2
+2. MultiVar Examples3
+3. Residuals Diagnostics and Variation
 
 ## Week 3 Quiz
 
