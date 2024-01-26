@@ -183,7 +183,15 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="week-03.html"><a href="week-03.html"><i class="fa fa-check"></i><b>3</b> Week 03</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="week-03.html"><a href="week-03.html#multi-variable-regression"><i class="fa fa-check"></i><b>3.1</b> Multi-variable regression</a></li>
+<li class="chapter" data-level="3.1" data-path="week-03.html"><a href="week-03.html#multi-variable-regression"><i class="fa fa-check"></i><b>3.1</b> Multi-variable regression</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="week-03.html"><a href="week-03.html#how-to-get-the-coefficients-derivation-of-formulas"><i class="fa fa-check"></i><b>3.1.1</b> How to get the coefficients, derivation of formulas</a></li>
+<li class="chapter" data-level="3.1.2" data-path="week-03.html"><a href="week-03.html#results"><i class="fa fa-check"></i><b>3.1.2</b> Results</a></li>
+<li class="chapter" data-level="3.1.3" data-path="week-03.html"><a href="week-03.html#example-with-two-variables-simple-linear-regression"><i class="fa fa-check"></i><b>3.1.3</b> Example with two variables, simple linear regression</a></li>
+<li class="chapter" data-level="3.1.4" data-path="week-03.html"><a href="week-03.html#the-general-case"><i class="fa fa-check"></i><b>3.1.4</b> The general case</a></li>
+<li class="chapter" data-level="3.1.5" data-path="week-03.html"><a href="week-03.html#examples-with-multiple-variables"><i class="fa fa-check"></i><b>3.1.5</b> Examples with multiple-variables</a></li>
+<li class="chapter" data-level="3.1.6" data-path="week-03.html"><a href="week-03.html#interpretation-of-coefficients"><i class="fa fa-check"></i><b>3.1.6</b> Interpretation of coefficients</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="week-03.html"><a href="week-03.html#multi-variable-regression-tips-and-tricks"><i class="fa fa-check"></i><b>3.2</b> Multi-variable regression tips and tricks</a></li>
 <li class="chapter" data-level="3.3" data-path="week-03.html"><a href="week-03.html#adjustment"><i class="fa fa-check"></i><b>3.3</b> Adjustment</a></li>
 <li class="chapter" data-level="3.4" data-path="week-03.html"><a href="week-03.html#residuals-again"><i class="fa fa-check"></i><b>3.4</b> Residuals again</a></li>
@@ -242,6 +250,108 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="multi-variable-regression" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Multi-variable regression</h2>
 <p>We now extend linear regression so that our models can contain more variables. A natural first approach is to assume additive effects, basically extending our line to a plane, or generalized version of a plane as we add more variables. Multi-variable regression represents one of the most widely used and successful methods in statistics.</p>
+<p>If you’re utilizing predictor X to forecast a response Y and discover a meaningful relationship, there’s a potential issue if the predictor hasn’t been randomly assigned to the subjects or units being observed. In such cases, there’s always a concern that there might be another variable, whether known or unknown, that could account for the observed relationship. For example, imagine if you had a friend who downloaded some data, where they had all sorts of health information from people
+and also their dietary information. This person claims to have found an interesting relationship: breath mint usage has a significant regression relationship with forced expiratory volume(FEV), a measure of lung function. You would be skeptical there’s very little basis for a biological relationship there. Breath mints are just sugar! But maybe, but what you’ve really be thinking is what other variables might explain this relationship? You might have two hypotheses: this person dug through lots and lots of variables and just found the one that was significant, and it’s just a chance of association, which is the problem of multiplicity. In addition it is likely, you would think the real problem is smokers tend to use more breath mints, and smoking has this relationship with lung function. It’s well-established that chronic exposure to a smoker, even second-hand smoke has negative impacts on lung function. So it’s probably smoking it probably has nothing to do with the breath mints, it’s a indirect effect of breath mints through smoking, not a direct effect of breath mints on lung function. This would be the hypothesis. To establish that there’s a breath mint effect beyond smoking we could consider smokers by themselves, and see whether their lung function differs by their breath mint usage, and consider non-smokers by themselves, and see whether their lung function differs by breath mint usage, where we conditioned on smoking status. This way we would compare like with like. Multivariable regression is sort of automated way to do that in a linear fashion. It makes fair enough assumptions, in automated way. In this section we will explain how it works and we will also talk a little bit about its limitations.</p>
+<p>Multivariable regression is trying to look at the relationship of a predictor and a response, while having, at some level, accounted for other variables. Moreover, multivariable regression is actually a good prediction model.
+For example, a Kaggle competition wanted to predict the number of days a person would be in the hospital in subsequent years given their claims history and number of days they were in the hospital in previous years. The insurance companies seek to harness an extensive dataset derived from claims, aiming to predict a singular numerical outcome. However, the conventional approach of simple linear regression would be insufficient when confronted with multiple predictors. How can we extend the scope of simple linear regression to accommodate a multitude of regressors for predictive purposes? The procedure is similar to simple linear regression where there’s more predictor terms,X values. For example, <span class="math inline">\(X_1\)</span> might be the number of insurance claims in the previous year, and <span class="math inline">\(X_2\)</span> might be whether or not the person had a particular cardiac problem, and so on. The first variable is typically just a constant one, so there’s an intercept that’s included, a term that’s just <span class="math inline">\(\beta_0\)</span> by itself. Interestrigly in this competition, we found that multivariable regression could get people very close to the winning entry, while other machine learning methods like random forest, and boosting only improved the results minorly on top of multivariable regression.</p>
+<p>Note: in case of breath mint study, one of the predictors, <span class="math inline">\(X_1\)</span> might be breath mint usage (a binary variable), and <span class="math inline">\(X_2\)</span> might be how much a person smoked.</p>
+<ul>
+<li><p>The general linear model extends simple linear regression (SLR) by adding terms linearly into the model.
+<span class="math display">\[
+Y_i =  \beta_0 X_{0i} + \beta_1 X_{1i} + \ldots +
+\beta_{p} X_{pi} + \epsilon_{i} 
+= \sum_{k=0}^p X_{ik} \beta_j + \epsilon_{i}
+\]</span></p></li>
+<li><p>Where <span class="math inline">\(X_{1i}=1\)</span> typically, the <span class="math inline">\(\beta_j\)</span> are the coefficients of the model.</p></li>
+<li><p>Least squares (and hence ML estimates under iid Gaussianity of the errors) minimizes
+<span class="math display">\[
+\sum_{i=1}^n \left(Y_i - \sum_{k=1}^p X_{ki} \beta_j\right)^2
+\]</span>
+Note, the important linearity is linearity in the coefficients. Thus
+<span class="math display">\[
+Y_i =  \beta_1 X_{1i}^2 + \beta_2 X_{2i}^2 + \ldots +
+\beta_{p} X_{pi}^2 + \epsilon_{i} 
+\]</span>
+is still a linear model. (We’ve just squared the elements of the predictor variables.)</p></li>
+</ul>
+<div id="how-to-get-the-coefficients-derivation-of-formulas" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> How to get the coefficients, derivation of formulas</h3>
+<p>Here we will go through the derivation of formulas to show how the least squares estimates are obtained. This derivation is not required for the course, but it may be helpful for those who are interested in understanding how the estimates are obtained.</p>
+<p>Just to review, if you have regression to the origin, you want a line that’s forced to the origin that has no intercepts. You have the single predictor <span class="math inline">\(X\)</span> and a single predictor of <span class="math inline">\(Y\)</span> and you want no intercept, <span class="math inline">\(E[Y_i]=X_{1i}\beta_1\)</span>. The slope estimate was <span class="math inline">\(\sum X_i Y_i / \sum X_i^2\)</span>. Now lets try to derive the least squares estimate when we have two regressors, which can be generalized to models with more variables. In <span class="math inline">\(E[Y_i] = X_{1i}\beta_1 + X_{2i}\beta_2 = \mu_i\)</span>, Least squares tries to minimize:
+<span class="math display">\[
+\sum_{i=1}^n (Y_i - X_{1i} \beta_1 - X_{2i} \beta_2)^2
+\]</span>
+Here we try to give a development that is more intuitive than what you would get with something like linear algebra.
+<span class="math display">\[\Sum(y_i - X_{0i} \beta_0 - X_{1i} \beta_1\]</span>
+Imagine we knew <span class="math inline">\(\beta_1\)</span> or fix <span class="math inline">\(\beta_1\)</span>, then we can write <span class="math inline">\(\tilde y_i = y_i - x_{0i} \beta_0\)</span> and subsequently <span class="math inline">\(\Sum(\tilde y_i - X_{1i} \beta_1\)</span>. This is exactly regression through the origin with just the single regressor. So we can write <span class="math inline">\(\beta_1 = \sum \tilde y_i X_{1i} / \sum X_{1i}^2\)</span>. Now we can plug this back into the original equation and we get:
+<span class="math display">\[
+\sum_{i=1}^n (Y_i - X_{1i} \beta_1 - X_{2i} \sum \tilde y_i X_{1i} / \sum X_{1i}^2)^2
+\]</span>
+This is an equation that only involves <span class="math inline">\(\beta_0\)</span> and a regression through the origin for <span class="math inline">\(\beta_0\)</span>. What it works out to be, and this is the interesting part, is that the regression slope for <span class="math inline">\(\beta_0\)</span>, is exactly what you would obtain if you took the residual of <span class="math inline">\(X_1\)</span> out of <span class="math inline">\(X_0\)</span>, and <span class="math inline">\(X_1\)</span> out of <span class="math inline">\(Y\)</span> and
+then just did regression to the origin.</p>
+<p>Multivariable regression calculates the coefficient for <span class="math inline">\(X_0\)</span>, <span class="math inline">\(\beta_0\)</span>, as if you had removed the effect of <span class="math inline">\(X_1\)</span> from both <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_0\)</span>. Similarly, the regression coefficient for <span class="math inline">\(X_1\)</span>, <span class="math inline">\(\beta_1\)</span>, is what you would get if you were to remove the effect of <span class="math inline">\(X_0\)</span> from both <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1\)</span>. This is why multivariable regression is thought of as having adjusted for the other variables.
+A coefficient from a multivariable regression is the coefficient where the linear effect of all the other variables on that predictor and response has been removed.</p>
+</div>
+<div id="results" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Results</h3>
+<p>In <span class="math inline">\(E[Y_i] = X_{0i}\beta_0 + X_{1i}\beta_1\)</span>, we have two covariants, <span class="math inline">\(X_1 , X_2\)</span>.
+<span class="math display">\[\hat \beta_0 = \frac{\sum_{i=1}^n e_{i, Y | X_1} e_{i, X_0 | X_1}}{\sum_{i=1}^n e_{i, X_0 | X_1}^2}\]</span></p>
+<p><span class="math inline">\(\beta_0\)</span> is what you would get with regression through the origin if you removed the second coefficient <span class="math inline">\(X_1\)</span>. Similarly, the same thing could be said about the coefficient for <span class="math inline">\(X_1 \beta_1\)</span>. <span class="math inline">\(\hat \beta_1\)</span> is the linear regression where linear effect of <span class="math inline">\(X_0\)</span> out of both the response <span class="math inline">\(Y\)</span>, and the second predictor, <span class="math inline">\(X_1\)</span>. This is why multivariable regression relationships are considered as having been adjusted for all the other variables.</p>
+</div>
+<div id="example-with-two-variables-simple-linear-regression" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Example with two variables, simple linear regression</h3>
+<p><span class="math inline">\(Y_{i} = \beta_0 X_{0i} + \beta_1 X_{1i}\)</span> where <span class="math inline">\(X_{0i} = 1\)</span> is an intercept term. Notice the fitted coefficient of <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(Y_{i}\)</span> is <span class="math inline">\(\bar Y\)</span>. The residuals are <span class="math inline">\(e_{i, Y | X_1} = Y_i - \bar Y\)</span>. Thus the fitted coefficient of <span class="math inline">\(X_{1i}\)</span> on <span class="math inline">\(X_{0i}\)</span> is <span class="math inline">\(\bar X_1\)</span>, which is the residuals <span class="math inline">\(e_{i, X_0 | X_1}= X_{0i} - \bar X_0\)</span>. We can write:
+<span class="math display">\[
+\hat \beta_1 = \frac{\sum_{i=1}^n e_{i, Y | X_0} e_{i, X_1 | X_0}}{\sum_{i=1}^n e_{i, X_1 | X_0}^2} = \frac{\sum_{i=1}^n (X_i - \bar X)(Y_i - \bar Y)}{\sum_{i=1}^n (X_i - \bar X)^2}
+= Cor(X, Y) \frac{Sd(Y)}{Sd(X)}
+\]</span></p>
+</div>
+<div id="the-general-case" class="section level3" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> The general case</h3>
+<p>More generally, multivariate regression estimates are exactly those having removed the linear relationship of the other variables from both the regressor and response. Least squares solutions have to minimize<span class="math display">\[\sum_{i=1}^n (Y_i - X_{1i}\beta_1 - \ldots - X_{pi}\beta_p)^2\]</span>. The least squares estimate for the coefficient of a multivariate regression model is exactly regression through the origin with the linear relationships with the other regressors removed from both the regressor and outcome by taking residuals. In this sense, multivariate regression “adjusts” a coefficient for the linear impact of the other variables.</p>
+</div>
+<div id="examples-with-multiple-variables" class="section level3" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> Examples with multiple-variables</h3>
+<p>In the following simulation we have 100 observations and want to generate three predictors, <code>x, x2, x3</code>, where they are all just standard normals. When we write <code>y = 1 + x + x2 + x3</code>, all my coefficients are 1, meaning the population model used for simulation, they’re all 1. Next we add some random noise, that’s the error term.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="week-03.html#cb123-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span>; x <span class="ot">=</span> <span class="fu">rnorm</span>(n); x2 <span class="ot">=</span> <span class="fu">rnorm</span>(n); x3 <span class="ot">=</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb123-2"><a href="week-03.html#cb123-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> x <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> .<span class="dv">1</span>)</span>
+<span id="cb123-3"><a href="week-03.html#cb123-3" aria-hidden="true" tabindex="-1"></a>ey <span class="ot">=</span> <span class="fu">resid</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x2 <span class="sc">+</span> x3))</span>
+<span id="cb123-4"><a href="week-03.html#cb123-4" aria-hidden="true" tabindex="-1"></a>ex <span class="ot">=</span> <span class="fu">resid</span>(<span class="fu">lm</span>(x <span class="sc">~</span> x2 <span class="sc">+</span> x3))</span>
+<span id="cb123-5"><a href="week-03.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(ey <span class="sc">*</span> ex) <span class="sc">/</span> <span class="fu">sum</span>(ex <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb123-6"><a href="week-03.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(ey <span class="sc">~</span> ex <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb123-7"><a href="week-03.html#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> x2 <span class="sc">+</span> x3)) </span></code></pre></div>
+<p>Here we want to point out, <code>coef(lm(ey ~ ex - 1))</code> is the same coefficient as if we regress y on x, x2 and x3, and an intercept<code>coef(lm(y ~ x + x2 + x3))</code>. You see the x term here is exactly the same as the regression through the origin estimate with the residuals.</p>
+</div>
+<div id="interpretation-of-coefficients" class="section level3" number="3.1.6">
+<h3><span class="header-section-number">3.1.6</span> Interpretation of coefficients</h3>
+<p>The regression predictor, given the collection of covariants take a specific value, <span class="math inline">\(x_1\)</span> to <span class="math inline">\(x_p\)</span>, is just the sum of the <span class="math inline">\(x_k\beta_k\)</span>. <span class="math display">\[E[Y | X_1 = x_1, \ldots, X_p = x_p] = \sum_{k=1}^p x_{k} \beta_k\]</span></p>
+<p>If one of the predictors, say <span class="math inline">\(X_1\)</span>, is incremented by 1 i.e. <span class="math inline">\(X_1\)</span> instead of <span class="math inline">\(x_1\)</span> takes <span class="math inline">\(x_1+1\)</span>, then the regression coefficient <span class="math inline">\(\beta_1\)</span> is the expected change in the response.
+<span class="math display">\[
+E[Y | X_1 = x_1 + 1, \ldots, X_p = x_p] = (x_1 + 1) \beta_1 + \sum_{k=2}^p x_{k} \beta_k
+\]</span></p>
+<p>If we subtract the two terms the expected value of the response from the responce where the first co-efficient takes the value of <span class="math inline">\(x_1 +1\)</span> works out to be <span class="math inline">\(\beta_1\)</span>.
+<span class="math display">\[
+E[Y | X_1 = x_1 + 1, \ldots, X_p = x_p]  - E[Y | X_1 = x_1, \ldots, X_p = x_p]\]</span>
+<span class="math display">\[= (x_1 + 1) \beta_1 + \sum_{k=2}^p x_{k} \beta_k + \sum_{k=1}^p x_{k} \beta_k = \beta_1 \]</span></p>
+<p>Notice all the other <span class="math inline">\(x_2\)</span> to <span class="math inline">\(x_p\)</span> were held fixed, the interpretation of a multivariate regression coefficient is the expected change in the response per unit change in the regressor, holding all of the other regressors fixed.</p>
+<p>The basic components of the linear models are exactly the same as in simple linear regression.</p>
+<ul>
+<li>Model <span class="math inline">\(Y_i = \sum_{k=1}^p X_{ik} \beta_{k} + \epsilon_{i}\)</span> where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span></li>
+<li>Fitted responses <span class="math inline">\(\hat Y_i = \sum_{k=1}^p X_{ik} \hat \beta_{k}\)</span></li>
+<li>Residuals <span class="math inline">\(e_i = Y_i - \hat Y_i\)</span></li>
+<li>Variance estimate <span class="math inline">\(\hat \sigma^2 = \frac{1}{n-p} \sum_{i=1}^n e_i ^2\)</span> (note the <span class="math inline">\(n-p\)</span> degrees of freedom)</li>
+<li>To get predicted responses at new values, <span class="math inline">\(x_1, \ldots, x_p\)</span>, simply plug them into the linear model <span class="math inline">\(\sum_{k=1}^p x_{k} \hat \beta_{k}\)</span></li>
+<li>Coefficients have standard errors, <span class="math inline">\(\hat \sigma_{\hat \beta_k}\)</span>, and
+<span class="math inline">\(\frac{\hat \beta_k - \beta_k}{\hat \sigma_{\hat \beta_k}}\)</span>
+follows a <span class="math inline">\(T\)</span> distribution with <span class="math inline">\(n-p\)</span> degrees of freedom.</li>
+<li>Predicted responses have standard errors and we can calculate predicted and expected response intervals.</li>
+</ul>
+<p>These should all be pretty familiar because they’re basically the same as what we did for linear aggression, the difference is we have more terms now. Remember in linear aggression we had two terms, we had an intercept and a covariant now we’re just adding more covariants potentially.</p>
+<p>One point to note is that the variance estimate is not quite the same as the average squared residuals. In linear regression we divided by <span class="math inline">\(n-2\)</span>, now we divide by <span class="math inline">\(n-p\)</span>. That’s kind of a technical point because if you know <span class="math inline">\(n-p\)</span> of the residuals you implicity know the last <span class="math inline">\(p\)</span> of them due to some linear constraints. That’s a minor point you can think of the residuals variants estimate is nothing other than the average square residuals for the most part with <span class="math inline">\(N-p\)</span> part not withstanding.</p>
+<p>In a sense all the things we knew about from linear regression carryover to multi-variable regression.</p>
+<p>To end this section, we want to emphasize how important linear models are to the data scientist. Before you do any machine learning or any complex algorithm, linear models should be your first attempt. They offer parsimonious and well understood easily describe relationships between predictors and response. There are some modern
+machine learning algorithms that can beat some of the propetries of linear models, like the imposed linearity. Nonetheless, linear models should always be your starting point. There’s some amazing things you can do with linear models that you may not think that would be possible. For example, you can take a time series like a music sound or something like that, and decompose it into its harmonics. This is so-called discrete Fourier transform can be thought of the as the fit from a linear model. You can flexibly fit rather complicated functions and curves and things like that using linear models. You can fit factor variables as predictors. ANOVA and ANCOVA are special cases of linear models. You can uncover complex multivariate relationships within a response and you can build fairly accurate prediction models.</p>
+</div>
 </div>
 <div id="multi-variable-regression-tips-and-tricks" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Multi-variable regression tips and tricks</h2>
@@ -257,6 +367,12 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="practical-r-exercises-in-swirl-2" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Practical R Exercises in swirl</h2>
+<p>During this week of the course you should complete the following lessons in the Regression Models swirl course:</p>
+<ol style="list-style-type: decimal">
+<li>MultiVar Examples2</li>
+<li>MultiVar Examples3</li>
+<li>Residuals Diagnostics and Variation</li>
+</ol>
 </div>
 <div id="week-3-quiz" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> Week 3 Quiz</h2>
