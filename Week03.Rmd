@@ -137,6 +137,57 @@ machine learning algorithms that can beat some of the propetries of linear model
 
 ## Multi-variable regression tips and tricks
 
+Let's start this discussion with the famous Swiss Fertility Data. Using the following command you can load the data and see the documentation.
+
+```{r, echo = T, eval = F}
+require(datasets); 
+data(swiss); 
+?swiss
+```
+
+The data shows standardized fertility measure and socio-economic indicators for each of 47 French-speaking provinces of Switzerland at about 1888. A data frame with 47 observations on 6 variables, each of which is in percent, i.e., in [0, 100]. The varibles are:
+
+* [,1]   Fertility          a common standardized fertility measure
+* [,2]   Agriculture        % of males involved in agriculture as occupation
+* [,3]	 Examination        % draftees receiving highest mark on army examination
+* [,4]	 Education          % education beyond primary school for draftees
+* [,5]	 Catholic           % catholic (as opposed to protestant)
+* [,6]	 Infant.Mortality   live births who live less than 1 year
+
+All variables but Fertility give proportions of the population.
+
+Visualizing some of the basic scatter plots is always a good practice. 
+
+```{r, echo = T, eval = T}
+g <- ggpairs(
+  swiss,
+  lower = list(continuous = "smooth"),
+  wrap = function(...) {
+    ggally_smooth(..., method = "loess")
+  }
+)
+g
+```
+
+In this plot you see fertility is on the x-axis for all the plots in the first column, agriculture is on the x-axis for all of the plots in the second column. Agriculture is also on the y-axis for the first graph. In addition, the corresponding upper triangular part of the matrix gives the correlation between the two variables. For example, fertility and agriculture the relation turns out to be fairly linear with confidence prediction band around it. The correlation between the two is 0.35. 
+
+Let's investigate the relationship where agriculture, the percent of the province that works in the agricultural industry, with fertility. 
+
+```{r, echo = T, eval = T}
+summary(lm(Fertility ~ . , data = swiss))$coefficients
+```
+
+Tilde period in `lm` function is a shorthand for all the other variables in the data frame. The output of the `summary` function gives the coefficients of the model. The first column gives the estimated coefficients, the second column gives the standard errors of the coefficients, the third column gives the t-statistics, and the fourth column gives the p-values. The p-values are the probability of observing a t-statistic as extreme as the one observed, if the true coefficient were 0.
+
+The number $-0.17$ in the `Agriculture` variable row is interpreted as: we expect a 0.17 decrease, in standardized fertility for every 1% increase in the percentage
+of males involved in agriculture, holding the other variables constant. Meaning we hold examination and education, percent Catholic and infant mortality constant. 
+
+The next column, the standard error 0.07, talks about how precise that coefficient is. It talks about the statistical variability of that coefficient. If we wanted to perform a hypothesis test, we would take the estimate, subtract off the hypothesized value, which in this case is zero, and divide it by the standard error of the estimate. Which is the definition of T-statistic. R conveniently provides it to us, -2.448. 
+
+
+We can calculate the probability of getting a t-statistic as extreme as that. As small as negative 2.448 or smaller, and because we're doing a two-sided test,
+we would double that p-value. The degrees of freedom are $n - #coefficients$, including the intercept. But again, R does that on our behalf, and that works out to be 0.018. 
+
 
 ## Adjustment
 
