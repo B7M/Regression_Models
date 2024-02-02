@@ -39,6 +39,12 @@ practical-r-exercises-in-swirl-1
 week-2-quiz
 week-03
 multi-variable-regression
+how-to-get-the-coefficients-derivation-of-formulas
+results
+example-with-two-variables-simple-linear-regression
+the-general-case
+examples-with-multiple-variables
+interpretation-of-coefficients
 multi-variable-regression-tips-and-tricks
 adjustment
 residuals-again
