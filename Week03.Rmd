@@ -277,140 +277,142 @@ g = g + xlab("Type of spray") + ylab("Insect count")
 g
 ```
 
-So, presumably,
-number left after applying the spray, and the spray factor is the type of spray,
-okay? And then it gives some examples
-of working with this data, but we don't need that cuz we're
-gonna build our own examples. So let's first plot some of the data. So I want to do a ggplot and
-I've already loaded ggplot2, but just to remind you, in case you're
-restarting your R session from earlier, you want to make sure
-that you acquire ggplot2. There, it's loaded. And then I have my ggplot and
-then my data is InsectSprays. And then for my aesthetic,
-my Y is the count, the number of insects. My X is the spray. They don't give you too much
-information about the sprays, but there's a couple of different
-sprays that they use. And then I want to fill the objects I'm
-creating with the factor variable spray. So there I've created my ggplot. And then I wanna do a violin plot. A violin plot is kind of like a histogram
-but sort of tilted on its side. And then they repeat it on both sides so
-it looks a little like a violin. Well, it looks like a violin
-if you're data cooperates. Otherwise, it looks like a blob. Okay, there's our violin plot. And then I wanna set my labels. And then if you wanna actually see
-the plot, you gotta bring it up. Okay, so, here's my violin plot. So you see there's sprays eight
-labeled spray A, B, C, D, E, and F? Okay.
-And you can see the insect counts, so I presume they applied the spray
-to numerous batches of insects and they,
->> It's unfortunate they're not telling me whether or not the count is the count of
-the number of alive or the number dead. So we don't know if this is
-a better spray, a better, let's say it's a mosquito spray or something like
-that, cuz no one likes mosquitoes. We don't know if this is a better spray or
-a worse spray. But let's talk about how we can
-test the difference between different factor levels in
-this case using linear models. And then, at the end I'll talk about some
-shortcomings of the approach that I'm proposing here. But here's a violin plot. And let me just do head Insect sprays to just show you the data, what it looks
-like, to see we have a bunch of counts. And then,
-the spray label's a very simple data set. And so, let's look at what happens when we
-include insect spray as a linear model and y as an outcome. So, let's fit our model. And now, what we're fitting is, our outcome is the count,
-the number of insects. Our predictor is the spray,
-which spray was used as a factor variable. It's already a factor variable. And then, I give it the data-set. And then, here, I just want
-the summary of the output from lm. Again, normally you wanna
-assign your lm to a variable so you can keep it for later. And then, I just wanna, for, to keep
-the printing a little bit self-contained, I'm grabbing the coefficient table. And so, there you see, the Intercept,
-spray B, spray C, spray D, spray E, and spray F. And spray A is conspicuously missing. And the idea is that everything here
-is now in comparison with spray A. So, this 0.833 is the change in the mean between spray B and spray A. In this case, 14.5,
-the intercept is the mean for spray A. And if you look over here at our plot,
-that seems about right. Look at our violin plot. 14.5 seems about right for spray A. And spray B, it seems reasonable
-that it would be off by, it would be changed just by
-a little bit from spray A. Now, spray C looks like it
-has a much lower count, okay? And look, it's coefficient is minus 12. Okay?
-And that looks like about right. So this one's at 14.5. And somewhere around two seems
-about right for this one, spray C. And so, that's exactly what
-this coefficient is saying. This negative 12 here is the different
-between spray C minus spray A. Now, if we wanted to compare,
-for example, spray B and spray C, we would have to subtract this,
-0.833, and this negative12. Now, we wouldn't have a standard error for
-that comparison immediately. However, that would give us the estimate. If I were to take the average count for
-the sprays, for those with spray A, I would get 14.5. If I were to take the average count for spray B, I would get 14.5 plus 0.833. So, I'd like now to show you how I
-can hard code the same model and not rely on r to actually
-pick the reference level. So, remember what I did last time
-is I did count was my outcome and my factor variable spray was my predictor. And what r does is it picks the spray
-level that's the lowest alphanumerically. So, in this case, spray level A,
-to set as the reference level. So let me show how you can hard
-code that myself manually. So, here count is my outcome. And then, I'm gonna create a variable
-using the I function which in lm actually performs the operation inside the
-regression, inside the model statement. So, here I just wanna look at the
-instances where the spray is equal to B. And then, I multiply that times 1 to
-change it from Boolean to numeric. And then, here's a variable that's
-1 when spray is C, and 0 otherwise. And here's a variable that's 1 when
-the spray is D, and 0 otherwise. And here's one for E,
-and here's one for F. So, I've included all of them except A. So, I've forced A to
-be my reference level. And I'm going to run this model. And it should give me the same
-result as with r did. It's just now I've shown you exactly how
-r is creating the regression variables. So, let me just remind ourselves
-what r gives us when we run, and let it handle the factor
-variable by itself. And then, let me do the same thing where
-I've created my own factor variables. And then, you can see 14.5, 14.5, 0.833, 0.833, you can see that it's identical. So this is what r is
-doing behind the scenes. And let's keep exploring this because
-this is kind of an important point. If you mess this up with factor variables,
-you get very incorrect conclusions. Now, let me show you what happens
-if I do include spray A here. So, I've done the same model I did before
-where I include all the variables, but now I'm also including
-an extra variable for spray A. And let me just do the lm part. And notice it gives an NA in
-front of the spray A coefficient. And the reason for
-that is because it's redundant. We have six means, right? For six sprays. And we have seven parameters in intercept. And then, now I've tried to put
-in six regression parameters. I have six means to fit seven parameters. It can't do that, so
-it's gonna drop one of them. Now, what if I do want my coefficients, instead of being interpreted as
-levels referenced to a control level, what if I want my coefficients to
-be the mean for each of the groups? Well, you can do that, but
-you have to remove the intercept. So, watch what happen when I say count is
-my outcome, and spray is my predictor, but I remove the intercept. Then notice what happens is that now I get a different set of
-coefficients, one for each spray level. So, it includes A, B, C, D, E and F. It hasn't dropped any levels. And it can do that now because it has six
-parameters, and six means to work with. And these are exactly equal to
-the means for each spray in the data. So, if I were to just go ahead and
-calculate the means for each spray, right? It works out to be the same numbers. 14.5, 15.3, 2.08 in both, and so on. Now, I want to emphasize this model is no different than my model
-that included an intercept. Why don't I go back to my model with
-my intercept just to illustrate this. So, now it's just that the coefficients
-have a different interpretation. Now, the intercept from the model,
-when I fit count as spray but included the intercept,
-my intercept now is interpreted, 14.5, as the mean for spray A. And you can see that it's
-exactly the empirical mean for spray A when I calculate the mean. It works out that way. And then, spray B,
-we talked about earlier, was the comparison between the reference
-level spray A and spray B. Okay?
-So, if I add these together, 14.5 and 0.833,
-I should get the mean for spray B. Okay, and that's what you see, 14.5 plus
-0.833, that gets me 15.33, and so on. So, If I add 14.5 and
-minus 12, I'm gonna get 2.08. If I add 14.5 and negative 9,
-I get 4.9, and so on. So, this model,
-where I've included an intercept, has all the same information as
-the model where I omitted the intercept, the only difference is how
-the coefficients are interpreted. In the model with the intercept now
-the intercept is interpreted as the sprayA mean and
-all the coefficients are interpreted as relative to sprayA
-differences from sprayA. And then if I would have fit it without
-the intercept then I get the mean for each spray. And if I want differences then I
-have to subtract the coefficients. And you usually want one of them to
-be a reference level because then you can do test. So now my p values are testing whether or
-not, for the t test whether or not A is different from B, and A is
-different from C, and A is different from D, and so on, whereas the p values from
-this test are just testing whether or not those means are different from 0,
-which is a very different test. Did sprayA kill any insects is what
-this is testing, where in this one, the sprayB row is testing whether
-sprayA is different from sprayB. So, what I'm trying to illustrate is that,
-how you play around with factor variables in LM is very important
-in terms of how you interpret it. It's not just a conceptual or
-theoretical thing to worry about it. It's a very practical
-thing to worry about. What your intercept means changes
-dramatically depending on what your reference level is or whether or
-not you include an intercept. Let me do one last thing. Where now I show you how
-you can re-level and in this case sprayA was my reference
-level you can very easily re-level it. So say sprayC is your reference level. So now here I just use
-the re level command so now inspect spray,
-the reference level is sprayC but now I've just created a new
-variable where that spray2. And now I'm gonna do my linear
-model where my outcome is my count. And spray2 is my predictor
-now instead of spray. And this is the one that has
-C as the reference level. And then R knows not to do the one that
-has the lowest alphanumeric letter, but instead has the reference
-level that I set. And there when I do it
-notice sprayA is present, sprayC is gone cuz now
-it's the reference level. 
+`Y` is the count, the number of insects, `X` is the spray. We use a violin plot to show the data, which is kind of like a histogram but sort of tilted on its side and repeated on both sides so it looks a little like a violin. It looks like a violin if you're data cooperates, otherwise, it looks like a blob. As you can see there are eight spray A, B, C, D, E, and F and you can see the insect counts. It's unfortunate they're not telling us whether or not the count is the count of
+the number of alive or the number dead insects. So we don't know if this is a better spray or a worse spray. However, we still can test the difference between different factor levels in this case using linear models. Wwhen we include insect spray as a linear model and y as an outcome.
+
+```{r, echo = T, eval = T}
+summary(lm(count ~ spray, data = InsectSprays))$coef
+```
+
+
+We get the Intercept, spray B, spray C, spray D, spray E, and spray F, notice that spray A is conspicuously missing. The idea is that everything here is in comparison with spray A. So, 0.833 is the change in the mean between spray B and spray A. In this case, 14.5 is the mean for spray A. You can double check that by looking at the plot. Spray B seems reasonable affected by a little bit from spray A, whereas spray C looks like it's affected a lot it has a coefficient of $-12$.
+If we wanted to compare spray B and spray C we would have to look at $0.833 - (-12.416)$. We wouldn't have a standard error for that comparison immediately. However, that would give us the estimate. 
+
+If we were to take the average count for the sprays, for those with spray A, we would get 14.5 with spray B we would get $14.5 + 0.833$. 
+What R does is it picks the spray level that's the lowest alphanumerically, in this case, spray level A, to set as the reference level. Here we like to show you how you can hard code the same model and not rely on R to pick the reference level. 
+```{r, echo = T, eval = T}
+summary(lm(count ~ 
+             I(1 * (spray == 'B')) + I(1 * (spray == 'C')) + 
+             I(1 * (spray == 'D')) + I(1 * (spray == 'E')) +
+             I(1 * (spray == 'F'))
+           , data = InsectSprays))$coef
+```
+
+Here `count` is the outcome and we create a variable using the `I` function which performs the operation inside the regression, inside the model statement. We look at the instances where the spray is equal to B then multiply that by 1 to change it from Boolean to numeric and do the same for the other sprays and add them all together. In this example we included all of the sprays except A which means we forced A to be the reference level. The result is identical to R picking the reference level as we expected. 
+
+
+What happens if we include spray A?
+```{r, echo = T, eval = T}
+summary(lm(count ~ 
+   I(1 * (spray == 'B')) + I(1 * (spray == 'C')) +  
+   I(1 * (spray == 'D')) + I(1 * (spray == 'E')) +
+   I(1 * (spray == 'F')) + I(1 * (spray == 'A')), data = InsectSprays))$coef
+```
+
+Notice it gives an NA in front of the spray A coefficient. We have six means, for six sprays and seven parameters in intercept. 
+
+If we do want the coefficients, instead of being interpreted as levels referenced to a control level be the mean for each of the groups? Well, we can do that by removing the intercept. 
+
+```{r, echo = T, eval = T}
+summary(lm(count ~ spray - 1, data = InsectSprays))$coef
+library(dplyr)
+summarise(group_by(InsectSprays, spray), mn = mean(count))
+```
+
+Here `count` is the outcome and spray is the predictor, but we remove the intercept. 
+Notice we get a different set of coefficients, one for each spray level. It includes A, B, C, D, E and F without dropping any levels. It can do that because it has six parameters, and six means to work with. The coefficients are exactly equal to the means for each spray in the data. If calculated the means for each spray it would work out to be the same numbers. 
+
+We want to emphasize this model is no different than the previous model that included an intercept, and just the coefficients have a different interpretation. If we add these together, 14.5 and 0.833 from the model with intercept we should get the mean for spray B, which is the case. In the model with the intercept, the intercept is interpreted as the spray A mean and all the coefficients are interpreted as relative to spray A differences from spray A and when we fit the data without the intercept we get the mean for each spray. 
+The p values are testing whether or not, A is different from B, and A is different from C, and A is different from D, and so on, whereas the p values from
+the model without intercept are testing whether or not those means are different from 0, which is a very different test. We were trying to illustrate how you play around with factor variables in `lm` is very important in terms of how you interpret it. It's not just a conceptual or theoretical thing to worry about it is a very practical thing. What your intercept means changes dramatically depending on what your reference level is.
+
+
+One more thing that we want to discuss is the idea of re-leveling. You can re-level to have differenct reference level. For example, if you want to compare spray C to spray A, you can re-level the spray variable to have C as the reference level. 
+
+```{r, echo = T, eval = T}
+spray2 <- relevel(InsectSprays$spray, "C")
+summary(lm(count ~ spray2, data = InsectSprays))$coef
+```
+
+### Summary of the InsectSprays example
+
+* If we treat Spray as a factor, R includes an intercept and omits the alphabetically first level of the factor.
+  * All t-tests are for comparisons of Sprays versus Spray A.
+  * Emprirical mean for A is the intercept.
+  * Other group means are the itc plus their coefficient. 
+* If we omit an intercept, then it includes terms for all levels of the factor. 
+  * Group means are the coefficients. 
+  * Tests are tests of whether the groups are different than zero. (Are the expected counts zero for that spray.)
+* If we want comparisons between, Spray B and C, say we could refit the model with C (or B) as the reference level. 
+
+**Note** We want to make a few points about the InsectSprays dataset, which we believe is important for the data scientist.
+
+* Counts are bounded from below by 0, violates the assumption of normality of the errors. 
+  * Also there are counts near zero, so both the actual assumption and the intent of the assumption are violated.
+* Variance does not appear to be constant.
+* Perhaps taking logs of the counts would help. 
+  * There are 0 counts, so maybe log(Count + 1)
+* Also, we'll cover Poisson GLMs for fitting count data.
+
+In this section we go through an example that underlies the topic of so called ANCOVA. In this example we will fit multiple lines with different intercepts and different slopes. We will use the swiss dataset, recall we're trying to model fertilities as a linear function of agriculture, which is the percent of that province that was working in agriculture. 
+
+```{r, echo = T, eval = T}
+library(datasets); data(swiss)
+head(swiss)
+```
+
+If we do `hist(swiss$Catholic)`, notice that it's very bimodal, that's because most provinces are either majority Catholic or majority Protestant, from this time period. 
+```{r, echo = T, eval = T}
+hist(swiss$Catholic)
+```
+
+We now create a catholic, binary variable, which is one if the province is majority catholic, and zero if it's majority protestant. 
+```{r, echo = T, eval = T}
+library(dplyr); 
+swiss = mutate(swiss, CatholicBin = 1 * (Catholic > 50))
+```
+
+We can plot the data to see the two groups, the `CatholicBin` factor variable, that's zero for majority Protestant and one for majority Catholic. 
+```{r, echo = T, eval = T}
+g = ggplot(swiss, aes(x = Agriculture, y = Fertility, colour = factor(CatholicBin)))
+g = g + geom_point(size = 6, colour = "black") + geom_point(size = 4)
+g = g + xlab("% in Agriculture") + ylab("Fertility")
+g
+```
+
+
+For the time being, we will ignore the outlaiers and simply work on fitting a line where we want two separate lines. One for the majority Catholic provinces, and one for the majority Protestant provinces. For notations `Y` is fertility, `X1` is the percent of the province working in agriculture, and `X2` is a binary variable, where it is one if the province is over 50% catholic, and zero if the province is majority Protestant. Let's consider model one, where we modeled the expected y, given x1 and x2, is an intercept plus a slope times x1. $E[Y | X_1 = x_1, X_2 = 0] = \beta_0 + \beta_1 x_1$. This is the line that would disregard the religion of the province entirely. Let's consider a second model $E[Y | X_1 = x_1, X_2 = 1] = \beta_0 + \beta_1 x_1 + \beta_2 x_2$. 
+In the event that X two is equal to zero, i.e. if the province is majority protestant, this works out to be $\beta_0 + \beta_1 x_1$. In the event that x2 is equal to one, i.e. if the province is majority Catholic, this works out to be $\beta_0 + \beta_2 + \beta_1 x_1$.
+
+
+The model that includes X1 and X2, but no interaction fits two models that have the same slope, but they have different intercepts, $\beta_0$ and then $\beta_0+\beta_2$. If we consider one third model $E[Y | X_1 = x_1, X_2 = 1] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$, in this model when X2 is zero, it works out to be $\beta_0 + \beta_1 x_1$, and when X2 is 1, which is the case when the province is majority Catholic, we get $\beta_0 + \beta_2 + \beta_1 x_1 + \beta_3 x_1$, now let's reorganize terms to get $\beta_0 + \beta_2 + (\beta_1 + \beta_3) x_1$. 
+
+This model is showing if we omitted that interaction term, we fit two lines the same slope, if we include the interaction term, we get two lines different slopes and different intercepts. And the coefficient in front of the Catholic term is going to change in the intercept going from Protestant to Catholic.
+
+### Exploring the models in R
+
+We start by fitting the model, where we fit the expected fertility as a linear function of the percent of the province working in agriculture. 
+```{r, echo = T, eval = T}
+fit = lm(Fertility ~ Agriculture, data = swiss)
+g1 = g
+g1 = g1 + geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2], size = 2)
+g1
+```
+
+Here we want to save the plot in `g1`, then we can keep adding different things to it. The coefficients summaries can be obtained by `summary(fit)$coef`.
+```{r, echo = T, eval = T}
+summary(lm(Fertility ~ Agriculture + factor(CatholicBin), data = swiss))$coef
+```
+
+This just disregards the color of the points. Let's do one that fits two parallel lines.
+```{r, echo = T, eval = T}
+fit = lm(Fertility ~ Agriculture + factor(CatholicBin), data = swiss)
+g1 = g
+g1 = g1 + geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2], size = 2)
+g1 = g1 + geom_abline(intercept = coef(fit)[1] + coef(fit)[3], slope = coef(fit)[2], size = 2)
+g1
+```
+
 
 
 ## Adjustment
