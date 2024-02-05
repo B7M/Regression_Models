@@ -13,7 +13,7 @@ If you're utilizing predictor X to forecast a response Y and discover a meaningf
 and also their dietary information. This person claims to have found an interesting relationship: breath mint usage has a significant regression relationship with forced expiratory volume(FEV), a measure of lung function. You would be skeptical there's very little basis for a biological relationship there. Breath mints are just sugar! But maybe, but what you've really be thinking is what other variables might explain this relationship? You might have two hypotheses: this person dug through lots and lots of variables and just found the one that was significant, and it's just a chance of association, which is the problem of multiplicity. In addition it is likely, you would think the real problem is smokers tend to use more breath mints, and smoking has this relationship with lung function. It's well-established that chronic exposure to a smoker, even second-hand smoke has negative impacts on lung function. So it's probably smoking it probably has nothing to do with the breath mints, it's a indirect effect of breath mints through smoking, not a direct effect of breath mints on lung function. This would be the hypothesis. To establish that there's a breath mint effect beyond smoking we could consider smokers by themselves, and see whether their lung function differs by their breath mint usage, and consider non-smokers by themselves, and see whether their lung function differs by breath mint usage, where we conditioned on smoking status. This way we would compare like with like. Multivariable regression is sort of automated way to do that in a linear fashion. It makes fair enough assumptions, in automated way. In this section we will explain how it works and we will also talk a little bit about its limitations. 
 
 Multivariable regression is trying to look at the relationship of a predictor and a response, while having, at some level, accounted for other variables. Moreover, multivariable regression is actually a good prediction model.
-For example, a Kaggle competition wanted to predict the number of days a person would be in the hospital in subsequent years given their claims history and number of days they were in the hospital in previous years. The insurance companies seek to harness an extensive dataset derived from claims, aiming to predict a singular numerical outcome. However, the conventional approach of simple linear regression would be insufficient when confronted with multiple predictors. How can we extend the scope of simple linear regression to accommodate a multitude of regressors for predictive purposes? The procedure is similar to simple linear regression where there's more predictor terms,X values. For example, $X_1$ might be the number of insurance claims in the previous year, and $X_2$ might be whether or not the person had a particular cardiac problem, and so on. The first variable is typically just a constant one, so there's an intercept that's included, a term that's just $\beta_0$ by itself. Interestrigly in this competition, we found that multivariable regression could get people very close to the winning entry, while other machine learning methods like random forest, and boosting only improved the results minorly on top of multivariable regression.
+For example, a Kaggle competition wanted to predict the number of days a person would be in the hospital in subsequent years given their claims history and number of days they were in the hospital in previous years. The insurance companies seek to harness an extensive dataset derived from claims, aiming to predict a singular numerical outcome. However, the conventional approach of simple linear regression would be insufficient when confronted with multiple predictors. How can we extend the scope of simple linear regression to accommodate a multitude of regressors for predictive purposes? The procedure is similar to simple linear regression where there's more predictor terms, X values. For example, $X_1$ might be the number of insurance claims in the previous year, and $X_2$ might be whether or not the person had a particular cardiac problem, and so on. The first variable is typically just a constant one, so there's an intercept that's included, a term that's just $\beta_0$ by itself. Interestingly in this competition, we found that multivariable regression could get people very close to the winning entry, while other machine learning methods like random forest, and boosting only improved the results minorly on top of multivariable regression.
 
 Note: in case of breath mint study, one of the predictors, $X_1$ might be breath mint usage (a binary variable), and $X_2$ might be how much a person smoked.
 
@@ -59,7 +59,7 @@ A coefficient from a multivariable regression is the coefficient where the linea
 
 ### Results
 
-In $E[Y_i] = X_{0i}\beta_0 + X_{1i}\beta_1$, we have two covariants, $X_1 , X_2$. 
+In $E[Y_i] = X_{0i}\beta_0 + X_{1i}\beta_1$, we have two covariates, $X_1 , X_2$. 
 $$\hat \beta_0 = \frac{\sum_{i=1}^n e_{i, Y | X_1} e_{i, X_0 | X_1}}{\sum_{i=1}^n e_{i, X_0 | X_1}^2}$$
 
 $\beta_0$ is what you would get with regression through the origin if you removed the second coefficient $X_1$. Similarly, the same thing could be said about the coefficient for $X_1 \beta_1$. $\hat \beta_1$ is the linear regression where linear effect of $X_0$ out of both the response $Y$, and the second predictor, $X_1$. This is why multivariable regression relationships are considered as having been adjusted for all the other variables. 
@@ -78,7 +78,7 @@ More generally, multivariate regression estimates are exactly those having remov
 
 ### Examples with multiple-variables
 
-In the following simulation we have 100 observations and want to generate three predictors, `x, x2, x3`, where they are all just standard normals. When we write `y = 1 + x + x2 + x3`, all my coefficients are 1, meaning the population model used for simulation, they're all 1. Next we add some random noise, that's the error term. 
+In the following simulation we have 100 observations and want to generate three predictors, `x, x2, x3`, where they are all just standard normal. When we write `y = 1 + x + x2 + x3`, all my coefficients are 1, meaning the population model used for simulation, they're all 1. Next we add some random noise, that's the error term. 
 
 ```{r, echo = T, eval = F}
 
@@ -92,7 +92,7 @@ coef(lm(y ~ x + x2 + x3))
 
 ```
 
-Here we want to point out, `coef(lm(ey ~ ex - 1))` is the same coefficient as if we regress y on x, x2 and x3, and an intercept`coef(lm(y ~ x + x2 + x3))`. You see the x term here is exactly the same as the regression through the origin estimate with the residuals. 
+Here we want to point out, `coef(lm(ey ~ ex - 1))` is the same coefficient as if we regress y on x, x2 and x3, and an intercept `coef(lm(y ~ x + x2 + x3))`. You see the x term here is exactly the same as the regression through the origin estimate with the residuals. 
 
 ### Interpretation of coefficients
 
@@ -126,14 +126,14 @@ follows a $T$ distribution with $n-p$ degrees of freedom.
 
 These should all be pretty familiar because they're basically the same as what we did for linear aggression, the difference is we have more terms now. Remember in linear aggression we had two terms, we had an intercept and a covariant now we're just adding more covariants potentially.
 
-One point to note is that the variance estimate is not quite the same as the average squared residuals. In linear regression we divided by $n-2$, now we divide by $n-p$. That's kind of a technical point because if you know $n-p$ of the residuals you implicity know the last $p$ of them due to some linear constraints. That's a minor point you can think of the residuals variants estimate is nothing other than the average square residuals for the most part with $N-p$ part not withstanding.
+One point to note is that the variance estimate is not quite the same as the average squared residuals. In linear regression we divided by $n-2$, now we divide by $n-p$. That's kind of a technical point because if you know $n-p$ of the residuals you implicitly know the last $p$ of them due to some linear constraints. That's a minor point you can think of the residuals variants estimate is nothing other than the average square residuals for the most part with $N-p$ part not withstanding.
 
 
 In a sense all the things we knew about from linear regression carryover to multi-variable regression. 
 
 
 To end this section, we want to emphasize how important linear models are to the data scientist. Before you do any machine learning or any complex algorithm, linear models should be your first attempt. They offer parsimonious and well understood easily describe relationships between predictors and response. There are some modern
-machine learning algorithms that can beat some of the propetries of linear models, like the imposed linearity. Nonetheless, linear models should always be your starting point. There's some amazing things you can do with linear models that you may not think that would be possible. For example, you can take a time series like a music sound or something like that, and decompose it into its harmonics. This is so-called discrete Fourier transform can be thought of the as the fit from a linear model. You can flexibly fit rather complicated functions and curves and things like that using linear models. You can fit factor variables as predictors. ANOVA and ANCOVA are special cases of linear models. You can uncover complex multivariate relationships within a response and you can build fairly accurate prediction models.
+machine learning algorithms that can beat some of the properties of linear models, like the imposed linearity. Nonetheless, linear models should always be your starting point. There's some amazing things you can do with linear models that you may not think that would be possible. For example, you can take a time series like a music sound or something like that, and decompose it into its harmonics. This is so-called discrete Fourier transform can be thought of the as the fit from a linear model. You can flexibly fit rather complicated functions and curves and things like that using linear models. You can fit factor variables as predictors. ANOVA and ANCOVA are special cases of linear models. You can uncover complex multivariate relationships within a response and you can build fairly accurate prediction models.
 
 ## Multi-variable regression tips and tricks
 
@@ -145,7 +145,7 @@ data(swiss);
 ?swiss
 ```
 
-The data shows standardized fertility measure and socio-economic indicators for each of 47 French-speaking provinces of Switzerland at about 1888. A data frame with 47 observations on 6 variables, each of which is in percent, i.e., in [0, 100]. The varibles are:
+The data shows standardized fertility measure and socio-economic indicators for each of 47 French-speaking provinces of Switzerland at about 1888. A data frame with 47 observations on 6 variables, each of which is in percent, i.e., in [0, 100]. The variables are:
 
 * [,1]   Fertility          a common standardized fertility measure
 * [,2]   Agriculture        % of males involved in agriculture as occupation
@@ -267,7 +267,7 @@ The mean for the three groups are:
 
 If we compare the means like $\beta_0$ the mean for the Independents versus $\beta_0 +\beta_1$ the mean for the Republicans, i.e. subtract those two, we get $\beta_1$. Which means $\beta_1$ compares Republicans to Independents, and similarly $\beta_2$ compares Democrats to Independents and $\beta_1 - \beta_2$ compares Republicans to Democrats. By omitting the regression variable for the Independents, the intercept became the value for the Independents, and all of the other coefficients have become interpreted relative to Independents and shows choice of reference category changes the interpretation. If we had included the regressor for
 Independents and excluded the one for Republicans, then the intercept would be for Republicans, and the coefficient in front of the Democratic would be Democrats versus Republicans. The coefficient in front of the Independent would be Independent versus Republican. To illustrate how this works we move to R.
-In this example we look at a factor variable and see how R is treating it the datset is `InsectSprays` and we're going to fit a linear model to it. 
+In this example we look at a factor variable and see how R is treating it the dataset is `InsectSprays` and we're going to fit a linear model to it. 
 
 ```{r, echo = T, eval = T}
 require(datasets);data(InsectSprays); require(stats); require(ggplot2)
@@ -338,7 +338,7 @@ summary(lm(count ~ spray2, data = InsectSprays))$coef
 
 * If we treat Spray as a factor, R includes an intercept and omits the alphabetically first level of the factor.
   * All t-tests are for comparisons of Sprays versus Spray A.
-  * Emprirical mean for A is the intercept.
+  * Empirical mean for A is the intercept.
   * Other group means are the itc plus their coefficient. 
 * If we omit an intercept, then it includes terms for all levels of the factor. 
   * Group means are the coefficients. 
@@ -413,13 +413,214 @@ g1 = g1 + geom_abline(intercept = coef(fit)[1] + coef(fit)[3], slope = coef(fit)
 g1
 ```
 
+Because the variable `CatholicBin` is 0 or 1, we don't actually have to have the factor statement. Because coding a variable of 0 versus 1 treats it as a factor. However we like to call factor variables and the reason is sometimes you have a variable like 0,1,2 for a 3 level variable, and if you don't call that a factor, R is going to treat that as a continuous regressor. It's going to say 2 is twice 1, even if 2 is just a numeric coding for representing red hair color and 1 is for brown hair color, where 2 really has nothing to do with being twice 1 in that case. 
 
+```{r, echo = T, eval = T}
+summary(lm(Fertility ~ Agriculture * factor(CatholicBin), data = swiss))$coef
+```
+We have an intercept and a slope, this intercept is the intercept for mostly Protestant provinces, the slope is the slope for mostly Protestant provinces. This 2.86 plus 62.04 is the intercept for the mostly Catholic provinces and the slope 0.096 + 0.089 is the slope for the mostly Catholic provinces. For lines with different intercepts and different slopes depending on the percent of the province that is Catholic, put an asterisk and do the fit. What happens when you add an asterisks in between two variables in R? It automatically fits the interaction. In general you want to include the main effects, if you include the interaction. 
+```{r, echo = T, eval = T}
+fit = lm(Fertility ~ Agriculture * factor(CatholicBin), data = swiss)
+g1 = g
+g1 = g1 + geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2], size = 2)
+g1 = g1 + geom_abline(intercept = coef(fit)[1] + coef(fit)[3], 
+                          slope = coef(fit)[2] + coef(fit)[4], size = 2)
+g1
+```
+based on the coefficients all the Catholic terms were positive the line with the slightly higher intercept is the Catholic line and the line for the slightly lower
+intercept is the mostly Protestant. Now you can probably see that well for the blue dots it is not clear how the two outlier blue dots impacting the fit, so we might want to investigate that. We will do that in the next section where we talk about residuals and influence diagnostics and that sort of thing. 
 
 ## Adjustment
 
+Adjustment, is the idea of putting regressors into a linear model to investigate the role of a third variable on the relationship between another two. Since it is often the case that a third variable can distort, or confound if you will, the relationship between two others.
+
+As an example, consider looking at lung cancer rates and breath mint usage. For the sake of completeness, imagine if you were looking at forced expiratory volume (a measure of lung function) and breath mint usage. If you found a statistically significant regression relationship, it wouldn’t be wise to rush off to the newspapers with the headline “Breath mint usage causes shortness of breath!”, for a variety of reasons. First off, even if the association is sound, you don’t know that it’s causal. But, more importantly in this case, the likely culprit is smoking habits. Smoking rates are likely related to both breath mint usage rates and lung function. How would you defend your finding against the accusation that it’s just variability in smoking habits?
+
+If your finding held up among non-smokers and smokers analyzed separately, then you might have something. In other words, people wouldn’t even begin to believe this finding unless it held up while holding smoking status constant. That is the idea of adding a regression variable into a model as adjustment. The coefficient of interest is interpreted as the effect of the predictor on the response, holding the adjustment variable constant.
+
+In this lecture, we’ll use simulation to investigate how adding a regressor into a model addresses the idea of adjustment.
+
+### Adjustment Examples
+
+In this section, we're gonna go over some examples of how adjusting for one variable can impact the apparent relationship of another variable on an outcome. The easiest way to see this is to look at a two group variable. For example, a treatment versus a control or something you might see in an AB test when we're adjusting for a continuous variable. Here's the first simulation: 
+```{r, echo = T, eval = T}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), runif(n/2));
+beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+In this case, the red group was the group reciving treatment and the blue group was control. The horizontal lines show the marginal effect of group status disregarding the x. The y was a measure of blood pressure, then we would think that if we hadn't factored in x, the mean for the group that received the treatment was around 2 and the mean for the control was around 0.8. You notice there's a pretty clear linear relationship between the outcome and the regressor. So what we could do is fit a model that looks like $y = \beta_0 + \beta_1 T + \beta_2 x + \epsilon$, where $T$ is the treatment indicator, with values of $\{0,1\}$. This would fit two parallel lines with $\beta_1$ representing the change in intercepts between the groups and $\beta_2$ the common slope that exists across the two groups. 
+```{r, echo = F, eval = T}
+n <- 100
+t <- rep(c(0, 1), c(n/2, n/2))
+x <- c(runif(n/2), runif(n/2))
+beta0 <- 0
+beta1 <- 2
+tau <- 1
+sigma <- 0.2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+
+# Create a scatter plot
+plot(x, y, type = "n", frame = FALSE, xlab = "x", ylab = "y")
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3,col="red")
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3,col="red")
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3,col="green")
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3,col="green")
+
+# Add histogram bins
+hist(x, breaks = 10, add = TRUE, col = rgb(0, 0, 0, 0.2))
+
+# Add points with different colors for each group
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+
+# Calculate and add the vertical distance label between two horizontal lines
+distance_label <- c(1, 2)
+
+# Add two text labels to the y-axis using mtext
+mtext(side = 2, text = c("Marginal effect", "Linear effect"), at = c(1.5, .35), line = c(2, 2), col = c("red","green"), cex = 1)
+```
+
+Taking a closer look at y-axis shows the marginal effect, the effect that we have if we disregard x, and the effect that we have if we incorporate x in a linear model and look at the change in the intercepts, are about the same. In addition, note in this example there is a lot of direct evidence to compare the groups for
+any given value of x. If we binned x we would have red and blue circles for a direct comparison of the treatment for kind of a fairly isolated level of x.
+
+Let's try a setting where it's gonna make a big difference. 
+```{r, echo = T, eval = T}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), 1.5 + runif(n/2));
+beta0 <- 0; beta1 <- 2; tau <- 0; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+The horizontal lines show marginal difference between the red, treated group, and the blue, control group. However, if we fit that model and look at the change in the intercepts, we'd see a tiny difference. This is a case where we would go from a massive treatment effect to nothing when we accounted for x. Moreover, if we knew that the x value was one or smaller, we know that value is in the blue group, and if it was 1.5 or higher, we know the value was in the treated group. So knowledge of x at some level pretty much gives us perfect knowledge of received treatment. In a randomized setuation it would be very hard to pick what treatment you had based on your x level because the x levels were all jumbled up some of the high x levels went to the treated, some of the high x levels went to the control. However, in this case, we clearly didn't randomize. The question of which model here is the right one to consider is not the discussion for this section, here we want to show how the inclusion of x can change the estimate. 
+As an example, imagin y, your outcome, was the blood pressure and the x variable was cholesterol or something highly related to whether or not you would've gotten prescribed a medication. You could see that adjusting for x is really just adjusting for the same thing that would lead you to have treatment. Again, this is what makes observational data analysis very hard as opposed to instances where you have randomized sample. This is an example where we had a strong marginal effect when we disregarded x, and a very subtle or a non-existent effect when we accounted for x. One more point is there is no value of x we can hold constant and compare red versus blue directly, which is a bad setting, where we're relying very heavily on the model to compare the group.
+
+A summary of the important points about the previous example can be listed as: 
+* The X variable is highly related to group status
+* The X variable is related to Y, the intercept doesn't depend on the group variable.
+  * The X variable remains related to Y holding group status constant
+* The group variable is marginally related to Y disregarding X.
+* The model would estimate no adjusted effect due to group.
+  * There isn't any data to inform the relationship between group and Y.
+  * This conclusion is entirely based on the model.
+
+
+Another senario is where there is some overlap between data point. 
+```{r, echo = T, eval = T}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), .9 + runif(n/2));
+beta0 <- 0; beta1 <- 2; tau <- -1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+There is some direct evidence for comparing the two groups. The marginal mean for the red and blue groups suggests the red is higher than the blue. However, the linear fit in the intercepts shows the blue is higher than the red. This shows the adjusted estimate is significant and the exact opposite of the unadjusted estimate. This phenomenon is often called Simpson's Paradox, and the idea is things can change to the exact opposite when you perform adjustment. 
+
+Next senario is shown in the following plot. 
+```{r, echo = T, eval = T}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(.5 + runif(n/2), runif(n/2));
+beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+
+Here there is no marginal effect. However, there's a huge effect when we adjust for x. There's no simple rule that says this is always what will happen with adjustment. Pretty much any permutation of going from significant to non-significant, staying both significant, staying non-significant, flipping signs can occur. 
+
+As our final example we look at the following graph.
+```{r, echo = T, eval = T}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2, -1, 1), runif(n/2, -1, 1));
+beta0 <- 0; beta1 <- 2; tau <- 0; tau1 <- -4; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + t * x * tau1 + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t + I(x * t))
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2] + coef(fit)[4], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+This example considers an instance where assuming the slopes were common across the two groups would be wrong. The linear model $y = \beta_0 + \beta_1 T + \beta_2 x + \beta_3 T x + \epsilon$ would fit two lines with different intercepts and different slopes. Another important thing to ascertain is there is no treatment effect. 
+
+If we look at the center there is no evidence of a treatment effect, if we look at the right side of the graph there is a big evidence that blue has a higher outcome than red, and if you look at the left side we see there is a lot of evidence that red has a higher outcome than blue. The interaction is the reason why the main treatment effect doesn't have a lot of meaning and the coefficient in front of the treated effects is not interpreted as the treatment effect by itself. The treatment effect depends on what level of x you're at, and you can't just read the term from the regression output associated with the treatment and act as if it's a treatment effect because we have an interaction term in the model. Again this shows how adjustment can really change things if you have a setting where you have not just adjustment, but so-called modification.
+
+We want to reiterate that nothing we've talked about is specific to having a binary treatment and a continuous x. 
+```{r, echo = T, eval = T}
+p <- 1
+n <- 100; x2 <- runif(n); x1 <- p * runif(n) - (1 - p) * x2
+beta0 <- 0; beta1 <- 1; tau <- 4 ; sigma <- .01
+y <- beta0 + x1 * beta1 + tau * x2 + rnorm(n, sd = sigma)
+plot(x1, y, type = "n", frame = FALSE)
+abline(lm(y ~ x1), lwd = 2)
+co.pal <- heat.colors(n)
+points(x1, y, pch = 21, col = "black", bg = co.pal[round((n - 1) * x2 + 1)], cex = 2)
+```
+
+The above plot shows outcome, y, and the continuous variable $x1$ and continuous variable $x2$ color coded, higher lighter values mean higher, and more red darker values means lower. At first glance you might say there is not much of a relationship between y and x1, however, if we look at it in three dimensions you can see that most of the variation of y is explained by its relationship with x2. Here we show the 2D plot of y versus x2. 
+```{r, echo = F, eval = T}
+p <- 1
+n <- 100
+x2 <- runif(n)
+x1 <- p * runif(n) - (1 - p) * x2
+beta0 <- 0
+beta1 <- 1
+tau <- 4
+sigma <- 0.01
+y <- beta0 + x1 * beta1 + tau * x2 + rnorm(n, sd = sigma)
+plot(x2, y, pch = 21, col = "black",lwd=2,
+     xlab = "x2", ylab = "y", main = "Variation of y with respect to x2")
+```
+
+An easy way to look at the other variables effect without having to resort to three dimensional plots, which don't work if you move beyond two variables is to look at residuals. 
+```{r, echo = T, eval = T}
+plot(resid(lm(x1 ~ x2)), resid(lm(y ~ x2)), frame = FALSE, col = "black", bg = "lightblue", pch = 21, cex = 2)
+abline(lm(I(resid(lm(x1 ~ x2))) ~ I(resid(lm(y ~ x2)))), lwd = 2)
+```
+
+Here we show the residual of y after having removed x2, the linear effect of x2, and the residual of x1 having removed linear effect of x2. As you can see there's
+a very strong relationship left over between y and x1 after having removed the effect of x2. 
+
+We want to reiterate we haven't said what exactly is the right model, the best way to think about that is you have to bring in some of the specific subject matter, or clinical scientific subject matter expertise into your model building exercise. If you're doing model building with a regular data set where you want interpretable
+coefficients getting the team of people some with the right scientific expertise, some with the statistical expertise, and some with the computing expertise is essential.
 
 ## Residuals again
-
 
 
 ## Model selection
