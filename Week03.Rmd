@@ -159,6 +159,7 @@ All variables but Fertility give proportions of the population.
 Visualizing some of the basic scatter plots is always a good practice. 
 
 ```{r, echo = T, eval = T}
+library(GGally)
 g <- ggpairs(
   swiss,
   lower = list(continuous = "smooth"),
