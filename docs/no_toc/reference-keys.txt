@@ -46,7 +46,11 @@ the-general-case
 examples-with-multiple-variables
 interpretation-of-coefficients
 multi-variable-regression-tips-and-tricks
+dummy-variables-are-smart
+summary-of-the-insectsprays-example
+exploring-the-models-in-r
 adjustment
+adjustment-examples
 residuals-again
 model-selection
 practical-r-exercises-in-swirl-2
