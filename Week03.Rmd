@@ -3,6 +3,10 @@ ottrpal::set_knitr_image_path()
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+```{r, echo = F, eval = T}
+install.packages("GGally")
+```
+
 # Week 03
 
 ## Multi-variable regression
