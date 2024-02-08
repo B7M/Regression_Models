@@ -349,10 +349,135 @@ lines(julian(gaData$date),glm2$fitted/(gaData$visits+1),col="blue",lwd=3)
 
 This section is a bit of mishmash of interesting things that one can accomplish with linear models.
 
+In this final section, we aim to inspire you to continue exploring regression models and linear models, emphasizing their immense importance in data analysis. We will share a couple of interesting insights that extend the capabilities of linear models beyond what we've covered so far.
+
+When thinking about extending linear models, the first consideration is fitting complex functions using regression models. While we've explored adding squared and cubic terms to capture lower-order functions, what if the function is more intricate, like a sine curve? How can we fit such non-parametric functions using a linear model? One approach is to specify our model as $Y = f(x) + ε$, where $f$ represents a potentially complicated function. Surprisingly, there's a relatively straightforward way to achieve this, and we will introduce you to a simple initial step. Keep in mind that there's an entire literature on this topic, and we'll cover some fundamental concepts.
+
+The first step involves using something called regression splines. The model for $Y = f(X) + ε$ includes an intercept ($β₀$), a regular slope term ($β₁ X₁$), and additional terms involving the sum of terms of the form $$Y_i = \beta_0 + \beta_1 X_i + \sum_{k=1}^d (x_i - \xi_k)_+ \gamma_k + \epsilon_{i}$$ 
+
+where $(a)_+ = a$ if $a > 0$ and $0$ otherwise and $\xi_i$ are known knot points.
+
+The idea behind regression splines involves creating kinks or breaks in a stick rather than breaking it apart. Imagine having a stick, and instead of breaking it, you introduce kinks at specific points. Now, if you aim to fit a function to your data, and the data exhibits a pattern like zigzag, you might want to create breaks at certain points to capture the complexity of the function. Mathematically modeling these breaks is precisely what the little plus functions do in the context of regression splines. The process involves introducing these "kinks" at selected points in the data to better represent the underlying function. It's worth noting that these functions help ensure continuity in the overall model. If you're interested, you can delve deeper into the mathematical aspects and prove to yourself that the resulting function remains continuous despite the introduced breaks. This continuity is a crucial aspect of the approach, allowing for a more flexible and accurate representation of complex functions in the data. The easiest way to show this would be to go through an example. 
+
+```{r, echo = T, eval = T}
+n <- 500; x <- seq(0, 4 * pi, length = n); y <- sin(x) + rnorm(n, sd = .3)
+knots <- seq(0, 8 * pi, length = 20); 
+splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot))
+xMat <- cbind(1, x, splineTerms)
+yhat <- predict(lm(y ~ xMat - 1))
+plot(x, y, frame = FALSE, pch = 21, bg = "lightblue", cex = 2)
+lines(x, yhat, col = "red", lwd = 2)
+```
+
+In this example, simulated data is generated, representing a sine curve with added noise, as seen in the blue points on the plot. The goal is to fit a model to this data using regression splines. To achieve this, a set of knots (breakpoints where the line will be continuous but not smooth) is calculated. In this case, 20 knots are evenly spaced along the range of the collected data. The creation of the matrix of knot terms is illustrated, showcasing how to implement the function discussed earlier. This matrix serves as a basis for constructing the x matrix, which includes an intercept term, a slope coefficient term (x by itself), and the spline terms. The model is then fitted using these predictors, with the intercept excluded from the model since it's already incorporated in the x matrix. The resulting fitted plot looks promising, effectively capturing the sine curve. However, one notable aspect is that the fit appears sharp at the knots. Mathematically, this occurs because although the function used is continuous, it lacks continuity in its derivatives, making it not continuously differentiable. This characteristic may lead to sharp transitions at the knot points, which can be a consideration when applying regression splines to capture smooth functions.
+
+To address the issue of a non-continuous derivative at the knot points and achieve a smoother curve, a simple trick involves adding square terms. Instead of having a function with x minus the knot points, marked with a little plus symbol, you square that difference. 
+$$Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \sum_{k=1}^d (x_i - \xi_k)_+^2 \gamma_k + \epsilon_{i}$$
+The updated function maintains the same structure as before but incorporating the square term.
+
+Mathematically, the squared term ensures that if the x-coordinate is beyond the knot point, the difference is squared, creating a smooth transition. The function is defined as $(x_i-\xi_k)^2$ if x is greater than the knot point, and zero otherwise.
+
+```{r, echo = T, eval = T}
+splineTerms <- sapply(knots, function(knot) (x > knot) * (x - knot)^2)
+xMat <- cbind(1, x, x^2, splineTerms)
+yhat <- predict(lm(y ~ xMat - 1))
+plot(x, y, frame = FALSE, pch = 21, bg = "lightblue", cex = 2)
+lines(x, yhat, col = "red", lwd = 2)
+```
+
+The code remains almost identical to the previous version, with the addition of squaring the difference for points beyond the knot. When fitting the model with this modification, the resulting curve appears smooth, effectively addressing the discontinuity issue at the knot points. It's important to note that this process involves ordinary regression, showcasing the flexibility of regression models in capturing complex functions.
+
+In this example, we've successfully fitted a complex function using ordinary regression by incorporating a set of knots. However, there are certain challenges associated with this basic version of regression splines. One key challenge is determining the precise locations of the knot points. Too many or too few knot points can introduce potential issues. To address these challenges, there are more advanced techniques and solutions. It's essential to recognize that the collection of sine terms introduced earlier is termed a basis, representing building blocks for functions. While regression splines are one way to create a basis, there are various other approaches. Some popular bases include the Fourier basis (which will be discussed shortly), the wavelet basis, and spline bases like the regression splines we've explored. Different bases have distinct strengths and weaknesses, and researchers invest considerable effort in developing and understanding these foundations. If the goal is to fit data with a specific shape, such as a hockey stick, having just one knot point may be sufficient. This approach can capture abrupt changes in the data, like a hockey stick model, provided the location of the knot point is precisely known. It's important to note that fitting non-linear functions is not limited to linear models; it can also be extended to generalized linear models (GLMs). The process involves specifying the regression in the linear predictor, allowing for the flexibility to handle non-linear relationships in a more generalized framework. One consistent challenge in this approach is the determination of knot points (naught points). Too few or too many knot points can pose problems. A modern solution to address this challenge involves incorporating many knot points and adding a regularization term. The regularization term penalizes coefficients from spline terms, discouraging excessively large coefficients and helping control the number of parameters in the model. While regularization is a more advanced topic, it is commonly covered in advanced linear modeling or regression modeling classes. By understanding the basics of fitting non-linear functions using linear and generalized linear models, you now have a foundation for further exploration. Experimenting with knot placement and the number of knots is a practical starting point. To delve deeper into this topic, consider taking additional classes in linear models to extend your knowledge and skills.
+
+In the next example, the focus is on creating another basis known as the Fourier basis and exploring how to model harmonics using it. The exercise involves imagining a major scale, which consists of eight notes: do, re, mi, fa, so, la, ti, do. A chord, in this context, refers to three notes played together. The question posed is whether, given a continuous chord played for some time and digitized into R, the software would be able to figure out the notes comprising the chord based solely on the sound.
+
+The data for this exercise was generated, and the frequencies for various notes were obtained from the Internet. The frequencies correspond to notes starting from the middle C key on a piano and going up one octave to the C key again. The goal is to take these notes and create digitally sampled time points for analysis. Now, let's proceed with the analysis of this data to see if R can deduce the notes comprising the chord based on the digitized sound.
+
+```{r, echo = T, eval = T}
+##Chord finder, playing the white keys on a piano from octave c4 - c5
+notes4 <- c(261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25)
+t <- seq(0, 2, by = .001); n <- length(t)
+c4 <- sin(2 * pi * notes4[1] * t); e4 <- sin(2 * pi * notes4[3] * t); 
+g4 <- sin(2 * pi * notes4[5] * t)
+chord <- c4 + e4 + g4 + rnorm(n, 0, 0.3)
+x <- sapply(notes4, function(freq) sin(2 * pi * freq * t))
+fit <- lm(chord ~ x - 1)
+```
+
+The chord is created using three notes: C, E, and G. Each note is generated by creating a sine wave at the corresponding frequency. While R lacks the capability to directly play these frequencies as sound, the resulting chord would sound like a digital representation of a C major chord if played. To analyze the chord, a basis is created using sine functions for every note (eight sine functions in total). A linear model is then fitted with the chord as the outcome and the sine functions as predictors. The intercept is removed since everything is centered to have mean zero. The coefficients obtained from this model are then plotted, revealing that R correctly estimates the coefficients for C, E, and G as being relatively large compared to the other notes.
+
+```{r, echo = T, eval = T}
+plot(c(0, 9), c(0, 1.5), xlab = "Note", ylab = "Coef^2", axes = FALSE, frame = TRUE, type = "n")
+axis(2)
+axis(1, at = 1 : 8, labels = c("c4", "d4", "e4", "f4", "g4", "a4", "b4", "c5"))
+for (i in 1 : 8) abline(v = i, lwd = 3, col = grey(.8))
+lines(c(0, 1 : 8, 9), c(0, coef(fit)^2, 0), type = "l", lwd = 3, col = "red")
+```
+
+This analysis demonstrates that by utilizing a Fourier basis and fitting a linear model, R can effectively estimate the coefficients for each note, allowing one to identify the chord based on the magnitudes of these coefficients. Here we just used sine waves but in general case we have sine and cosine waves. The Discrete Fourier Transform (DFT) is a mathematical technique used to analyze the frequency content of a time-series signal. It fits a completely saturated linear model by including both sine and cosine terms for all possible frequencies that the given time series allows based on its sampling rate. In the context of a two-second digitally sampled music segment, the DFT calculates coefficients for both sine and cosine components at various frequencies. The "completely saturated model" means that it includes coefficients for all possible frequencies up to the Nyquist frequency, which is half the sampling rate. For example, if there are a thousand time points in the sampled music, the DFT will include a thousand coefficients in the model, covering a range of frequencies. This comprehensive approach allows the DFT to capture both the sine and cosine components of the signal, providing a detailed representation of its frequency spectrum. 
+
+To illustrate, the DFT is applied to the chord data, and the square real components of the resulting transform are plotted. 
+```{r, echo = T, eval = T}
+a <- fft(chord); 
+plot(Re(a)^2, type = "l")
+```
+
+The plot shows peaks at specific frequencies, and by back-calculating these frequencies, one can identify the notes C, E, and G—the components of the C major chord. This technique is commonly used in music and sound processing, where engineers analyze the spectrum of sound signals using the DFT, essentially performing a linear model with numerous sine and cosine terms as regressors.
+
+We want to emphasize that the discovery of the Discrete Fourier Transform was a significant breakthrough. The reason people prefer using the Fourier Transform over the linear model is due to a discovery by the renowned statistician Tucci. Tucci found a quick way to perform the Fourier transform, known as the fast Fourier transform, which has become the standard method. It's notably faster than the linear model, making it the preferred choice for sound engineers dealing with Fourier transform problems.
+
+In conclusion, this section has demonstrated two key points. First, we can fit complex functions easily with just a few lines of code. Second, linear models can handle tasks that may initially seem beyond their scope, such as diagnosing notes in a chord. Both of these tasks are not only possible but also quite straightforward with linear models. The examples presented required only a minimal amount of code, showcasing the effectiveness of these techniques. We hope you've enjoyed the class and gained valuable insights. As you continue your learning journey, we recommend exploring techniques for generalizing models, which we only briefly touched upon in this class. Additionally, delving into correlated and longitudinal data is essential, as it introduces a crucial aspect not covered in our discussion of independent and exchangeable data. Understanding how to handle correlations is vital for extending linear models to various important topics.
+
+If you decide to pursue further studies, prioritize generalized linear models and longitudinal multi-level data. These areas will enhance your understanding and application of linear models to diverse scenarios. Thank you for participating in the class, and feel free to follow Jeff Leak and Roger Pang on Twitter for updates on new developments in our data science lab.
 
 ## Practical R Exercises in swirl
 
+During this week of the course you should complete the following lessons in the Regression Models swirl course:
+
+1. Variance Inflation Factors
+2. Overfitting and Underfitting
+3. Binary Outcomes
+4. Count Outcomes
 
 ## Week 4 Quiz
 
+1. Consider the space shuttle data `?shuttle` in the `MASS` library. Consider modeling the use of the autolander as the outcome (variable name `use`). Fit a logistic regression model with autolander (variable auto) use (labeled as "auto" 1) versus not (0) as predicted by wind sign (variable wind). Give the estimated odds ratio for autolander use comparing head winds, labeled as "head" in the variable headwind (numerator) to tail winds (denominator).
+
+2. Consider the previous problem. Give the estimated odds ratio for autolander use comparing head winds (numerator) to tail winds (denominator) adjusting for wind strength from the variable magn.
+
+3. If you fit a logistic regression model to a binary variable, for example use of the autolander, then fit a logistic regression model for one minus the outcome (not using the autolander) what happens to the coefficients?
+
+4. Consider the insect spray data `InsectSprays`. Fit a Poisson model using spray as a factor level. Report the estimated relative rate comapring spray A (numerator) to spray B (denominator).
+
+5. Consider a Poisson glm with an offset, `t`. So, for example, a model of the form `glm(count ~ x + offset(t), family = poisson)` where `x` is a factor variable comparing a treatment (1) to a control (0) and `t` is the natural log of a monitoring time. What is impact of the coefficient for `x` if we fit the model `glm(count ~ x + offset(t2), family = poisson)` where `2 <- log(10) + t`? In other words, what happens to the coefficients if we change the units of the offset variable. (Note, adding log(10) on the log scale is multiplying by 10 on the original scale.)
+
+6. Consider the data below. Using a knot point at 0, fit a linear model that looks like a hockey stick with two lines meeting at x=0. Include an intercept term, x and the knot point term. What is the estimated slope of the line after 0?
+```{r, echo=T, eval=F}
+x <- -5:5
+y <- c(5.12, 3.93, 2.67, 1.87, 0.52, 0.08, 0.93, 2.05, 2.54, 3.87, 4.97)
+```
+
 ## Course Project
+
+You work for Motor Trend, a magazine about the automobile industry. Looking at a data set of a collection of cars, they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
+* “Is an automatic or manual transmission better for MPG”
+* "Quantify the MPG difference between automatic and manual transmissions" 
+
+**Grading Criteria Overview**
+
+_Peer Grading_
+
+* The criteria that your classmates will use to evaluate and grade your work are shown below.
+* Each criteria is binary: (1 point = criteria met acceptably; 0 points = criteria not met acceptably)
+
+_Criteria_
+
+* Did the student interpret the coefficients correctly?
+* Did the student do some exploratory data analyses?
+* Did the student fit multiple models and detail their strategy for model selection?
+* Did the student answer the questions of interest or detail why the question(s) is (are) not answerable?
+* Did the student do a residual plot and some diagnostics?
+* Did the student quantify the uncertainty in their conclusions and/or perform an inference correctly?
+* Was the report brief (about 2 pages long) for the main body of the report and no longer than 5 with supporting appendix of figures?
+* Did the report include an executive summary?
+* Was the report done in Rmd (knitr)? 
