@@ -120,9 +120,9 @@ A brief historical note on odds: It originates from the concept of a fair game. 
 
 Casinos or tracks make money by taking a fee for every bet, ensuring they are financially neutral regardless of the outcome. This fee ensures that the house is guaranteed to win, making the phrase "the house wins" quite literal. The complexity of the betting system involves various factors, but the basic principle remains: the house sets up odds to be financially neutral and takes a small fee from each bet.
 
-In this demonstration using the manipulate package in R, logistic regression curves are visualized with varying values of beta0 (intercept) and beta1 (slope). 
+Run this in RStudio which is a demonstration using the manipulate package in R, logistic regression curves are visualized with varying values of beta0 (intercept) and beta1 (slope). At the time of developing this course, the manipulate package was not available in OTTR. However, the code is provided for students to run in RStudio.
 
-```{r, echo = T, eval = T}
+```{r, echo = T, eval = F}
 library(manipulate)
 x <- seq(-10, 10, length = 1000)
 manipulate(
