@@ -70,6 +70,10 @@ library(UsingR)
 ```
 
 ```
+## Warning: package 'MASS' was built under R version 4.0.3
+```
+
+```
 ## Loading required package: HistData
 ```
 
