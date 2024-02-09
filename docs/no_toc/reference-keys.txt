@@ -4,7 +4,7 @@ introduction
 welcome-to-regression-models
 some-basics
 youtube
-syllabus-xxx
+syllabus
 course-description
 course-content
 book-regression-models-for-data-science-in-r.
@@ -21,7 +21,7 @@ linear-least-squares
 notations-and-background
 linear-least-squares-1
 linear-least-squares-coding-example
-mathematical-details-optional-xxx
+mathematical-details-optional
 regression-to-the-mean
 practical-r-exercises-in-swirl
 week-1-quiz
