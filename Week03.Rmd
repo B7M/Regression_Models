@@ -5,6 +5,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r, echo = F, eval = T}
 install.packages("GGally")
+install.packages("car")
 ```
 
 # Week 03
