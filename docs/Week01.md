@@ -602,20 +602,20 @@ of statistical uncertainty automatically.
 
 ### Mathematical Details (Optional)
 
-Our goal here is to show $$\hat\beta_1 = Cov(y,x)\frac{sd(y)}{sd(x)}$$
+Our goal here is to show $$\hat\beta_1 = Cov(y,x)\frac{Sd(y)}{Sd(x)}$$
 
-Before we proceed with full regression we would like to demonstrate regression through the origin. We aim to draw a line fitting the equation $y = x \beta$ to the data $y_1,...,y_n$ and $x_1,...,x_n$. To achieve this, we wish to minimize the criteria $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2$$ 
-Assume $\hat\beta$ is the solution and we rewrite the equation as $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta} + x_i \hat{\beta}) - x_i \hat{\beta}^2$$
+Before we proceed with full regression we would like to demonstrate regression through the origin. We aim to draw a line fitting the equation $y = x \beta$ to the data $y_1,...,y_n$ and $x_1,...,x_n$. To achieve this, we wish to minimize the criteria $$\sum_{i=1}^{n} (y_i - x_i{\beta})^2$$ 
+Assume $\hat\beta$ is the solution and we rewrite the equation as $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta} + x_i \hat{\beta} - x_i \hat{\beta})^2$$
 Expanding the square, we obtain $$\begin{align}
-\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat-x_i\beta) + \sum_{i=1}^{n} (x_i \hat{\beta}-x_i\beta)^2 \\
-\geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat-x_i\beta) 
+\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta) + \sum_{i=1}^{n} (x_i \hat{\beta}-x_i\beta)^2 \\
+\geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta) 
 \end{align}$$.
 
-Suppose $\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta) = 0$, then the equation simplifies to $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 \geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2$$
+Suppose $\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta) = 0$, then the criteria equation simplifies to $$\sum_{i=1}^{n} (y_i - x_i {\beta})^2 \geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2$$
 
 Let's see if we can solve the following equation for $\hat\beta$: $$\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta)=\sum_{i=1}^{n} (y_i - x_i\hat\beta)x_i(\hat\beta-\beta)$$ 
-We can rewrite the equation as $$\hat\beta\frac{\sum_{i=1}^n y_ix_i}{\sum_{i=1}^n x_i^2}$$
-Now that we found the solution for the line through the origin, we can move on to the full regression. In full regression, we want to minimize the criteria $$\sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 = \sum_{i=1}^{n} (y_i^* - \beta_0)^2$$ where $y_i^* = y_i - \beta_0$. We know the least square solution for the eqution is $\beta_0 = \frac{\sum_{i=1}^n y_i^*}{n}= \frac{\sum_{i=1}^{n} (y_i - x_i \beta_1)}{n} = \bar y - \beta_1 \bar x$$
+We can rewrite the equation as $$\hat\beta=\frac{\sum_{i=1}^n y_ix_i}{\sum_{i=1}^n x_i^2}$$
+Now that we found the solution for the line through the origin, we can move on to the full regression. In full regression, we want to minimize the criteria $$\sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 = \sum_{i=1}^{n} (y_i^* - \beta_0)^2$$ where $y_i^* = y_i - x_i\beta_1$. We know the least square solution for the eqution is $$\beta_0 = \frac{\sum_{i=1}^n y_i^*}{n}= \frac{\sum_{i=1}^{n} (y_i - x_i \beta_1)}{n} = \bar y - \beta_1 \bar x$$
 This means the least squares criteria is only going to get smaller if we plugin a $\beta_0$ that satisfies $\bar y - \beta_1 \bar x$.
 $$ \sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 \geq \sum_{i=1}^{n} (y_i - (\bar y  - x_i \beta_1)- \beta_1x_i)^2 = \sum_{i=1}^{n} (\tilde y- \tilde x \beta_1)^2$$
 
