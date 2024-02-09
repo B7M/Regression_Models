@@ -94,9 +94,9 @@ If we happen to have several exchangeable binary outcomes for the same level of 
 
 In this section, the focus is on scenarios where the outcome is a binary random variable, taking values of zero or one. Such situations arise frequently in various analyses, such as survival studies where individuals are either alive or deceased at the study's conclusion, or in sports analytics, where wins or losses are recorded. The goal is to model the data as a series of coin flips, where the probability of success depends on a set of covariates. When dealing with collections of zeros and ones with a constant success probability and independence, the total number of successes or failures follows a binomial distribution. Binary logistic regression is employed to handle binomial random variables in the special case where the covariate is constant. Here we will cover two cases: binary and binomial, with the focus initially on the binary case. To illustrate, a motivating example is presented using a dataset organized by Jeff Leak, an instructor in the data science specialization. 
 ```{r, echo = T, eval = T}
-download.file("https://dl.dropboxusercontent.com/u/7710864/data/ravensData.rda"
-              , destfile="./data/ravensData.rda",method="curl")
-load("./data/ravensData.rda")
+download.file("https://raw.githubusercontent.com/B7M/Course_data/main/ravensData.csv"
+              , destfile="./data/ravensData.csv",method="curl")
+ravensData <- read.csv("./data/ravensData.csv")
 head(ravensData)
 ```
 
@@ -197,8 +197,8 @@ The rightmost panel demonstrates the close resemblance to a normal distribution.
 
 As an example, let's analyze Jeff Leek's web traffic on his [website](www.biostat.jhsph.edu/~jleek). The variable of interest in this case is the number of web hits per day, with the unit of time set as $t$ equals one day. To interpret the data as web hits per hour, $t$ would need to be set to 24. Similarly, for seconds, it would be $t=24\times 60$, and so on. 
 ```{r, echo = T, eval = T}
-download.file("https://dl.dropboxusercontent.com/u/7710864/data/gaData.rda",destfile="./data/gaData.rda",method="curl")
-load("./data/gaData.rda")
+download.file("https://raw.githubusercontent.com/B7M/Course_data/main/gaData.csv",destfile="./data/gaData.csv",method="curl")
+gaData <- read.csv("./data/gaData.csv")
 gaData$julian <- julian(gaData$date)
 head(gaData)
 ```

@@ -737,25 +737,6 @@ round(hatvalues(fit2)[1 : 10], 3)
 
 The diagnostic values of `dfbetas` for the first point, which was the outlying point. It's still large but nowhere near as large as in the previous case. It appears to have some influence in the fit, but nothing like in the previous case. However, the hat values has a much larger hat value than and the remaining points. It is because the point is outside of the range of the X values, but it adheres to the direction relationship meaning it will have a large leverage value but not a large `dfbetas` value.
 
-The next example is by Stefanski et.al. that shows why we do residual plots. Basically, the reason we look at residual plots is because they zoom on potential problems with our model. 
-```{r, echo = T, eval = T}
-dat <- read.table('http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt', header = FALSE)
-pairs(dat)
-```
-The pairwise scatter plots show nothing interesting other than a lot of over plotting. 
-
-```{r, echo = T, eval = T}
-summary(lm(V1 ~ . -1, data = dat))$coef
-```
-
-In this model every single P values is highly significant for the coefficients. In multi variable examples because you can't plot the residuals like in linear regression and you need to pick a number of the X with the most common ways to plot the residuals versus the fitted values. Doing so will show you a clever little picture that comes out. 
-```{r, echo = T, eval = T}
-fit <- lm(V1 ~ . - 1, data = dat); 
-plot(predict(fit), resid(fit), pch = '.')
-```
-
-Without looking at the residuals we wouldn't have seen anything. But looking at the residuals has zoomed in on the clear aspect of poor model fit with a clear systematic pattern in the residuals that we missed. 
-
 Now let's go back to the swiss data and look at the different examples of diagnostic plots that can spit out by default by R. 
 
 ```{r, echo = T, eval = T}
