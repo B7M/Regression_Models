@@ -262,9 +262,9 @@ summary(lm(y ~ x1))$coef
 ```
 
 ```
-##              Estimate Std. Error    t value     Pr(>|t|)
-## (Intercept)  1.231687   1.278821  0.9631424 3.378466e-01
-## x1          96.206352   2.190330 43.9232303 2.801406e-66
+##              Estimate Std. Error   t value     Pr(>|t|)
+## (Intercept)  1.475159   1.071085  1.377256 1.715706e-01
+## x1          95.615533   1.826863 52.338638 1.950603e-73
 ```
 
 ```r
@@ -272,10 +272,10 @@ summary(lm(y ~ x1 + x2))$coef
 ```
 
 ```
-##                  Estimate   Std. Error       t value      Pr(>|t|)
-## (Intercept) -0.0001088336 0.0021104605   -0.05156863  9.589785e-01
-## x1          -0.9998822953 0.0165252233  -60.50643190  7.688898e-79
-## x2           0.9999810575 0.0001659207 6026.86147442 3.953311e-272
+##                 Estimate   Std. Error      t value      Pr(>|t|)
+## (Intercept)  0.002037625 0.0020565230    0.9908106  3.242432e-01
+## x1          -0.998103740 0.0188826391  -52.8582756  2.584104e-73
+## x2           0.999985383 0.0001921053 5205.4014600 5.884765e-266
 ```
 
 The second regressor, $x_2$, is the values $1-n$, $x_1$ is a variable that depends on $x_2$ and random noise. Think of $x_2$ as something we might measure regularly, like days, and $x_1$ as something like a saving account where the balance goes up with time and random fluctuations. The random fluctuations impact the spending, so the money doesn't necessarily always just go up. It goes up and down sporadically, but the linear trend is going up. Let's assume y is happiness with a measure like `y = -x1 + x2 + noise`. The true generating model `y` is negatively associated with `-x1` suggesting happiness is negatively associated with money and positively associated with `x2`, so it goes up with time and down with `x1` with some random normal noise. We know from the model `y = -x1 + x2 + noise` the outcome depends negatively on `x1` with a coefficient of minus 1, and depends positively on `x2` with a coefficient of plus 1. If fit `x1` by itself we get an enormous coefficient, 95, which is clearly wrong. It's nothing near to the negative 1 that it's supposed to be or that we would hope it would be. It is picking up the residual effect of `x2` that's a big driver of y, but when we fit the correct model, `x1` and `x2`, together we will get the correct coefficients, about minus 1 for `x1`, and about plus 1 for `x2`. You can imagine why this would happen by answering: what is regression doing? It's taking `x1` and removing the linear effect of `x2`.
@@ -946,7 +946,7 @@ round(dfbetas(fit)[1 : 10, 2], 3)
 
 ```
 ##      1      2      3      4      5      6      7      8      9     10 
-##  8.466  0.013  0.011  0.035 -0.018  0.022 -0.035 -0.019  0.000 -0.090
+##  7.640  0.008  0.024  0.030 -0.097 -0.117  0.000  0.073 -0.043 -0.121
 ```
 
 ```r
@@ -955,7 +955,7 @@ round(hatvalues(fit)[1 : 10], 3)
 
 ```
 ##     1     2     3     4     5     6     7     8     9    10 
-## 0.487 0.010 0.011 0.013 0.011 0.012 0.014 0.010 0.010 0.020
+## 0.479 0.010 0.011 0.012 0.019 0.014 0.011 0.019 0.014 0.019
 ```
 
 The `dfbetas` shows the first point (10,10) is orders ofmagnitude larger than the remaining point. The hat value for this point is much larger than the hat values for the remaining points. The hat values have to be between zero and one. Based on thes diagnostics we would single out (10,10).
@@ -981,7 +981,7 @@ round(dfbetas(fit2)[1 : 10, 2], 3)
 
 ```
 ##      1      2      3      4      5      6      7      8      9     10 
-## -0.252 -0.005 -0.110  0.092  0.048  0.265 -0.032 -0.026 -0.017  0.052
+##  0.182 -0.013 -0.003  0.001 -0.008 -0.030  0.110  0.018 -0.121  0.145
 ```
 
 ```r
@@ -990,7 +990,7 @@ round(hatvalues(fit2)[1 : 10], 3)
 
 ```
 ##     1     2     3     4     5     6     7     8     9    10 
-## 0.231 0.010 0.031 0.013 0.020 0.031 0.015 0.013 0.010 0.036
+## 0.249 0.016 0.010 0.012 0.010 0.011 0.015 0.012 0.020 0.021
 ```
 
 The diagnostic values of `dfbetas` for the first point, which was the outlying point. It's still large but nowhere near as large as in the previous case. It appears to have some influence in the fit, but nothing like in the previous case. However, the hat values has a much larger hat value than and the remaining points. It is because the point is outside of the range of the X values, but it adheres to the direction relationship meaning it will have a large leverage value but not a large `dfbetas` value.
@@ -1063,7 +1063,7 @@ round(apply(betas, 1, sd), 5)
 
 ```
 ##      x1      x1      x1 
-## 0.03317 0.03316 0.03346
+## 0.02958 0.03033 0.03039
 ```
 
 We are interested in the standard deviation of the simulated estimated coefficients. The reason we do this by simulation is the variance inflation occurs on the actual standard errors, not the estimated standard errors. This is sort of the ideal setting, where the three regressors don't have anything to do with one another. What you see is the standard deviation of the $\beta_1$ coefficients we get across all simulations. They are about same and nothing that bad. The variance inflation by including the extra variables was negligible. The reason is because x2 and x3, have nothing to do x1. We simulated them independently. 
@@ -1085,7 +1085,7 @@ round(apply(betas, 1, sd), 5)
 
 ```
 ##      x1      x1      x1 
-## 0.03149 0.04037 0.10649
+## 0.03157 0.04880 0.11387
 ```
 
 As expected we see huge amounts of variance inflation, especially for the third model where we include x2 and x3. The general rule is that the more correlated the covariates are to the regressors that you're interested in, the worse off you're going to be in terms of paying a penalty for increased standard deviation. For example, if we have diastolic blood pressure data in the model, and we put systolic blood pressure in the model, which is relatively the same thing it is going
@@ -1099,7 +1099,7 @@ c(summary(lm(y ~ x1 + x2))$cov.unscaled[2,2],
 ```
 
 ```
-## [1]  1.62661 10.32427
+## [1]  2.271788 13.105094
 ```
 
 ```r
@@ -1107,8 +1107,8 @@ temp <- apply(betas, 1, var); temp[2 : 3] / temp[1]
 ```
 
 ```
-##       x1       x1 
-##  1.64394 11.43768
+##        x1        x1 
+##  2.389323 13.007911
 ```
 
 Let's analyze the variance inflation using the Swiss data. 
