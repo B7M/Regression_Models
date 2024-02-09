@@ -108,7 +108,7 @@ If you'd prefer to watch the videos on YouTube, you can find them [here](https:/
 If you'd like to keep up with the instructors I'm @bcaffo on twitter, Roger is @rdpeng and Jeff is @jtleek. The Department of Biostat here is @jhubiostat.
 
 
-### Syllabus (xxx)
+### Syllabus
 
 Course Title: Regression Models
 
@@ -261,7 +261,7 @@ One definition, let $y_i$, be the height for child $i$, where in this dataset $i
 That's how we define the middle. It's also related to physics in this so called physical center of mass of the histogram that we showed on the previously. 
 Imagine of those bars as being physical entities, having weight and you are trying to figure out where you would put your finger to balance it out. That would be the physical center of mass. You might have guessed that the center of the data has to be the mean. 
 
-Let's use our studio's `manipulate` function to experiment with trying to find that center of mass. 
+The `manipulate` function is one of the best ways to experiment with trying to find the center of mass in this example. However, at the time of developin this course `manipulate` is not available in OTTR environment, you can run the code in your local R environment.
 
 
 ```r
@@ -275,8 +275,6 @@ myHist<-function(mu){
 }
 manipulate(myHist(mu),mu=slider(62,74,step=0.5))
 ```
-
-fig xxx
 
 Because we're using manipulate we can move the slider around and monitor the value of $\mu$ and
 the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of $\mu$. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get's up large again. You can see $\mu$ is the point that balanced out this histogram.
@@ -612,8 +610,27 @@ c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
 Here we are showing the somewhat fancy plot for this data. We would also note that `ggplot2` does a very good thing for us on our behalf. It automatically gives us a confidence interval around the line. We'll talk about how to generate this confidence interval later on in the lecture. But it's very nice that they're thinking
 of statistical uncertainty automatically.
 
-### Mathematical Details (Optional) XXX
+### Mathematical Details (Optional)
 
+Our goal here is to show $$\hat\beta_1 = Cov(y,x)\frac{sd(y)}{sd(x)}$$
+
+Before we proceed with full regression we would like to demonstrate regression through the origin. We aim to draw a line fitting the equation $y = x \beta$ to the data $y_1,...,y_n$ and $x_1,...,x_n$. To achieve this, we wish to minimize the criteria $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2$$ 
+Assume $\hat\beta$ is the solution and we rewrite the equation as $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta} + x_i \hat{\beta}) - x_i \hat{\beta}^2$$
+Expanding the square, we obtain $$\begin{align}
+\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat-x_i\beta) + \sum_{i=1}^{n} (x_i \hat{\beta}-x_i\beta)^2 \\
+\geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat-x_i\beta) 
+\end{align}$$.
+
+Suppose $\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta) = 0$, then the equation simplifies to $$\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 \geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2$$
+
+Let's see if we can solve the following equation for $\hat\beta$: $$\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta)=\sum_{i=1}^{n} (y_i - x_i\hat\beta)x_i(\hat\beta-\beta)$$ 
+We can rewrite the equation as $$\hat\beta\frac{\sum_{i=1}^n y_ix_i}{\sum_{i=1}^n x_i^2}$$
+Now that we found the solution for the line through the origin, we can move on to the full regression. In full regression, we want to minimize the criteria $$\sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 = \sum_{i=1}^{n} (y_i^* - \beta_0)^2$$ where $y_i^* = y_i - \beta_0$. We know the least square solution for the eqution is $\beta_0 = \frac{\sum_{i=1}^n y_i^*}{n}= \frac{\sum_{i=1}^{n} (y_i - x_i \beta_1)}{n} = \bar y - \beta_1 \bar x$$
+This means the least squares criteria is only going to get smaller if we plugin a $\beta_0$ that satisfies $\bar y - \beta_1 \bar x$.
+$$ \sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 \geq \sum_{i=1}^{n} (y_i - (\bar y  - x_i \beta_1)- \beta_1x_i)^2 = \sum_{i=1}^{n} (\tilde y- \tilde x \beta_1)^2$$
+
+Here $\tilde y = y - \bar y$ and $\tilde x = x - \bar x$. This suggests that $$\hat\beta_1 = \frac{\sum_{i=1}^n \tilde y_i \tilde x_i}{\sum_{i=1}^n \tilde x_i^2} = \frac{\sum_{i=1}^n(y_i-\bar y)(x_i-\bar x)}{\sum_{i=1}^n(x_i-\bar x)^2}=\frac{Cov(y,x)}{Sd(x)}$$
+For $\hat\beta_0$, we can write $\hat\beta_0 = \bar y - \hat\beta_1 \bar x$.
 
 ## Regression to the Mean
 
