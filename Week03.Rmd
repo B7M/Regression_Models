@@ -918,7 +918,7 @@ https://projects.fivethirtyeight.com/p-hacking/
 Your assignment is to study how income varies across college major categories. Specifically answer: “Is there an association between college major category and income?” 
 
 To get started, start a new R/RStudio session with a clean workspace. To do this in R, you can use the `q()` function to quit, then reopen R. The easiest way to do this in RStudio is to quit RStudio entirely and reopen it. After you have started a new session, run the following commands. This will load a `data.frame` called college for you to work with.
-```{r, echo = T, eval = T}
+```{r, echo = T, eval = F}
 install.packages("devtools")
 devtools::install_github("jhudsl/collegeIncome")
 library(collegeIncome)
@@ -926,18 +926,18 @@ data(college)
 ```
 
 Next download and install the `matahari` R package with the following commands:
-```{r, echo = T, eval = T}
-devtools::install_github("jhudsl/matahari")
+```{r, echo = T, eval = F}
+install.packages("matahari")
 library(matahari)
 ```
 
 This package allows a record of your analysis (your R command history) to be documented. You will be uploading a file containing this record to GitHub and submitting the link as part of this quiz. Before you start the analysis for this assignment, enter the following command to begin the documentation of your analysis:
-```{r, echo = T, eval = T}
+```{r, echo = T, eval = F}
 dance_start(value = FALSE, contents = FALSE)
 ```
 
 You can then proceed with the rest of your analysis in R as usual. When you have finished your analysis, use the following command to save the record of your analysis on your desktop:
-```{r, echo = T, eval = T}
+```{r, echo = T, eval = F}
 dance_save("~/Desktop/college_major_analysis.rds")
 ```
 
