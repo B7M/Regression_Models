@@ -1,7 +1,0 @@
-1-Week-01.md
-2-Week-02.md
-3-Week-03.md
-4-Week-04.md
-5-References.md
-About-this-Course.md
-About-the-Authors.md
