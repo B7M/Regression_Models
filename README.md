@@ -1,4 +1,4 @@
-# {Regression Models}
+# Regression Models
 
 This course was created from [this GitHub template](https://github.com/jhudsl/OTTR_Template).
 
