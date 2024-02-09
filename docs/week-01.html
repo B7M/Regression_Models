@@ -144,7 +144,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1.1" data-path="week-01.html"><a href="week-01.html#welcome-to-regression-models"><i class="fa fa-check"></i><b>1.1.1</b> Welcome to Regression Models</a></li>
 <li class="chapter" data-level="1.1.2" data-path="week-01.html"><a href="week-01.html#some-basics"><i class="fa fa-check"></i><b>1.1.2</b> Some Basics</a></li>
-<li class="chapter" data-level="1.1.3" data-path="week-01.html"><a href="week-01.html#syllabus-xxx"><i class="fa fa-check"></i><b>1.1.3</b> Syllabus (xxx)</a></li>
+<li class="chapter" data-level="1.1.3" data-path="week-01.html"><a href="week-01.html#syllabus"><i class="fa fa-check"></i><b>1.1.3</b> Syllabus</a></li>
 <li class="chapter" data-level="1.1.4" data-path="week-01.html"><a href="week-01.html#data-science-specialization-community-site"><i class="fa fa-check"></i><b>1.1.4</b> Data Science Specialization Community Site</a></li>
 <li class="chapter" data-level="1.1.5" data-path="week-01.html"><a href="week-01.html#where-to-get-more-advanced-material"><i class="fa fa-check"></i><b>1.1.5</b> Where to get more advanced material</a></li>
 </ul></li>
@@ -157,7 +157,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.1" data-path="week-01.html"><a href="week-01.html#notations-and-background"><i class="fa fa-check"></i><b>1.3.1</b> Notations and background</a></li>
 <li class="chapter" data-level="1.3.2" data-path="week-01.html"><a href="week-01.html#linear-least-squares-1"><i class="fa fa-check"></i><b>1.3.2</b> Linear Least Squares</a></li>
 <li class="chapter" data-level="1.3.3" data-path="week-01.html"><a href="week-01.html#linear-least-squares-coding-example"><i class="fa fa-check"></i><b>1.3.3</b> Linear Least Squares Coding Example</a></li>
-<li class="chapter" data-level="1.3.4" data-path="week-01.html"><a href="week-01.html#mathematical-details-optional-xxx"><i class="fa fa-check"></i><b>1.3.4</b> Mathematical Details (Optional) XXX</a></li>
+<li class="chapter" data-level="1.3.4" data-path="week-01.html"><a href="week-01.html#mathematical-details-optional"><i class="fa fa-check"></i><b>1.3.4</b> Mathematical Details (Optional)</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="week-01.html"><a href="week-01.html#regression-to-the-mean"><i class="fa fa-check"></i><b>1.4</b> Regression to the Mean</a></li>
 <li class="chapter" data-level="1.5" data-path="week-01.html"><a href="week-01.html#practical-r-exercises-in-swirl"><i class="fa fa-check"></i><b>1.5</b> Practical R Exercises in swirl</a></li>
@@ -286,8 +286,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 If you’d like to keep up with the instructors I’m <span class="citation">(<a href="#ref-bcaffo" role="doc-biblioref"><strong>bcaffo?</strong></a>)</span> on twitter, Roger is <span class="citation">(<a href="#ref-rdpeng" role="doc-biblioref"><strong>rdpeng?</strong></a>)</span> and Jeff is <span class="citation">(<a href="#ref-jtleek" role="doc-biblioref"><strong>jtleek?</strong></a>)</span>. The Department of Biostat here is <span class="citation">(<a href="#ref-jhubiostat" role="doc-biblioref"><strong>jhubiostat?</strong></a>)</span>.</p>
 </div>
 </div>
-<div id="syllabus-xxx" class="section level3" number="1.1.3">
-<h3><span class="header-section-number">1.1.3</span> Syllabus (xxx)</h3>
+<div id="syllabus" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Syllabus</h3>
 <p>Course Title: Regression Models</p>
 <p>Course Instructor(s):The primary instructor of this class is <a href="https://sites.google.com/view/bcaffo/home/">Brian Caffo</a>.
 Brian is a professor at Johns Hopkins Biostatistics and co-directs the <a href="https://www.smart-stats.org">SMART working group</a>.</p>
@@ -441,7 +441,7 @@ the parents disregarding children. And the marginal distribution of the children
 <p>One definition, let <span class="math inline">\(y_i\)</span>, be the height for child <span class="math inline">\(i\)</span>, where in this dataset <span class="math inline">\(i=1,2,...,n=928\)</span>. So the middle is the value of<span class="math inline">\(\mu\)</span> that minimizes <span class="math display">\[\sum_{i=1}^n(y_i-\mu)^2\]</span></p>
 <p>That’s how we define the middle. It’s also related to physics in this so called physical center of mass of the histogram that we showed on the previously.
 Imagine of those bars as being physical entities, having weight and you are trying to figure out where you would put your finger to balance it out. That would be the physical center of mass. You might have guessed that the center of the data has to be the mean.</p>
-<p>Let’s use our studio’s <code>manipulate</code> function to experiment with trying to find that center of mass.</p>
+<p>The <code>manipulate</code> function is one of the best ways to experiment with trying to find the center of mass in this example. However, at the time of developin this course <code>manipulate</code> is not available in OTTR environment, you can run the code in your local R environment.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="week-01.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(manipulate) </span>
 <span id="cb22-2"><a href="week-01.html#cb22-2" aria-hidden="true" tabindex="-1"></a>myHist<span class="ot">&lt;-</span><span class="cf">function</span>(mu){</span>
 <span id="cb22-3"><a href="week-01.html#cb22-3" aria-hidden="true" tabindex="-1"></a>    mse<span class="ot">&lt;-</span><span class="fu">mean</span>((galton<span class="sc">$</span>child <span class="sc">-</span> mu)<span class="sc">^</span><span class="dv">2</span>)</span>
@@ -451,7 +451,6 @@ Imagine of those bars as being physical entities, having weight and you are tryi
 <span id="cb22-7"><a href="week-01.html#cb22-7" aria-hidden="true" tabindex="-1"></a>    g</span>
 <span id="cb22-8"><a href="week-01.html#cb22-8" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb22-9"><a href="week-01.html#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">manipulate</span>(<span class="fu">myHist</span>(mu),<span class="at">mu=</span><span class="fu">slider</span>(<span class="dv">62</span>,<span class="dv">74</span>,<span class="at">step=</span><span class="fl">0.5</span>))</span></code></pre></div>
-<p>fig xxx</p>
 <p>Because we’re using manipulate we can move the slider around and monitor the value of <span class="math inline">\(\mu\)</span> and
 the mean squared error, that is the sum of the squared distances between the observed data points and that particular value of <span class="math inline">\(\mu\)</span>. If you move the slider around, you would notice notice as we get toward the center of the histogram, the mean squared error is going down and if you keep moving the slider way up, it get’s up large again. You can see <span class="math inline">\(\mu\)</span> is the point that balanced out this histogram.</p>
 <p><strong>Notice</strong>
@@ -663,8 +662,23 @@ by the sum of the <span class="math inline">\(X\)</span> variable squared. So, l
 <p>Here we are showing the somewhat fancy plot for this data. We would also note that <code>ggplot2</code> does a very good thing for us on our behalf. It automatically gives us a confidence interval around the line. We’ll talk about how to generate this confidence interval later on in the lecture. But it’s very nice that they’re thinking
 of statistical uncertainty automatically.</p>
 </div>
-<div id="mathematical-details-optional-xxx" class="section level3" number="1.3.4">
-<h3><span class="header-section-number">1.3.4</span> Mathematical Details (Optional) XXX</h3>
+<div id="mathematical-details-optional" class="section level3" number="1.3.4">
+<h3><span class="header-section-number">1.3.4</span> Mathematical Details (Optional)</h3>
+<p>Our goal here is to show <span class="math display">\[\hat\beta_1 = Cov(y,x)\frac{sd(y)}{sd(x)}\]</span></p>
+<p>Before we proceed with full regression we would like to demonstrate regression through the origin. We aim to draw a line fitting the equation <span class="math inline">\(y = x \beta\)</span> to the data <span class="math inline">\(y_1,...,y_n\)</span> and <span class="math inline">\(x_1,...,x_n\)</span>. To achieve this, we wish to minimize the criteria <span class="math display">\[\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2\]</span>
+Assume <span class="math inline">\(\hat\beta\)</span> is the solution and we rewrite the equation as <span class="math display">\[\sum_{i=1}^{n} (y_i - x_i \hat{\beta} + x_i \hat{\beta}) - x_i \hat{\beta}^2\]</span>
+Expanding the square, we obtain <span class="math display">\[\begin{align}
+\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat-x_i\beta) + \sum_{i=1}^{n} (x_i \hat{\beta}-x_i\beta)^2 \\
+\geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 - 2 \sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat-x_i\beta) 
+\end{align}\]</span>.</p>
+<p>Suppose <span class="math inline">\(\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta) = 0\)</span>, then the equation simplifies to <span class="math display">\[\sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2 \geq \sum_{i=1}^{n} (y_i - x_i \hat{\beta})^2\]</span></p>
+<p>Let’s see if we can solve the following equation for <span class="math inline">\(\hat\beta\)</span>: <span class="math display">\[\sum_{i=1}^{n} (y_i - x_i\hat\beta)(x_i\hat\beta-x_i\beta)=\sum_{i=1}^{n} (y_i - x_i\hat\beta)x_i(\hat\beta-\beta)\]</span>
+We can rewrite the equation as <span class="math display">\[\hat\beta\frac{\sum_{i=1}^n y_ix_i}{\sum_{i=1}^n x_i^2}\]</span>
+Now that we found the solution for the line through the origin, we can move on to the full regression. In full regression, we want to minimize the criteria <span class="math display">\[\sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 = \sum_{i=1}^{n} (y_i^* - \beta_0)^2\]</span> where <span class="math inline">\(y_i^* = y_i - \beta_0\)</span>. We know the least square solution for the eqution is <span class="math inline">\(\beta_0 = \frac{\sum_{i=1}^n y_i^*}{n}= \frac{\sum_{i=1}^{n} (y_i - x_i \beta_1)}{n} = \bar y - \beta_1 \bar x\)</span>$
+This means the least squares criteria is only going to get smaller if we plugin a <span class="math inline">\(\beta_0\)</span> that satisfies <span class="math inline">\(\bar y - \beta_1 \bar x\)</span>.
+<span class="math display">\[ \sum_{i=1}^{n} (y_i - \beta_0 - x_i \beta_1)^2 \geq \sum_{i=1}^{n} (y_i - (\bar y  - x_i \beta_1)- \beta_1x_i)^2 = \sum_{i=1}^{n} (\tilde y- \tilde x \beta_1)^2\]</span></p>
+<p>Here <span class="math inline">\(\tilde y = y - \bar y\)</span> and <span class="math inline">\(\tilde x = x - \bar x\)</span>. This suggests that <span class="math display">\[\hat\beta_1 = \frac{\sum_{i=1}^n \tilde y_i \tilde x_i}{\sum_{i=1}^n \tilde x_i^2} = \frac{\sum_{i=1}^n(y_i-\bar y)(x_i-\bar x)}{\sum_{i=1}^n(x_i-\bar x)^2}=\frac{Cov(y,x)}{Sd(x)}\]</span>
+For <span class="math inline">\(\hat\beta_0\)</span>, we can write <span class="math inline">\(\hat\beta_0 = \bar y - \hat\beta_1 \bar x\)</span>.</p>
 </div>
 </div>
 <div id="regression-to-the-mean" class="section level2" number="1.4">
